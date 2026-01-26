@@ -1,0 +1,297 @@
+{% comment %}
+  Curated Discovery section for homepage.
+{% endcomment %}
+
+{% liquid
+  assign tile_a_collection = section.settings.tile_a_collection
+  assign tile_b_collection = section.settings.tile_b_collection
+  assign tile_c_collection = section.settings.tile_c_collection
+
+  assign tile_a_image = section.settings.tile_a_image
+  if tile_a_image == blank and tile_a_collection != blank
+    assign tile_a_image = tile_a_collection.featured_image
+  endif
+
+  assign tile_b_image = section.settings.tile_b_image
+  if tile_b_image == blank and tile_b_collection != blank
+    assign tile_b_image = tile_b_collection.featured_image
+  endif
+
+  assign tile_c_image = section.settings.tile_c_image
+  if tile_c_image == blank and tile_c_collection != blank
+    assign tile_c_image = tile_c_collection.featured_image
+  endif
+
+  assign tile_a_title = section.settings.tile_a_title
+  if tile_a_title == blank and tile_a_collection != blank
+    assign tile_a_title = tile_a_collection.title
+  endif
+
+  assign tile_b_title = section.settings.tile_b_title
+  if tile_b_title == blank and tile_b_collection != blank
+    assign tile_b_title = tile_b_collection.title
+  endif
+
+  assign tile_c_title = section.settings.tile_c_title
+  if tile_c_title == blank and tile_c_collection != blank
+    assign tile_c_title = tile_c_collection.title
+  endif
+
+  assign tile_a_link = section.settings.tile_a_link
+  if tile_a_link == blank and tile_a_collection != blank
+    assign tile_a_link = tile_a_collection.url
+  endif
+
+  assign tile_b_link = section.settings.tile_b_link
+  if tile_b_link == blank and tile_b_collection != blank
+    assign tile_b_link = tile_b_collection.url
+  endif
+
+  assign tile_c_link = section.settings.tile_c_link
+  if tile_c_link == blank and tile_c_collection != blank
+    assign tile_c_link = tile_c_collection.url
+  endif
+%}
+
+<section
+  class="db-curated-discovery spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width db-curated-discovery__inner">
+    {% if section.settings.heading != blank %}
+      <div class="db-curated-discovery__header">
+        <h2 class="db-curated-discovery__heading">{{ section.settings.heading }}</h2>
+        {% if section.settings.subline != blank %}
+          <p class="db-curated-discovery__subline">{{ section.settings.subline }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="db-curated-discovery__grid">
+      <a class="db-curated-discovery__tile db-curated-discovery__tile--large" href="{{ tile_a_link | default: '#' }}">
+        <div class="db-curated-discovery__media">
+          {% if tile_a_image != blank %}
+            <img
+              src="{{ tile_a_image | image_url: width: 1600 }}"
+              alt="{{ section.settings.tile_a_image_alt | default: tile_a_title | escape }}"
+              loading="lazy"
+              width="{{ tile_a_image.width }}"
+              height="{{ tile_a_image.height }}"
+              class="db-curated-discovery__image"
+            >
+          {% else %}
+            <div class="db-curated-discovery__placeholder" aria-hidden="true"></div>
+          {% endif %}
+        </div>
+        <div class="db-curated-discovery__overlay" aria-hidden="true"></div>
+        <div class="db-curated-discovery__text">
+          {% if tile_a_title != blank %}
+            <h3 class="db-curated-discovery__title">{{ tile_a_title }}</h3>
+          {% endif %}
+          {% if section.settings.tile_a_descriptor != blank %}
+            <p class="db-curated-discovery__descriptor">{{ section.settings.tile_a_descriptor }}</p>
+          {% endif %}
+          {% if section.settings.cta_label != blank %}
+            <span class="db-curated-discovery__cta">{{ section.settings.cta_label }}</span>
+          {% endif %}
+        </div>
+      </a>
+
+      <div class="db-curated-discovery__stack">
+        <a class="db-curated-discovery__tile db-curated-discovery__tile--small" href="{{ tile_b_link | default: '#' }}">
+          <div class="db-curated-discovery__media">
+            {% if tile_b_image != blank %}
+              <img
+                src="{{ tile_b_image | image_url: width: 1200 }}"
+                alt="{{ section.settings.tile_b_image_alt | default: tile_b_title | escape }}"
+                loading="lazy"
+                width="{{ tile_b_image.width }}"
+                height="{{ tile_b_image.height }}"
+                class="db-curated-discovery__image"
+              >
+            {% else %}
+              <div class="db-curated-discovery__placeholder" aria-hidden="true"></div>
+            {% endif %}
+          </div>
+          <div class="db-curated-discovery__overlay" aria-hidden="true"></div>
+          <div class="db-curated-discovery__text">
+            {% if tile_b_title != blank %}
+              <h3 class="db-curated-discovery__title">{{ tile_b_title }}</h3>
+            {% endif %}
+            {% if section.settings.cta_label != blank %}
+              <span class="db-curated-discovery__cta">{{ section.settings.cta_label }}</span>
+            {% endif %}
+          </div>
+        </a>
+
+        <a class="db-curated-discovery__tile db-curated-discovery__tile--small" href="{{ tile_c_link | default: '#' }}">
+          <div class="db-curated-discovery__media">
+            {% if tile_c_image != blank %}
+              <img
+                src="{{ tile_c_image | image_url: width: 1200 }}"
+                alt="{{ section.settings.tile_c_image_alt | default: tile_c_title | escape }}"
+                loading="lazy"
+                width="{{ tile_c_image.width }}"
+                height="{{ tile_c_image.height }}"
+                class="db-curated-discovery__image"
+              >
+            {% else %}
+              <div class="db-curated-discovery__placeholder" aria-hidden="true"></div>
+            {% endif %}
+          </div>
+          <div class="db-curated-discovery__overlay" aria-hidden="true"></div>
+          <div class="db-curated-discovery__text">
+            {% if tile_c_title != blank %}
+              <h3 class="db-curated-discovery__title">{{ tile_c_title }}</h3>
+            {% endif %}
+            {% if section.settings.cta_label != blank %}
+              <span class="db-curated-discovery__cta">{{ section.settings.cta_label }}</span>
+            {% endif %}
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Curated Discovery",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Discover"
+    },
+    {
+      "type": "text",
+      "id": "subline",
+      "label": "Subline",
+      "default": "Three quiet ways to explore"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "\u2192"
+    },
+    {
+      "type": "header",
+      "content": "Large tile (A)"
+    },
+    {
+      "type": "collection",
+      "id": "tile_a_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_a_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_a_image_alt",
+      "label": "Image alt text"
+    },
+    {
+      "type": "text",
+      "id": "tile_a_title",
+      "label": "Title override"
+    },
+    {
+      "type": "url",
+      "id": "tile_a_link",
+      "label": "Link override"
+    },
+    {
+      "type": "text",
+      "id": "tile_a_descriptor",
+      "label": "Descriptor (large tile only)",
+      "default": "Soft forms for everyday ritual"
+    },
+    {
+      "type": "header",
+      "content": "Small tile (B)"
+    },
+    {
+      "type": "collection",
+      "id": "tile_b_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_b_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_b_image_alt",
+      "label": "Image alt text"
+    },
+    {
+      "type": "text",
+      "id": "tile_b_title",
+      "label": "Title override"
+    },
+    {
+      "type": "url",
+      "id": "tile_b_link",
+      "label": "Link override"
+    },
+    {
+      "type": "header",
+      "content": "Small tile (C)"
+    },
+    {
+      "type": "collection",
+      "id": "tile_c_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_c_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_c_image_alt",
+      "label": "Image alt text"
+    },
+    {
+      "type": "text",
+      "id": "tile_c_title",
+      "label": "Title override"
+    },
+    {
+      "type": "url",
+      "id": "tile_c_link",
+      "label": "Link override"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "Curated Discovery"
+    }
+  ]
+}
+{% endschema %}

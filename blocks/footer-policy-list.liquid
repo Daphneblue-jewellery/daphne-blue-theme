@@ -1,0 +1,125 @@
+
+{% assign block_settings = block.settings %}
+{% assign terms_policy = shop.policies.terms_of_service %}
+{% assign privacy_policy = shop.policies.privacy_policy %}
+
+{% if terms_policy != blank or privacy_policy != blank or block_settings.accessibility_link != blank %}
+  <div
+    class="footer-utilities__policy-list footer-utilities__text"
+    style="{% render 'typography-style', preset: 'custom', settings: block_settings %}"
+    {{ block.shopify_attributes }}
+  >
+    <ul class="footer-policy-links list-unstyled">
+      {% if terms_policy != blank %}
+        <li>
+          <a href="{{ terms_policy.url }}">{{ terms_policy.title }}</a>
+        </li>
+      {% endif %}
+      {% if privacy_policy != blank %}
+        <li>
+          <a href="{{ privacy_policy.url }}">{{ privacy_policy.title }}</a>
+        </li>
+      {% endif %}
+      {% if block_settings.accessibility_link != blank %}
+        <li>
+          <a href="{{ block_settings.accessibility_link }}">{{ block_settings.accessibility_label }}</a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .footer-policy-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-policy-links a {
+    color: inherit;
+    text-decoration: none;
+    font-size: var(--font-size, 0.75rem);
+    text-transform: var(--text-transform, none);
+  }
+
+  .footer-policy-links a:hover {
+    color: var(--color-foreground);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.policy_list",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.manage_policies"
+    },
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Accessibility label",
+      "default": "Accessibility"
+    },
+    {
+      "type": "url",
+      "id": "accessibility_link",
+      "label": "Accessibility link"
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "t:settings.size",
+      "options": [
+        {
+          "value": "0.625rem",
+          "label": "10px"
+        },
+        {
+          "value": "0.75rem",
+          "label": "12px"
+        },
+        {
+          "value": "0.875rem",
+          "label": "14px"
+        },
+        {
+          "value": "1rem",
+          "label": "16px"
+        },
+        {
+          "value": "1.125rem",
+          "label": "18px"
+        }
+      ],
+      "default": "0.75rem"
+    },
+    {
+      "type": "select",
+      "id": "case",
+      "label": "t:settings.case",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.default"
+        },
+        {
+          "value": "uppercase",
+          "label": "t:options.uppercase"
+        }
+      ],
+      "default": "none"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.policy_list",
+      "category": "t:categories.footer"
+    }
+  ]
+}
+{% endschema %}

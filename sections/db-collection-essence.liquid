@@ -1,0 +1,71 @@
+{% comment %}
+  Collection essence / mood copy block.
+{% endcomment %}
+
+<section
+  class="db-collection-essence spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width db-collection-essence__inner">
+    {% if section.settings.heading != blank %}
+      <h2 class="db-collection-essence__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.body != blank %}
+      <div class="db-collection-essence__body">
+        {{ section.settings.body }}
+      </div>
+    {% endif %}
+    {% if section.settings.note != blank %}
+      <p class="db-collection-essence__note">{{ section.settings.note }}</p>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DB Collection essence",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Collection essence"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Rooted in warm light and grounded forms, The Land collection speaks in quiet textures and lived-in shapes. Pieces that feel familiar on the skin and easy to return to, day after day.</p>"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Poetic note (optional)",
+      "default": "For the pieces you return to without thinking."
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 40
+    }
+  ],
+  "presets": [
+    {
+      "name": "DB Collection essence"
+    }
+  ]
+}
+{% endschema %}

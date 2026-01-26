@@ -1,0 +1,853 @@
+{% doc %}
+  @prompt
+    Create a brand values section that allows me to add lifestyle images and copy - this should feel like a product card, but it's to let customers know what we stand for 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-brand-values-{{ ai_gen_id }} {
+    padding: {{ block.settings.section_padding_top }}px 0 {{ block.settings.section_padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .ai-brand-values-container-{{ ai_gen_id }} {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-brand-values-header-{{ ai_gen_id }} {
+    display: grid;
+    gap: 12px;
+    margin-bottom: clamp(28px, 4vw, 52px);
+    text-align: left;
+  }
+
+  .ai-brand-values-heading-{{ ai_gen_id }} {
+    font-family: var(--font-heading--family);
+    font-size: clamp(2rem, 2.6vw, 3rem);
+    line-height: 1.1;
+    color: {{ block.settings.title_color }};
+    margin: 0;
+  }
+
+  .ai-brand-values-subheading-{{ ai_gen_id }} {
+    font-family: var(--db-type-press-family);
+    font-size: var(--db-type-press-size);
+    line-height: var(--db-type-press-line-height);
+    letter-spacing: var(--db-type-press-letter-spacing);
+    text-transform: var(--db-type-press-case);
+    color: rgb(var(--color-foreground-rgb) / 0.6);
+    margin: 0;
+  }
+
+  .ai-brand-values-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat({{ block.settings.columns_desktop }}, 1fr);
+    gap: clamp(32px, 4vw, 64px);
+    align-items: start;
+    max-width: none;
+    width: 100%;
+    margin-inline: 0;
+  }
+
+  .db-crafted-with-care .db-craft-grid-wrap {
+    width: calc(75% - 5px);
+    max-width: none;
+    margin: 0 auto;
+    padding: 0;
+  }
+
+  .ai-brand-value-card-{{ ai_gen_id }} {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    cursor: default;
+  }
+
+  .ai-brand-value-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: {{ block.settings.image_aspect_ratio }}%;
+    overflow: hidden;
+    background-color: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+  }
+
+  .ai-brand-value-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.92) contrast(0.96);
+  }
+
+  .ai-brand-value-image-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-brand-value-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.92) contrast(0.96);
+  }
+
+  .ai-brand-value-content-{{ ai_gen_id }} {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: none;
+    width: 100%;
+  }
+
+  .ai-brand-value-title-{{ ai_gen_id }} {
+    font-family: var(--font-heading--family);
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .ai-brand-value-description-{{ ai_gen_id }} {
+    font-size: 1.02rem;
+    color: rgb(var(--color-foreground-rgb) / 0.72);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .ai-brand-value-empty-state-{{ ai_gen_id }} {
+    position: absolute;
+    bottom: 20px;
+    left: 16px;
+    right: 16px;
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-brand-values-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .ai-brand-value-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.9 }}px;
+    }
+
+    .ai-brand-value-description-{{ ai_gen_id }} {
+      font-size: {{ block.settings.description_size | times: 0.9 }}px;
+    }
+
+    .db-crafted-with-care .ai-brand-value-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | minus: 4 | times: 0.9 }}px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-brand-values-{{ ai_gen_id }} {
+      padding: {{ block.settings.section_padding_top | times: 0.7 }}px 0 {{ block.settings.section_padding_bottom | times: 0.7 }}px;
+    }
+
+    .ai-brand-values-header-{{ ai_gen_id }} {
+      margin-bottom: 24px;
+    }
+
+    .ai-brand-values-grid-{{ ai_gen_id }} {
+      {% if block.settings.columns_mobile == '1' %}
+        grid-template-columns: 1fr;
+      {% else %}
+        grid-template-columns: repeat(2, 1fr);
+      {% endif %}
+      gap: 24px;
+    }
+
+    .ai-brand-value-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.8 }}px;
+    }
+
+    .ai-brand-value-description-{{ ai_gen_id }} {
+      font-size: 1.02rem;
+    }
+
+    .db-crafted-with-care .ai-brand-value-title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | minus: 4 | times: 0.8 }}px;
+    }
+  }
+
+  .db-crafted-with-care {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    background-color: var(--db-bg, #FAFAF8);
+    padding-top: 0;
+    padding-bottom: 60px;
+  }
+
+  #shopify-section-176502700877b457c1 {
+    position: relative;
+    z-index: 2;
+    background-color: var(--db-bg, #FAFAF8);
+  }
+
+  #shopify-section-176502700877b457c1 .section-content-wrapper {
+    --padding-block-start: 0px;
+    --padding-block-end: 0px;
+  }
+
+  #shopify-section-176502700877b457c1 + #shopify-section-section_FF8fqd {
+    margin-top: 0 !important;
+    transform: none !important;
+  }
+
+  .db-crafted-with-care .ai-brand-values-header-{{ ai_gen_id }} {
+    margin-bottom: 40px;
+    gap: 0;
+  }
+
+  .db-crafted-with-care .ai-brand-values-container-{{ ai_gen_id }} {
+    width: 100%;
+    max-width: var(--page-content-width);
+    margin-inline: auto;
+    padding: 0;
+  }
+
+  .db-crafted-with-care .db-crafted__header {
+    width: 100%;
+  }
+
+  .db-crafted-with-care .db-crafted__divider {
+    height: 1px;
+    width: 100%;
+    background-color: rgb(var(--color-foreground-rgb) / 0.12);
+    margin: 16px 0 56px;
+  }
+
+  .db-crafted-with-care .db-crafted__title {
+    margin: 0 0 10px;
+  }
+
+  .db-crafted-with-care .db-crafted__sub {
+    margin: 0;
+  }
+
+  .db-crafted-with-care .db-craft-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+  }
+
+  .db-crafted-with-care .db-craft-item {
+    width: 100%;
+  }
+
+  .db-crafted-with-care .ai-brand-value-image-wrapper-{{ ai_gen_id }} {
+    width: 100%;
+    padding-bottom: 125%;
+    margin-inline: 0;
+  }
+
+  .db-crafted-with-care .ai-brand-value-content-{{ ai_gen_id }} {
+    width: 100%;
+    margin-inline: 0;
+  }
+
+  .db-crafted-with-care .ai-brand-value-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size | minus: 4 }}px;
+  }
+
+
+  .db-crafted-with-care.is-reveal-pending .db-craft-heading,
+  .db-crafted-with-care.is-reveal-pending .db-craft-item {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .db-crafted-with-care.is-revealed .db-craft-heading,
+  .db-crafted-with-care.is-revealed .db-craft-item {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 600ms cubic-bezier(0.2, 0.6, 0.2, 1),
+      transform 600ms cubic-bezier(0.2, 0.6, 0.2, 1);
+  }
+
+  .db-crafted-with-care .db-craft-item {
+    transition-delay: 0ms;
+  }
+
+  .db-crafted-with-care .db-craft-item:nth-child(2) {
+    transition-delay: 120ms;
+  }
+
+  .db-crafted-with-care .db-craft-item:nth-child(3) {
+    transition-delay: 240ms;
+  }
+
+  .db-crafted-with-care .db-craft-image {
+    display: block;
+    filter: brightness(1) contrast(1);
+    transition: filter var(--animation-speed) var(--animation-easing);
+    will-change: filter;
+  }
+
+  .db-crafted-with-care .db-craft-item:hover .db-craft-image,
+  .db-crafted-with-care .db-craft-item:focus-within .db-craft-image {
+    filter: brightness(1.02) contrast(1.02);
+  }
+
+  .db-crafted-with-care .db-craft-link {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--db-type-press-family);
+    font-size: 0.7rem;
+    line-height: 1.4;
+    letter-spacing: var(--db-type-press-letter-spacing);
+    text-transform: var(--db-type-press-case);
+    color: rgb(var(--color-foreground-rgb) / 0.6);
+    text-decoration: none;
+    margin-top: 10px;
+    border-bottom: 1px solid transparent;
+    transition: color 300ms ease, border-color 300ms ease;
+  }
+
+  .db-crafted-with-care .db-craft-link:hover,
+  .db-crafted-with-care .db-craft-link:focus-visible {
+    color: #6FA9B8;
+    border-color: currentColor;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .db-crafted-with-care * {
+      transition: none !important;
+      animation: none !important;
+    }
+
+    .db-crafted-with-care .db-craft-image {
+      transform: none !important;
+    }
+
+    .db-crafted-with-care.is-reveal-pending .db-craft-heading,
+    .db-crafted-with-care.is-reveal-pending .db-craft-item {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .db-crafted-with-care {
+      padding-top: 0;
+      padding-bottom: 44px;
+    }
+
+    .db-crafted-with-care .db-craft-grid-wrap {
+      width: calc(100% - 40px);
+      margin: 0 auto;
+    }
+
+    .db-crafted-with-care .ai-brand-value-image-wrapper-{{ ai_gen_id }},
+    .db-crafted-with-care .ai-brand-value-content-{{ ai_gen_id }} {
+      width: 100%;
+    }
+
+    .db-crafted-with-care .ai-brand-values-header-{{ ai_gen_id }} {
+      margin-bottom: 24px;
+    }
+
+    .db-crafted-with-care .db-crafted__divider {
+      margin: 16px 0 40px;
+    }
+
+    .db-crafted-with-care .db-craft-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  }
+
+  @media screen and (min-width: 750px) and (max-width: 989px) {
+    .db-crafted-with-care .db-craft-grid-wrap {
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .db-crafted-with-care .db-craft-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-brand-values-{{ ai_gen_id }} db-crafted-with-care" data-db-crafted="{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-brand-values-container-{{ ai_gen_id }} db-crafted__container page-width">
+    <div class="ai-brand-values-header-{{ ai_gen_id }} db-craft-heading db-crafted__header">
+      <div class="db-crafted__divider" aria-hidden="true"></div>
+      {% if block.settings.section_heading != blank %}
+        <h2 class="ai-brand-values-heading-{{ ai_gen_id }} db-crafted__title">{{ block.settings.section_heading }}</h2>
+      {% endif %}
+      {% if block.settings.section_subheading != blank %}
+        <div class="ai-brand-values-subheading-{{ ai_gen_id }} db-crafted__sub">{{ block.settings.section_subheading }}</div>
+      {% endif %}
+    </div>
+    <div class="db-craft-grid-wrap">
+      <div class="ai-brand-values-grid-{{ ai_gen_id }} db-craft-grid">
+      {% for i in (1..6) %}
+        {% liquid
+          assign value_enabled_key = 'value_' | append: i | append: '_enabled'
+          assign value_image_key = 'value_' | append: i | append: '_image'
+          assign value_title_key = 'value_' | append: i | append: '_title'
+          assign value_description_key = 'value_' | append: i | append: '_description'
+          assign learn_more_url = ''
+
+          assign value_enabled = block.settings[value_enabled_key]
+          assign value_image = block.settings[value_image_key]
+          assign value_title = block.settings[value_title_key]
+          assign value_description = block.settings[value_description_key]
+
+          case i
+            when 1
+              assign learn_more_url = '/pages/sourcing'
+            when 2
+              assign learn_more_url = '/pages/craft'
+            when 3
+              assign learn_more_url = '/pages/longevity'
+          endcase
+        %}
+
+        {% if value_enabled %}
+          <div class="ai-brand-value-card-{{ ai_gen_id }} db-craft-item">
+            <div class="ai-brand-value-image-wrapper-{{ ai_gen_id }}">
+              {% if value_image %}
+                <img
+                  src="{{ value_image | image_url: width: 800 }}"
+                  alt="{{ value_image.alt | escape }}"
+                  loading="lazy"
+                  width="{{ value_image.width }}"
+                  height="{{ value_image.height }}"
+                  class="ai-brand-value-image-{{ ai_gen_id }} db-craft-image"
+                >
+              {% else %}
+                <div class="ai-brand-value-image-placeholder-{{ ai_gen_id }} db-craft-image">
+                  {{ 'lifestyle-1' | placeholder_svg_tag }}
+                  <div class="ai-brand-value-empty-state-{{ ai_gen_id }}">
+                    Add an image
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+
+            <div class="ai-brand-value-content-{{ ai_gen_id }}">
+              {% if value_title != blank %}
+                <h3 class="ai-brand-value-title-{{ ai_gen_id }}">{{ value_title }}</h3>
+              {% endif %}
+
+              {% if value_description != blank %}
+                <div class="ai-brand-value-description-{{ ai_gen_id }}">
+                  {{ value_description }}
+                </div>
+              {% endif %}
+
+              {% if learn_more_url != blank %}
+                <a class="db-craft-link" href="{{ learn_more_url }}">Learn more &rarr;</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const section = document.querySelector('[data-db-crafted="{{ ai_gen_id }}"]');
+    if (!section) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) {
+      section.classList.add('is-revealed');
+      section.classList.remove('is-reveal-pending');
+      return;
+    }
+
+    section.classList.add('is-reveal-pending');
+
+    if (!('IntersectionObserver' in window)) {
+      section.classList.add('is-revealed');
+      section.classList.remove('is-reveal-pending');
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            section.classList.add('is-revealed');
+            section.classList.remove('is-reveal-pending');
+            obs.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(section);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Brand values",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Heading",
+      "default": "Crafted with care."
+    },
+    {
+      "type": "text",
+      "id": "section_subheading",
+      "label": "Subheading",
+      "default": "THREE PRINCIPLES THAT GUIDE EVERY DAPHNE BLUE PIECE."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "label": "Columns on desktop",
+      "default": 3
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        {
+          "value": "1",
+          "label": "1"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Grid gap",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Card border radius",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Card padding",
+      "default": 25
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_hover_effect",
+      "label": "Enable hover effect",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_aspect_ratio",
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "label": "Image aspect ratio",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Value 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "value_1_enabled",
+      "label": "Enable value 1",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "value_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "value_1_title",
+      "label": "Title",
+      "default": "Sustainable materials"
+    },
+    {
+      "type": "textarea",
+      "id": "value_1_description",
+      "label": "Description",
+      "default": "We source only the finest ethically-sourced materials for our collections."
+    },
+    {
+      "type": "header",
+      "content": "Value 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "value_2_enabled",
+      "label": "Enable value 2",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "value_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "value_2_title",
+      "label": "Title",
+      "default": "Handcrafted quality"
+    },
+    {
+      "type": "textarea",
+      "id": "value_2_description",
+      "label": "Description",
+      "default": "Each piece is carefully crafted by skilled artisans with attention to detail."
+    },
+    {
+      "type": "header",
+      "content": "Value 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "value_3_enabled",
+      "label": "Enable value 3",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "value_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "value_3_title",
+      "label": "Title",
+      "default": "Timeless design"
+    },
+    {
+      "type": "textarea",
+      "id": "value_3_description",
+      "label": "Description",
+      "default": "Our designs transcend trends, creating pieces you'll treasure for years."
+    },
+    {
+      "type": "header",
+      "content": "Value 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "value_4_enabled",
+      "label": "Enable value 4",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "value_4_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "value_4_title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "value_4_description",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Value 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "value_5_enabled",
+      "label": "Enable value 5",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "value_5_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "value_5_title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "value_5_description",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Value 6"
+    },
+    {
+      "type": "checkbox",
+      "id": "value_6_enabled",
+      "label": "Enable value 6",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "value_6_image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "value_6_title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "value_6_description",
+      "label": "Description"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand values"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,444 @@
+{% doc %}
+  @prompt
+    Create a brand values section to inform customers of what we stand for - this should have a "caring for the environment section" and "den-influencing society" section - there will be one more section, so leave room for this., I want them all on one line, so can you shrink the boxes?, I want the icons to be images and to be separate from the text block, Can you try and put the headline copy on the outside of the boxes? And make all boxes the same size , Can you try and add some of the waves from our main "Daphne blue" logo through the boxes? These should be white, wavy lines to incorporate the main feel of our brand, I don't like those waves - can you make it more like a wavy sun? Also underline all the hero copy above the boxes, but make sure the size of the line is the same length for all three words, Remove the underline, Remove the sun decoration
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-brand-values-{{ ai_gen_id }} {
+    padding: {{ block.settings.section_padding }}px 20px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-brand-values-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .ai-brand-values-heading-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: {{ block.settings.heading_spacing }}px;
+    color: {{ block.settings.heading_color }};
+    font-size: {{ block.settings.heading_size }}px;
+  }
+
+  .ai-brand-values-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: {{ block.settings.grid_gap }}px;
+  }
+
+  .ai-brand-value-card-{{ ai_gen_id }} {
+    text-align: center;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ai-brand-value-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-5px);
+  }
+
+  .ai-brand-value-icon-wrapper-{{ ai_gen_id }} {
+    margin-bottom: {{ block.settings.icon_spacing }}px;
+  }
+
+  .ai-brand-value-icon-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    margin: 0 auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .ai-brand-value-icon-placeholder-{{ ai_gen_id }} {
+    width: {{ block.settings.icon_size }}px;
+    height: {{ block.settings.icon_size }}px;
+    margin: 0 auto;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  .ai-brand-value-icon-placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+  }
+
+  .ai-brand-value-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+    margin-bottom: {{ block.settings.title_spacing }}px;
+    font-weight: 600;
+  }
+
+  .ai-brand-value-text-block-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background }};
+    padding: {{ block.settings.card_padding }}px;
+    border-radius: {{ block.settings.card_border_radius }}px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-brand-value-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.description_color }};
+    line-height: 1.6;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-brand-values-grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-brand-values-heading-{{ ai_gen_id }} {
+      font-size: {{ block.settings.heading_size | times: 0.7 }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-brand-values-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-brand-values-container-{{ ai_gen_id }}">
+    {% if block.settings.heading != blank %}
+      <h2 class="ai-brand-values-heading-{{ ai_gen_id }}">{{ block.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="ai-brand-values-grid-{{ ai_gen_id }}">
+      {% if block.settings.value_1_enabled %}
+        <div class="ai-brand-value-card-{{ ai_gen_id }}">
+          <div class="ai-brand-value-icon-wrapper-{{ ai_gen_id }}">
+            {% if block.settings.value_1_icon %}
+              <img
+                src="{{ block.settings.value_1_icon | image_url: width: 400 }}"
+                alt="{{ block.settings.value_1_icon.alt | escape }}"
+                class="ai-brand-value-icon-{{ ai_gen_id }}"
+                loading="lazy"
+                width="{{ block.settings.icon_size }}"
+                height="{{ block.settings.icon_size }}"
+              >
+            {% else %}
+              <div class="ai-brand-value-icon-placeholder-{{ ai_gen_id }}">
+                {{ 'image' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+          </div>
+          <h3 class="ai-brand-value-title-{{ ai_gen_id }}">{{ block.settings.value_1_title }}</h3>
+          <div class="ai-brand-value-text-block-{{ ai_gen_id }}">
+            <div class="ai-brand-value-description-{{ ai_gen_id }}">{{ block.settings.value_1_description }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.value_2_enabled %}
+        <div class="ai-brand-value-card-{{ ai_gen_id }}">
+          <div class="ai-brand-value-icon-wrapper-{{ ai_gen_id }}">
+            {% if block.settings.value_2_icon %}
+              <img
+                src="{{ block.settings.value_2_icon | image_url: width: 400 }}"
+                alt="{{ block.settings.value_2_icon.alt | escape }}"
+                class="ai-brand-value-icon-{{ ai_gen_id }}"
+                loading="lazy"
+                width="{{ block.settings.icon_size }}"
+                height="{{ block.settings.icon_size }}"
+              >
+            {% else %}
+              <div class="ai-brand-value-icon-placeholder-{{ ai_gen_id }}">
+                {{ 'image' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+          </div>
+          <h3 class="ai-brand-value-title-{{ ai_gen_id }}">{{ block.settings.value_2_title }}</h3>
+          <div class="ai-brand-value-text-block-{{ ai_gen_id }}">
+            <div class="ai-brand-value-description-{{ ai_gen_id }}">{{ block.settings.value_2_description }}</div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if block.settings.value_3_enabled %}
+        <div class="ai-brand-value-card-{{ ai_gen_id }}">
+          <div class="ai-brand-value-icon-wrapper-{{ ai_gen_id }}">
+            {% if block.settings.value_3_icon %}
+              <img
+                src="{{ block.settings.value_3_icon | image_url: width: 400 }}"
+                alt="{{ block.settings.value_3_icon.alt | escape }}"
+                class="ai-brand-value-icon-{{ ai_gen_id }}"
+                loading="lazy"
+                width="{{ block.settings.icon_size }}"
+                height="{{ block.settings.icon_size }}"
+              >
+            {% else %}
+              <div class="ai-brand-value-icon-placeholder-{{ ai_gen_id }}">
+                {{ 'image' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+          </div>
+          <h3 class="ai-brand-value-title-{{ ai_gen_id }}">{{ block.settings.value_3_title }}</h3>
+          <div class="ai-brand-value-text-block-{{ ai_gen_id }}">
+            <div class="ai-brand-value-description-{{ ai_gen_id }}">{{ block.settings.value_3_description }}</div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brand values",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>What we stand for</p>"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "min": 20,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "label": "Heading size",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "heading_spacing",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "px",
+      "label": "Heading spacing",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Section padding",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#f4f0f4"
+    },
+    {
+      "type": "range",
+      "id": "card_padding",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Card padding",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Card border radius",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "grid_gap",
+      "min": 10,
+      "max": 60,
+      "step": 5,
+      "unit": "px",
+      "label": "Grid gap",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "min": 30,
+      "max": 150,
+      "step": 5,
+      "unit": "px",
+      "label": "Icon size",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "icon_spacing",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "unit": "px",
+      "label": "Icon spacing",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "title_spacing",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Title spacing",
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#2E2E2E"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Description size",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Value 1 - Caring for the environment"
+    },
+    {
+      "type": "checkbox",
+      "id": "value_1_enabled",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "value_1_icon",
+      "label": "Icon image"
+    },
+    {
+      "type": "text",
+      "id": "value_1_title",
+      "label": "Title",
+      "default": "Caring for the environment"
+    },
+    {
+      "type": "richtext",
+      "id": "value_1_description",
+      "label": "Description",
+      "default": "<p>We're committed to sustainable practices and reducing our environmental impact through thoughtful sourcing and production.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Value 2 - De-influencing society"
+    },
+    {
+      "type": "checkbox",
+      "id": "value_2_enabled",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "value_2_icon",
+      "label": "Icon image"
+    },
+    {
+      "type": "text",
+      "id": "value_2_title",
+      "label": "Title",
+      "default": "De-influencing society"
+    },
+    {
+      "type": "richtext",
+      "id": "value_2_description",
+      "label": "Description",
+      "default": "<p>We believe in mindful consumption and authentic connections, not trends. Quality over quantity, always.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Value 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "value_3_enabled",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "value_3_icon",
+      "label": "Icon image"
+    },
+    {
+      "type": "text",
+      "id": "value_3_title",
+      "label": "Title",
+      "default": "Your third value"
+    },
+    {
+      "type": "richtext",
+      "id": "value_3_description",
+      "label": "Description",
+      "default": "<p>Add your third brand value here to complete your story.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand values"
+    }
+  ]
+}
+{% endschema %}

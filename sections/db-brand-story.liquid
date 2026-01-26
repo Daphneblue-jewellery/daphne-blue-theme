@@ -1,0 +1,94 @@
+{% comment %}
+  Brand story / craft section for homepage.
+{% endcomment %}
+
+<section class="db-brand-story">
+  <div class="page-width db-brand-story__inner">
+    <div class="db-brand-story__media">
+      {% if section.settings.image != blank %}
+        <img
+          src="{{ section.settings.image | image_url: width: 1400 }}"
+          alt="{{ section.settings.image_alt | default: section.settings.heading | escape }}"
+          loading="lazy"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          class="db-brand-story__image"
+        >
+      {% else %}
+        <div class="db-brand-story__placeholder" aria-hidden="true">
+          <span class="db-brand-story__placeholder-label">CRAFTED IN SMALL BATCHES</span>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="db-brand-story__content">
+      {% if section.settings.heading != blank %}
+        <h2 class="db-brand-story__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p class="db-brand-story__eyebrow">{{ section.settings.subheading }}</p>
+      {% endif %}
+      {% if section.settings.body != blank %}
+        <div class="db-brand-story__body">{{ section.settings.body }}</div>
+      {% endif %}
+      {% if section.settings.cta_label != blank and section.settings.cta_link != blank %}
+        <a class="db-brand-story__cta" href="{{ section.settings.cta_link }}">
+          {{ section.settings.cta_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Made with intention",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Made with intention"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "SMALL-BATCH JEWELLERY INSPIRED BY LAND, SEA, SKY & STARS."
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Each piece is designed to be lived in &mdash; softly shaped by nature, crafted in small batches, and finished with care. Thoughtful details, timeless silhouettes, and a feeling you'll return to.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Jewellery in soft natural light"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Read our story \u2192"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Made with intention"
+    }
+  ]
+}
+{% endschema %}

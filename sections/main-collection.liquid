@@ -1,0 +1,805 @@
+
+
+<script
+  src="{{ 'results-list.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{% assign use_sidebar_filters = false %}
+{% for block in section.blocks %}
+  {% if block.type == 'filters' and block.settings.filter_style == 'vertical' and block.settings.enable_filtering %}
+    {% assign use_sidebar_filters = true %}
+  {% endif %}
+{% endfor %}
+
+{% assign is_land_collection = false %}
+{% if template.suffix == 'the-land' %}
+  {% assign is_land_collection = true %}
+{% endif %}
+
+{% assign placeholder_children = '' %}
+  {% if is_land_collection %}
+    {% assign land_placeholder_images = 'land-placeholder-1.jpg|land-placeholder-2.jpg|land-placeholder-3.jpg|land-placeholder-4.jpg|land-placeholder-5.jpg|land-placeholder-6.jpg|land-placeholder-7.jpg|land-placeholder-8.jpg' | split: '|' %}
+    {% capture placeholder_children %}
+      {% for i in (1..8) %}
+        {% assign placeholder_index = forloop.index0 | modulo: land_placeholder_images.size %}
+        {% assign placeholder_image = land_placeholder_images[placeholder_index] %}
+        <li
+          id="{{ section.id }}-placeholder-{{ forloop.index }}"
+          class="product-grid__item product-grid__item--{{ forloop.index0 }}"
+          data-product-id="placeholder-{{ forloop.index }}"
+        >
+        {% render 'db-product-card', placeholder: true, placeholder_id: forloop.index0, placeholder_image: placeholder_image %}
+      </li>
+    {% endfor %}
+  {% endcapture %}
+{% endif %}
+
+{% if use_sidebar_filters %}
+  <script
+    src="{{ 'db-collection-facets.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+{% endif %}
+
+{% javascript %}
+  const url = new URL(window.location.href);
+  if (url.hash) {
+    document.addEventListener(
+      'DOMContentLoaded',
+      () => {
+        const card = document.getElementById(url.hash.slice(1));
+        if (card) {
+          card.scrollIntoView({ behavior: 'instant' });
+        }
+      },
+      { once: true }
+    );
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const landRoot = document.querySelector('.db-land-collection');
+    if (!landRoot) return;
+
+    const landFilters = landRoot.querySelector('.facets--horizontal');
+    if (landFilters && !landFilters.id) {
+      landFilters.id = 'LandFilters';
+    }
+
+    const clickHandler = (event) => {
+      const chip = event.target.closest('[data-land-filter-chip]');
+      if (!chip) return;
+      event.preventDefault();
+
+      const value = (chip.dataset.value || '').toLowerCase();
+      const inputs = document.querySelectorAll(
+        '.facets input[type=\"checkbox\"], .facets input[type=\"radio\"]'
+      );
+      const match = Array.from(inputs).find((input) => {
+        return (input.value || '').toLowerCase() === value;
+      });
+
+      if (match) {
+        match.click();
+        match.dispatchEvent(new Event('change', { bubbles: true }));
+        const form = match.closest('form');
+        if (form) form.dispatchEvent(new Event('submit', { bubbles: true }));
+        return;
+      }
+
+      const filters = document.getElementById('LandFilters');
+      if (filters) {
+        filters.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    };
+
+    const landCta = document.querySelector('.db-land-cta');
+    const landControls =
+      document.getElementById('LandControls') ||
+      document.getElementById('LandFilters');
+
+    const slowScrollTo = (target) => {
+      if (!target) return;
+      const header = document.querySelector('#header-component');
+      const offset = (header?.getBoundingClientRect().height || 0) + 16;
+      const startY = window.scrollY;
+      const destination =
+        target.getBoundingClientRect().top + window.scrollY - offset;
+      const duration = 800; // slower micro-interaction
+      const startTime = performance.now();
+      const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+      const step = (now) => {
+        const elapsed = Math.min(1, (now - startTime) / duration);
+        const eased = easeOutCubic(elapsed);
+        const nextY = startY + (destination - startY) * eased;
+        window.scrollTo({ top: nextY, left: 0, behavior: 'auto' });
+        if (elapsed < 1) requestAnimationFrame(step);
+      };
+
+      requestAnimationFrame(step);
+    };
+
+    if (landCta && landControls) {
+      landCta.addEventListener('click', (event) => {
+        event.preventDefault();
+        slowScrollTo(landControls);
+      });
+    }
+
+    document.addEventListener('click', clickHandler);
+  });
+{% endjavascript %}
+
+{% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<results-list
+  class="section product-grid-container color-{{ section.settings.color_scheme }}{% if use_sidebar_filters %} db-collection-facets{% endif %}{% if is_land_collection %} db-land-collection{% endif %}"
+  style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
+  section-id="{{ section.id }}"
+  infinite-scroll="{{ section.settings.enable_infinite_scroll }}"
+>
+  {% render 'skip-to-content-link', href: '#ResultsList', text: 'accessibility.skip_to_results_list' %}
+
+{% if is_land_collection %}
+{% endif %}
+
+  {% if use_sidebar_filters %}
+    <div class="db-collection-facets__inner page-width">
+  {% endif %}
+      <div
+        class="collection-wrapper grid gap-style"
+      >
+        {% content_for 'block',
+          type: 'filters',
+          id: 'filters',
+          results: collection,
+          results_size: collection.products_count
+        %}
+
+        {% assign products_per_page = 24 %}
+
+        {% if section.settings.enable_infinite_scroll == false %}
+          {% assign products_per_page = section.settings.products_per_page %}
+        {% endif %}
+
+        {% paginate collection.products by products_per_page %}
+          {% capture children %}
+            {% for product in collection.products %}
+              <li
+                id="{{ section.id }}-{{ product.id }}"
+                class="product-grid__item product-grid__item--{{ forloop.index0 }}"
+                data-page="{{ paginate.current_page }}"
+                data-product-id="{{ product.id }}"
+                ref="cards[]"
+              >
+                {% if is_land_collection %}
+                  {% render 'db-product-card', product: product %}
+                {% else %}
+                  {% # theme-check-disable %}
+                  {% content_for 'block', type: '_product-card', id: 'product-card', closest.product: product %}
+                  {% # theme-check-enable %}
+                {% endif %}
+              </li>
+              {% if is_land_collection and paginate.current_page == 1 and forloop.index == 8 %}
+                <li class="product-grid__item product-grid__item--editorial" aria-label="Editorial moment">
+                  <div class="db-land-editorial">
+                    <div class="db-land-editorial__media">
+                      <img
+                        src="{{ 'land-placeholder-5.jpg' | asset_url }}"
+                        alt="Earthy texture for The Land"
+                        loading="lazy"
+                        width="1200"
+                        height="1500"
+                      >
+                    </div>
+                    <div class="db-land-editorial__content">
+                      <p class="db-land-editorial__kicker">A Land moment</p>
+                      <h3 class="db-land-editorial__title">Rooted by nature</h3>
+                      <p class="db-land-editorial__copy">Warm metals and grounding stones — designed to layer, designed to last.</p>
+                      <ul class="db-land-editorial__list" aria-label="Materials">
+                        <li>Warm metals</li>
+                        <li>Grounded stones</li>
+                        <li>Made to layer</li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              {% endif %}
+            {% endfor %}
+          {% endcapture %}
+
+          {% render 'product-grid',
+            section: section,
+            children: children,
+            products: collection.products,
+            paginate: paginate,
+            enable_infinite_scroll: section.settings.enable_infinite_scroll,
+            hide_empty_state: is_land_collection,
+            placeholder_children: placeholder_children
+          %}
+        {% endpaginate %}
+      </div>
+  {% if use_sidebar_filters %}
+    </div>
+  {% endif %}
+</results-list>
+
+{% stylesheet %}
+  .main-collection-grid {
+    grid-column: var(--grid-column--mobile);
+
+    @media screen and (min-width: 750px) {
+      grid-column: var(--grid-column--desktop);
+    }
+  }
+
+  .collection-wrapper {
+    @media screen and (min-width: 750px) {
+      grid-template-columns:
+        1fr repeat(
+          var(--centered-column-number),
+          minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
+        )
+        1fr;
+    }
+  }
+
+  .collection-wrapper:has(.facets-block-wrapper--full-width),
+  .collection-wrapper:has(.collection-wrapper--full-width) {
+    @media screen and (min-width: 750px) {
+      grid-column: 1 / -1;
+      grid-template-columns:
+        minmax(var(--page-margin), 1fr) repeat(
+          var(--centered-column-number),
+          minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
+        )
+        minmax(var(--page-margin), 1fr);
+    }
+  }
+
+  .collection-wrapper:has(.facets--vertical) .facets-block-wrapper--vertical:not(.hidden) ~ .main-collection-grid {
+    @media screen and (min-width: 750px) {
+      grid-column: var(--facets-vertical-col-width) / var(--full-width-column-number);
+    }
+  }
+
+  .collection-wrapper:has(.facets-block-wrapper--vertical:not(#filters-drawer)):has(.collection-wrapper--full-width) {
+    @media screen and (min-width: 750px) {
+      grid-column: 1 / -1;
+      grid-template-columns: 0fr repeat(var(--centered-column-number), minmax(0, 1fr)) 0fr;
+    }
+  }
+
+  :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
+    [product-grid-view='default']
+    .product-grid__card {
+    @media screen and (max-width: 749px) {
+      padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
+      padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
+    }
+  }
+
+  :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
+    [product-grid-view='mobile-single']
+    .product-grid__card {
+    @media screen and (max-width: 749px) {
+      padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
+      padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
+    }
+  }
+
+  /* Make product media go edge-to-edge by using negative margins */
+  :is(.collection-wrapper--full-width) .card-gallery,
+  :is(.collection-wrapper--full-width-on-mobile) .card-gallery {
+    @media screen and (max-width: 749px) {
+      margin-inline-start: calc(-1 * max(var(--padding-xs), var(--padding-inline-start)));
+      margin-inline-end: calc(-1 * max(var(--padding-xs), var(--padding-inline-end)));
+    }
+  }
+
+  /* Land collection enhancements */
+  .db-land-collection {
+    --land-filters-offset: calc(var(--header-group-height, 72px) + 10px);
+  }
+
+  .db-land-collection .main-collection-grid {
+    padding: var(--padding-block-start) var(--page-margin) var(--padding-block-end) var(--page-margin);
+  }
+
+  @media (max-width: 749px) {
+    .db-land-collection .main-collection-grid {
+      padding: var(--grid--margin--mobile, 0) var(--page-margin);
+    }
+  }
+
+  .db-land-collection .db-land-controls { display: none; }
+
+  .db-land-collection .product-grid__item--editorial {
+    grid-column: 1 / -1;
+    list-style: none;
+    padding: 0;
+  }
+
+  .db-land-collection .db-land-editorial {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(20px, 5vw, 48px);
+    align-items: center;
+    padding: clamp(18px, 4vw, 32px);
+    background: linear-gradient(135deg, rgb(var(--color-foreground-rgb) / 0.02), rgb(var(--color-foreground-rgb) / 0));
+    border-radius: 18px;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.06);
+  }
+
+  .db-land-collection .db-land-editorial__media {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+  }
+
+  .db-land-collection .db-land-editorial__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    aspect-ratio: 4 / 5;
+  }
+
+  .db-land-collection .db-land-editorial__content {
+    display: grid;
+    gap: 10px;
+  }
+
+  .db-land-collection .db-land-editorial__kicker {
+    margin: 0;
+    font-family: var(--db-type-press-family);
+    font-size: var(--db-type-press-size);
+    letter-spacing: var(--db-type-press-letter-spacing);
+    text-transform: var(--db-type-press-case);
+    color: rgb(var(--color-foreground-rgb) / 0.6);
+  }
+
+  .db-land-collection .db-land-editorial__title {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.6rem, 2vw, 2.2rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--color-foreground-heading);
+  }
+
+  .db-land-collection .db-land-editorial__copy {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgb(var(--color-foreground-rgb) / 0.72);
+  }
+
+  .db-land-collection .db-land-editorial__list {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: var(--font-body--family);
+    font-size: 0.95rem;
+    color: rgb(var(--color-foreground-rgb) / 0.78);
+  }
+
+  .db-land-collection .db-land-editorial__list li {
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+    background: rgb(var(--color-background-rgb));
+  }
+
+  .db-land-collection .facets__filters-wrapper--fallback {
+    display: none;
+  }
+
+  .db-land-collection .facets__status--fallback-note {
+    display: none;
+  }
+
+  .db-land-collection .facets__status--fallback {
+    display: none;
+  }
+
+  .db-land-collection .facets__form-wrapper--fallback {
+    display: none;
+  }
+
+  @media (max-width: 989px) {
+    .db-land-collection .db-land-editorial {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .db-land-collection .db-land-chip {
+      transition: none;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  /* Daphne Blue editorial filter rail */
+  .db-land-collection .db-filter-rail__container {
+    width: 100%;
+  }
+
+  .db-land-collection .db-filter-rail {
+    width: 100%;
+    background: rgb(var(--color-background-rgb));
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.06);
+    border-radius: 16px;
+    padding: clamp(10px, 2vw, 16px);
+  }
+
+  .db-land-collection .db-filter-rail__row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(12px, 2vw, 18px);
+  }
+
+  @media (max-width: 749px) {
+    .db-land-collection .db-filter-rail__row {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .db-land-collection .db-filter-rail__meta {
+      order: -1;
+      width: 100%;
+    }
+  }
+
+  .db-land-collection .db-filter-rail__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .db-land-collection .db-filter-rail__meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: flex-end;
+    color: rgb(var(--color-foreground-rgb) / 0.7);
+    font-family: var(--font-body--family);
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    min-width: 0;
+  }
+
+  .db-land-collection .db-filter-rail__count {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .db-land-collection .db-filter-rail__status {
+    margin: 10px 0 0;
+    color: rgb(var(--color-foreground-rgb) / 0.65);
+    font-size: 0.95rem;
+  }
+
+  .db-land-collection .db-filter-rail .facets__filters-wrapper {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    row-gap: 12px;
+  }
+
+  .db-land-collection .db-filter-rail details {
+    position: relative;
+  }
+
+  .db-land-collection .db-filter-rail .facets__summary {
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.08);
+    border-radius: 16px;
+    padding: 9px 12px;
+    min-height: 38px;
+    gap: 8px;
+    background: rgb(var(--color-foreground-rgb) / 0.02);
+    color: rgb(var(--color-foreground-rgb) / 0.82);
+    letter-spacing: 0.01em;
+    font-size: 0.96rem;
+    text-decoration: underline transparent 0.1em;
+    text-underline-offset: 0.18em;
+    transition: color 520ms var(--animation-easing), border-color 520ms var(--animation-easing), background-color 520ms var(--animation-easing), text-decoration-color 520ms var(--animation-easing);
+  }
+
+  .db-land-collection .db-filter-rail .facets__summary .icon-caret {
+    transition: transform 520ms var(--animation-easing), color 520ms var(--animation-easing);
+  }
+
+  .db-land-collection .db-filter-rail .facets__summary:hover,
+  .db-land-collection .db-filter-rail .facets__summary:focus-visible,
+  .db-land-collection .db-filter-rail details[open] > .facets__summary {
+    color: rgb(var(--color-foreground-rgb));
+    border-color: rgb(var(--color-foreground-rgb) / 0.18);
+    background: rgb(var(--color-foreground-rgb) / 0.04);
+    text-decoration-color: currentColor;
+  }
+
+  .db-land-collection .db-filter-rail .facets__summary:hover .icon-caret,
+  .db-land-collection .db-filter-rail .facets__summary:focus-visible .icon-caret,
+  .db-land-collection .db-filter-rail details[open] .icon-caret {
+    transform: translateY(-2px);
+    color: currentColor;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .db-land-collection .db-filter-rail .facets__summary .icon-caret {
+      transition: none;
+      transform: none;
+    }
+  }
+
+  .db-land-collection .db-filter-rail .facets__panel-content,
+  .db-land-collection .db-filter-rail .sorting-filter__options {
+    border-radius: 14px;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.08);
+    box-shadow: none;
+    background: rgb(var(--color-background-rgb));
+    padding: var(--padding-sm);
+    margin-top: 6px;
+  }
+
+  .db-land-collection .db-filter-rail .facets__panel-content::-webkit-scrollbar,
+  .db-land-collection .db-filter-rail .sorting-filter__options::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .db-land-collection .db-filter-rail .facets__panel-content::-webkit-scrollbar-thumb,
+  .db-land-collection .db-filter-rail .sorting-filter__options::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-foreground-rgb) / 0.14);
+    border-radius: 999px;
+  }
+
+  .db-land-collection .db-filter-rail .facets__panel-content::-webkit-scrollbar-track,
+  .db-land-collection .db-filter-rail .sorting-filter__options::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .db-land-collection .db-filter-rail .facets__inputs-wrapper {
+    padding: 0;
+    margin: 0;
+  }
+
+  .db-land-collection .db-filter-rail .facets__filters-wrapper .facets__summary {
+    width: auto;
+  }
+
+  .db-land-collection .db-filter-rail .facets__overflow-list {
+    gap: 10px;
+  }
+
+  .db-land-collection .db-filter-rail .facets-remove--toolbar {
+    margin: 0;
+    padding: 0;
+    gap: 8px;
+  }
+
+  .db-land-collection .db-filter-rail .facets__clear-all-link {
+    padding: 0;
+  }
+
+  .db-land-collection .db-filter-rail .facets__label,
+  .db-land-collection .db-filter-rail .clear-filter {
+    letter-spacing: 0.01em;
+  }
+
+  .db-land-collection .db-filter-rail .sorting-filter {
+    position: relative;
+  }
+
+  .db-land-collection .db-filter-rail .sorting-filter__container {
+    padding: 0;
+    margin: 0;
+  }
+
+  .db-land-collection .db-filter-rail .sorting-filter__options {
+    right: 0;
+  }
+
+  .db-land-collection .db-filter-rail .products-count-wrapper {
+    display: none !important;
+  }
+
+  .db-land-collection .db-filter-rail .facets__filters-wrapper .facets__summary .icon-caret {
+    height: var(--icon-size-xs);
+    width: var(--icon-size-xs);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.collection_container",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout_type",
+      "label": "t:settings.type",
+      "options": [
+        {
+          "value": "grid",
+          "label": "t:options.grid"
+        },
+        {
+          "value": "organic",
+          "label": "t:options.editorial"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "select",
+      "id": "product_card_size",
+      "label": "t:settings.card_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        },
+        {
+          "value": "extra-large",
+          "label": "t:options.extra_large"
+        }
+      ],
+      "default": "medium",
+      "visible_if": "{{ section.settings.layout_type == 'grid' }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_product_card_size",
+      "label": "t:settings.mobile_card_size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_infinite_scroll",
+      "label": "t:settings.auto_load_products",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "t:settings.products_per_page",
+      "min": 8,
+      "max": 36,
+      "step": 4,
+      "default": 24,
+      "visible_if": "{{ section.settings.enable_infinite_scroll == false }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "product_grid_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "centered",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "centered"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width_on_mobile",
+      "label": "t:settings.full_width_on_mobile",
+      "default": true,
+      "visible_if": "{{ section.settings.product_grid_width != 'full-width' }}"
+    },
+    {
+      "type": "range",
+      "id": "columns_gap_horizontal",
+      "label": "t:settings.horizontal_gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "columns_gap_vertical",
+      "label": "t:settings.vertical_gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.section_layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom_padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": []
+}
+{% endschema %}

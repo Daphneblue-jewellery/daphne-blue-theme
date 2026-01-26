@@ -1,0 +1,315 @@
+{% assign onboarding = placeholder | default: false %}
+{% assign land_mode = false %}
+{% if template.suffix == 'the-land' %}
+  {% assign land_mode = true %}
+{% endif %}
+
+{% assign descriptor = '' %}
+{% unless onboarding %}
+  {% assign descriptor = product.metafields.custom.poetic_line %}
+  {% if descriptor == blank %}
+    {% assign descriptor = product.metafields.custom.descriptor %}
+  {% endif %}
+  {% if descriptor == blank %}
+    {% assign descriptor = product.metafields.custom.editorial_note %}
+  {% endif %}
+{% endunless %}
+
+{% assign target_url = product.url | default: '#' %}
+{% if onboarding %}
+  {% assign target_url = '#' %}
+{% endif %}
+
+{% assign featured_image = nil %}
+{% unless onboarding %}
+  {% assign featured_image = product.featured_image %}
+{% endunless %}
+
+{% assign placeholder_image = placeholder_image %}
+{% assign use_land_placeholders = false %}
+{% if template.suffix == 'the-land' %}
+  {% assign use_land_placeholders = true %}
+{% endif %}
+{% if use_land_placeholders %}
+  {% assign land_placeholder_images = 'land-placeholder-1.jpg|land-placeholder-2.jpg|land-placeholder-3.jpg|land-placeholder-4.jpg|land-placeholder-5.jpg|land-placeholder-6.jpg|land-placeholder-7.jpg|land-placeholder-8.jpg' | split: '|' %}
+
+  {% if featured_image == nil %}
+    {% assign placeholder_seed = placeholder_id | default: product.id | default: 0 | plus: 0 %}
+    {% assign placeholder_index = placeholder_seed | modulo: land_placeholder_images.size %}
+    {% assign placeholder_image = placeholder_image | default: land_placeholder_images[placeholder_index] %}
+  {% endif %}
+{% endif %}
+
+{% assign show_sale = false %}
+{% assign price = nil %}
+{% assign compare_at = nil %}
+{% unless onboarding %}
+  {% assign price = product.price %}
+  {% assign compare_at = product.compare_at_price %}
+  {% if compare_at and compare_at > price %}
+    {% assign show_sale = true %}
+  {% endif %}
+{% endunless %}
+
+{% assign swatches = nil %}
+{% unless onboarding %}
+  {% assign swatches = product.options_with_values | where: 'name', 'Color' | first %}
+  {% if swatches == nil %}
+    {% assign swatches = product.options_with_values | first %}
+  {% endif %}
+{% endunless %}
+
+<a class="db-card{% if land_mode %} db-card--land{% endif %}" href="{{ target_url }}" {% if onboarding %}aria-hidden="true"{% endif %}>
+  <div class="db-card__media" aria-hidden="true">
+    {% if featured_image %}
+      <img
+        src="{{ featured_image | image_url: width: 1200 }}"
+        alt="{{ featured_image.alt | default: product.title | escape }}"
+        loading="lazy"
+        width="{{ featured_image.width }}"
+        height="{{ featured_image.height }}"
+      >
+    {% elsif placeholder_image %}
+      <img
+        src="{{ placeholder_image | asset_url }}"
+        alt="Placeholder jewellery photography"
+        loading="lazy"
+        width="1200"
+        height="1500"
+      >
+    {% else %}
+      <div class="db-card__placeholder"></div>
+    {% endif %}
+  </div>
+
+  <div class="db-card__body{% if land_mode %} db-card__body--overlay{% endif %}">
+    <h3 class="db-card__title">{% unless onboarding %}{{ product.title }}{% else %}&nbsp;{% endunless %}</h3>
+    {% if descriptor != blank %}
+      <p class="db-card__descriptor">{{ descriptor }}</p>
+    {% endif %}
+    <div class="db-card__meta">
+      {% if onboarding %}
+        <span class="db-card__price">&nbsp;</span>
+      {% else %}
+        <span class="db-card__price">{{ price | money }}</span>
+        {% if show_sale %}
+          <span class="db-card__price db-card__price--compare">{{ compare_at | money }}</span>
+        {% endif %}
+      {% endif %}
+    </div>
+
+    {% if swatches and swatches.values.size > 1 %}
+      <div class="db-card__swatches" aria-hidden="true">
+        {% assign swatch_limit = 5 %}
+        {% for option_value in swatches.values limit: swatch_limit %}
+          {% assign swatch_color = option_value.swatch.color | default: option_value | downcase %}
+          <span class="db-card__swatch" style="--db-swatch-color: {{ swatch_color }}"></span>
+        {% endfor %}
+        {% if swatches.values.size > swatch_limit %}
+          <span class="db-card__swatch db-card__swatch--more"></span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</a>
+
+<style>
+  .db-card {
+    display: grid;
+    gap: 24px;
+    text-decoration: none;
+    color: inherit;
+    isolation: isolate;
+    transition: transform 520ms var(--db-motion-ease-out), filter 520ms var(--db-motion-ease-out);
+    outline: none;
+  }
+
+  /* Land editorial variant */
+  .db-card--land {
+    gap: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: transparent;
+    position: relative;
+  }
+
+  .db-card--land .db-card__media {
+    border-radius: inherit;
+  }
+
+  .db-card--land .db-card__media::after {
+    opacity: 0.65;
+    background: linear-gradient(180deg, rgb(0 0 0 / 0) 0%, rgb(0 0 0 / 0.55) 85%);
+  }
+
+  .db-card--land .db-card__body {
+    border-radius: 0;
+  }
+
+  .db-card__body--overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 18px 18px 20px;
+    color: #f9f7f2;
+    background: linear-gradient(180deg, rgb(0 0 0 / 0) 0%, rgb(0 0 0 / 0.65) 100%);
+    display: grid;
+    gap: 6px;
+    pointer-events: none;
+  }
+
+  .db-card--land .db-card__title {
+    color: #f9f7f2;
+    font-size: clamp(1.15rem, 1.4vw + 0.6rem, 1.45rem);
+    margin: 0;
+  }
+
+  .db-card--land .db-card__descriptor {
+    color: rgb(249 247 242 / 0.8);
+    margin: 0;
+  }
+
+  .db-card--land .db-card__meta {
+    color: rgb(249 247 242 / 0.7);
+    font-size: 0.9rem;
+    margin-top: 4px;
+  }
+
+  .db-card--land .db-card__swatches {
+    display: none;
+  }
+
+  .db-card--land .db-card__media img {
+    transition: transform 520ms var(--db-motion-ease-out), filter 520ms var(--db-motion-ease-out);
+  }
+
+  .db-card--land:hover .db-card__media img,
+  .db-card--land:focus-visible .db-card__media img {
+    transform: scale(1.03);
+    filter: brightness(1.04) contrast(1.03);
+  }
+
+  .db-card--land:hover,
+  .db-card--land:focus-visible {
+    transform: translateY(-3px);
+  }
+
+  .db-card--land:focus-visible .db-card__body--overlay {
+    outline: 2px solid rgb(249 247 242 / 0.4);
+    outline-offset: 6px;
+    border-radius: 8px;
+  }
+
+  .db-card:focus-visible {
+    outline: 2px solid var(--db-focus-ring-color);
+    outline-offset: 8px;
+    border-radius: var(--db-focus-ring-radius);
+  }
+
+  .db-card__media {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+  }
+
+  .db-card__media img,
+  .db-card__placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 520ms var(--db-motion-ease-out), filter 520ms var(--db-motion-ease-out);
+    display: block;
+  }
+
+  .db-card__placeholder {
+    background: radial-gradient(circle at 30% 30%, rgb(var(--color-foreground-rgb) / 0.08), transparent 45%),
+      linear-gradient(135deg, rgb(var(--color-foreground-rgb) / 0.06), rgb(var(--color-background-rgb) / 0.7));
+    filter: blur(0.5px);
+  }
+
+  .db-card__body {
+    display: grid;
+    gap: 8px;
+  }
+
+  .db-card__title {
+    font-family: var(--font-accent--family, var(--font-heading--family));
+    font-size: clamp(1rem, 1.2vw + 0.8rem, 1.35rem);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+
+  .db-card__descriptor {
+    margin: 4px 0 0;
+    font-size: 0.95rem;
+    color: rgb(var(--color-foreground-rgb) / 0.65);
+    line-height: 1.5;
+  }
+
+  .db-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 6px;
+    font-size: 0.95rem;
+    color: rgb(var(--color-foreground-rgb) / 0.55);
+  }
+
+  .db-card__price--compare {
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
+  .db-card__swatches {
+    display: inline-flex;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .db-card__swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: var(--db-swatch-color, rgb(var(--color-foreground-rgb) / 0.3));
+    box-shadow: 0 0 0 1px rgb(var(--color-background-rgb)), 0 0 0 2px rgb(var(--color-foreground-rgb) / 0.08);
+  }
+
+  .db-card__swatch--more {
+    background: transparent;
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.35);
+  }
+
+  .db-card:hover .db-card__media img,
+  .db-card:focus-visible .db-card__media img {
+    transform: scale(1.02);
+    filter: saturate(1.02);
+  }
+
+  .db-card:hover,
+  .db-card:focus-visible {
+    transform: translateY(-3px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .db-card,
+    .db-card__media img,
+    .db-card__placeholder {
+      transition: none;
+      transform: none;
+    }
+  }
+
+  /* Collection grid integration (Land) */
+  .db-collection-facets .product-grid {
+    --product-grid-gap: 24px 24px;
+  }
+
+  .db-collection-facets .product-grid__item {
+    border: none;
+    padding: 0;
+  }
+
+  .db-collection-facets .product-grid {
+    margin-top: 8px;
+  }
+</style>

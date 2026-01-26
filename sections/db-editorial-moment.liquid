@@ -1,0 +1,127 @@
+{% comment %}
+  Editorial brand moment section.
+{% endcomment %}
+
+<section
+  class="db-editorial-moment spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width db-editorial-moment__inner">
+    {% if section.settings.show_divider %}
+      <div class="db-editorial-moment__divider" aria-hidden="true">
+        <span class="db-editorial-moment__divider-line"></span>
+      </div>
+    {% endif %}
+
+    <div class="db-editorial-moment__grid">
+      <div class="db-editorial-moment__media">
+        {% if section.settings.image != blank %}
+          <img
+            src="{{ section.settings.image | image_url: width: 1800 }}"
+            alt="{{ section.settings.image_alt | default: section.settings.heading | escape }}"
+            loading="lazy"
+            width="{{ section.settings.image.width }}"
+            height="{{ section.settings.image.height }}"
+            class="db-editorial-moment__image"
+          >
+        {% else %}
+          <div class="db-editorial-moment__placeholder" aria-hidden="true"></div>
+        {% endif %}
+      </div>
+
+      <div class="db-editorial-moment__content">
+        {% if section.settings.heading != blank %}
+          <h2 class="db-editorial-moment__heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.subline != blank %}
+          <p class="db-editorial-moment__subline">{{ section.settings.subline }}</p>
+        {% endif %}
+        {% if section.settings.body != blank %}
+          <div class="db-editorial-moment__body">{{ section.settings.body }}</div>
+        {% endif %}
+        {% if section.settings.link_label != blank and section.settings.link_url != blank %}
+          <a class="db-editorial-moment__link" href="{{ section.settings.link_url }}">
+            {{ section.settings.link_label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Editorial brand moment",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Daphne Blue jewellery in soft light"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Designed to be lived in"
+    },
+    {
+      "type": "text",
+      "id": "subline",
+      "label": "Subline",
+      "default": "Quiet pieces for everyday ritual"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Each piece begins with a feeling &mdash; light on skin, familiar in hand, quiet in presence. Crafted in small batches and finished with care, Daphne Blue jewellery is made to move with you through everyday rituals and fleeting moments alike. Pieces you return to, not because they ask to be noticed &mdash; but because they feel like yours.</p>"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Our story \u2192"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider",
+      "label": "Show divider",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial brand moment"
+    }
+  ]
+}
+{% endschema %}

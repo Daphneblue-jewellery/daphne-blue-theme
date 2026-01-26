@@ -1,0 +1,640 @@
+{% doc %}
+  @prompt
+    A carousel of dainty jewellery with clear themes 1) the land 2) the sea 3) the sky 4) the stars 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+{% assign section_padding_bottom = block.settings.section_padding | minus: 24 | at_least: 0 %}
+
+{% style %}
+  .ai-jewellery-carousel-{{ ai_gen_id }} {
+    padding-top: {{ block.settings.section_padding }}px;
+    padding-bottom: {{ section_padding_bottom }}px;
+    background-color: {{ block.settings.background_color }};
+    /* Slow the hover/micro-interaction motion further */
+    --db-motion-duration: 780ms;
+  }
+
+  .ai-jewellery-carousel__container-{{ ai_gen_id }} {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ai-jewellery-carousel__header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .ai-jewellery-carousel__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-family: var(--font-heading--family);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: 0;
+    color: {{ block.settings.text_color }};
+    margin: 0 0 12px;
+  }
+
+  .ai-jewellery-carousel__subtitle-{{ ai_gen_id }} {
+    font-size: var(--db-type-press-size);
+    font-family: var(--db-type-press-family);
+    color: {{ block.settings.text_color }};
+    opacity: 0.8;
+    margin: 0;
+    text-transform: var(--db-type-press-case);
+    letter-spacing: var(--db-type-press-letter-spacing);
+  }
+
+  .ai-jewellery-carousel__themes-{{ ai_gen_id }} {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 20px;
+  }
+
+  .ai-jewellery-carousel__themes-{{ ai_gen_id }}::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ai-jewellery-carousel__theme-card-{{ ai_gen_id }} {
+    flex: 0 0 calc(25% - 15px);
+    min-width: 280px;
+    scroll-snap-align: start;
+    background-color: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    transition: transform var(--db-motion-duration, 420ms) var(--db-motion-ease, ease);
+    will-change: transform;
+    cursor: pointer;
+  }
+
+  .ai-jewellery-carousel__card-link-{{ ai_gen_id }} {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .ai-jewellery-carousel__image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: 125%;
+    overflow: hidden;
+    background-color: #f4f4f4;
+    border-radius: {{ block.settings.card_border_radius }}px;
+  }
+
+  .ai-jewellery-carousel__image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1);
+    transition: transform var(--db-motion-duration, 420ms) var(--db-motion-ease, ease),
+      filter var(--db-motion-duration, 420ms) var(--db-motion-ease, ease);
+    border-radius: inherit;
+  }
+
+  .ai-jewellery-carousel__placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-jewellery-carousel__placeholder-{{ ai_gen_id }} svg {
+    width: 60%;
+    height: 60%;
+    opacity: 0.3;
+  }
+
+  .ai-jewellery-carousel__theme-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0) 70%);
+    transition: background var(--db-motion-duration, 420ms) var(--db-motion-ease, ease);
+    border-radius: inherit;
+  }
+
+  .ai-jewellery-carousel__theme-name-{{ ai_gen_id }} {
+    font-size: 30px;
+    color: #ffffff;
+    margin: 0 0 4px;
+    font-weight: 600;
+    transition: transform var(--db-motion-duration, 420ms) var(--db-motion-ease, ease);
+  }
+
+  .ai-jewellery-carousel__theme-description-{{ ai_gen_id }} {
+    font-size: 1.02rem;
+    font-family: var(--font-body--family);
+    line-height: 1.7;
+    color: #ffffff;
+    margin: 0;
+    opacity: 0.9;
+    text-transform: none;
+    letter-spacing: 0;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.54);
+    transition: transform var(--db-motion-duration, 420ms) var(--db-motion-ease, ease),
+      opacity var(--db-motion-duration, 420ms) var(--db-motion-ease, ease);
+  }
+
+
+  .ai-jewellery-carousel__nav-{{ ai_gen_id }} {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 30px;
+  }
+
+  .ai-jewellery-carousel__nav-button-{{ ai_gen_id }} {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid {{ block.settings.text_color }};
+    background-color: transparent;
+    color: {{ block.settings.text_color }};
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .ai-jewellery-carousel__nav-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_color }};
+    border-color: {{ block.settings.button_color }};
+    color: {{ block.settings.button_text_color }};
+  }
+
+  .ai-jewellery-carousel__nav-button-{{ ai_gen_id }}:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .ai-jewellery-carousel__theme-card-{{ ai_gen_id }}:hover,
+  .ai-jewellery-carousel__theme-card-{{ ai_gen_id }}:focus-within {
+    transform: translateY(-2px);
+  }
+
+  .ai-jewellery-carousel__theme-card-{{ ai_gen_id }}:hover .ai-jewellery-carousel__image-{{ ai_gen_id }},
+  .ai-jewellery-carousel__theme-card-{{ ai_gen_id }}:focus-within .ai-jewellery-carousel__image-{{ ai_gen_id }} {
+    transform: none;
+    filter: brightness(1.02) contrast(1.02);
+  }
+
+  .ai-jewellery-carousel__card-link-{{ ai_gen_id }}:focus-visible {
+    outline: 2px solid var(--db-focus-ring-color, rgb(var(--color-foreground-rgb) / 0.7));
+    outline-offset: 6px;
+    border-radius: {{ block.settings.card_border_radius }}px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ai-jewellery-carousel__theme-card-{{ ai_gen_id }},
+    .ai-jewellery-carousel__image-{{ ai_gen_id }},
+    .ai-jewellery-carousel__theme-overlay-{{ ai_gen_id }},
+    .ai-jewellery-carousel__theme-name-{{ ai_gen_id }},
+    .ai-jewellery-carousel__theme-description-{{ ai_gen_id }} {
+      transition: none;
+    }
+
+    .ai-jewellery-carousel__theme-card-{{ ai_gen_id }}:hover,
+    .ai-jewellery-carousel__theme-card-{{ ai_gen_id }}:focus-within {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .ai-jewellery-carousel__theme-card-{{ ai_gen_id }}:hover .ai-jewellery-carousel__image-{{ ai_gen_id }},
+    .ai-jewellery-carousel__theme-card-{{ ai_gen_id }}:focus-within .ai-jewellery-carousel__image-{{ ai_gen_id }} {
+      transform: none;
+      filter: none;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .ai-jewellery-carousel__theme-card-{{ ai_gen_id }} {
+      flex: 0 0 calc(50% - 10px);
+      min-width: 250px;
+    }
+
+    .ai-jewellery-carousel__title-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.title_size }}px * 0.7);
+    }
+
+    .ai-jewellery-carousel__subtitle-{{ ai_gen_id }} {
+      font-size: calc({{ block.settings.subtitle_size }}px * 0.9);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-jewellery-carousel__theme-card-{{ ai_gen_id }} {
+      flex: 0 0 calc(100% - 40px);
+      min-width: 280px;
+    }
+
+    .ai-jewellery-carousel__nav-{{ ai_gen_id }} {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+<jewellery-carousel-{{ ai_gen_id }}
+  class="ai-jewellery-carousel-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-jewellery-carousel__container-{{ ai_gen_id }}">
+    {% if block.settings.title != blank or block.settings.subtitle != blank %}
+      <div class="ai-jewellery-carousel__header-{{ ai_gen_id }}">
+        {% if block.settings.title != blank %}
+          <h2 class="ai-jewellery-carousel__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+        {% endif %}
+        {% if block.settings.subtitle != blank %}
+          <p class="ai-jewellery-carousel__subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="ai-jewellery-carousel__themes-{{ ai_gen_id }}" data-carousel>
+      {% for i in (1..4) %}
+        {% liquid
+          assign theme_enabled_key = 'theme_' | append: i | append: '_enabled'
+          assign theme_name_key = 'theme_' | append: i | append: '_name'
+          assign theme_description_key = 'theme_' | append: i | append: '_description'
+          assign theme_image_key = 'theme_' | append: i | append: '_image'
+          assign theme_collection_key = 'theme_' | append: i | append: '_collection'
+
+          assign theme_enabled = block.settings[theme_enabled_key]
+          assign theme_name = block.settings[theme_name_key]
+          assign theme_description = block.settings[theme_description_key]
+          assign theme_image = block.settings[theme_image_key]
+          assign theme_collection = block.settings[theme_collection_key]
+        %}
+
+        {% if theme_enabled %}
+          <div class="ai-jewellery-carousel__theme-card-{{ ai_gen_id }}">
+            <a
+              href="{% if theme_collection %}{{ theme_collection.url }}{% else %}#{% endif %}"
+              class="ai-jewellery-carousel__card-link-{{ ai_gen_id }}"
+            >
+              <div class="ai-jewellery-carousel__image-wrapper-{{ ai_gen_id }}">
+                {% if theme_image %}
+                  <img
+                    src="{{ theme_image | image_url: width: 600 }}"
+                    alt="{{ theme_name | escape }}"
+                    loading="lazy"
+                    width="600"
+                    height="750"
+                    class="ai-jewellery-carousel__image-{{ ai_gen_id }}"
+                  >
+                {% else %}
+                  <div class="ai-jewellery-carousel__placeholder-{{ ai_gen_id }}">
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  </div>
+                {% endif %}
+                <div class="ai-jewellery-carousel__theme-overlay-{{ ai_gen_id }}">
+                  <h3 class="ai-jewellery-carousel__theme-name-{{ ai_gen_id }}">{{ theme_name }}</h3>
+                  {% if theme_description != blank %}
+                    <p class="ai-jewellery-carousel__theme-description-{{ ai_gen_id }}">
+                      {{ theme_description }}
+                    </p>
+                  {% endif %}
+                </div>
+              </div>
+
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+
+  </div>
+</jewellery-carousel-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class JewelleryCarousel{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.carousel = this.querySelector('[data-carousel]');
+        this.prevButton = this.querySelector('[data-nav="prev"]');
+        this.nextButton = this.querySelector('[data-nav="next"]');
+
+        if (this.prevButton && this.nextButton) {
+          this.prevButton.addEventListener('click', () => this.scroll('prev'));
+          this.nextButton.addEventListener('click', () => this.scroll('next'));
+          this.carousel.addEventListener('scroll', () => this.updateButtons());
+          this.updateButtons();
+        }
+      }
+
+      scroll(direction) {
+        const scrollAmount = this.carousel.offsetWidth * 0.8;
+        const currentScroll = this.carousel.scrollLeft;
+
+        if (direction === 'prev') {
+          this.carousel.scrollTo({
+            left: currentScroll - scrollAmount,
+            behavior: 'smooth'
+          });
+        } else {
+          this.carousel.scrollTo({
+            left: currentScroll + scrollAmount,
+            behavior: 'smooth'
+          });
+        }
+      }
+
+      updateButtons() {
+        const isAtStart = this.carousel.scrollLeft <= 0;
+        const isAtEnd = this.carousel.scrollLeft + this.carousel.offsetWidth >= this.carousel.scrollWidth - 10;
+
+        this.prevButton.disabled = isAtStart;
+        this.nextButton.disabled = isAtEnd;
+      }
+    }
+
+    customElements.define('jewellery-carousel-{{ ai_gen_id }}', JewelleryCarousel{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Jewellery themes carousel",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Explore our collections"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Dainty jewellery inspired by nature"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "min": 0,
+      "max": 100,
+      "step": 10,
+      "unit": "px",
+      "label": "Padding",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FAFAF8"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#2E2E2E"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#F2EDE6"
+    },
+    {
+      "type": "color",
+      "id": "button_color",
+      "label": "Button",
+      "default": "#2E2E2E"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FAFAF8"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_color",
+      "label": "Button hover",
+      "default": "#6FA9B8"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "label": "Title size",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Subtitle size",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Card border radius",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Button border radius",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Explore"
+    },
+    {
+      "type": "header",
+      "content": "The Land"
+    },
+    {
+      "type": "checkbox",
+      "id": "theme_1_enabled",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "theme_1_name",
+      "label": "Name",
+      "default": "The Land"
+    },
+    {
+      "type": "text",
+      "id": "theme_1_description",
+      "label": "Description",
+      "default": "Earthy tones and organic forms"
+    },
+    {
+      "type": "image_picker",
+      "id": "theme_1_image",
+      "label": "Image"
+    },
+    {
+      "type": "collection",
+      "id": "theme_1_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "The Sea"
+    },
+    {
+      "type": "checkbox",
+      "id": "theme_2_enabled",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "theme_2_name",
+      "label": "Name",
+      "default": "The Sea"
+    },
+    {
+      "type": "text",
+      "id": "theme_2_description",
+      "label": "Description",
+      "default": "Ocean-inspired elegance"
+    },
+    {
+      "type": "image_picker",
+      "id": "theme_2_image",
+      "label": "Image"
+    },
+    {
+      "type": "collection",
+      "id": "theme_2_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "The Sky"
+    },
+    {
+      "type": "checkbox",
+      "id": "theme_3_enabled",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "theme_3_name",
+      "label": "Name",
+      "default": "The Sky"
+    },
+    {
+      "type": "text",
+      "id": "theme_3_description",
+      "label": "Description",
+      "default": "Light and airy designs"
+    },
+    {
+      "type": "image_picker",
+      "id": "theme_3_image",
+      "label": "Image"
+    },
+    {
+      "type": "collection",
+      "id": "theme_3_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "header",
+      "content": "The Stars"
+    },
+    {
+      "type": "checkbox",
+      "id": "theme_4_enabled",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "theme_4_name",
+      "label": "Name",
+      "default": "The Stars"
+    },
+    {
+      "type": "text",
+      "id": "theme_4_description",
+      "label": "Description",
+      "default": "Celestial sparkle and shine"
+    },
+    {
+      "type": "image_picker",
+      "id": "theme_4_image",
+      "label": "Image"
+    },
+    {
+      "type": "collection",
+      "id": "theme_4_collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Jewellery themes carousel"
+    }
+  ]
+}
+{% endschema %}

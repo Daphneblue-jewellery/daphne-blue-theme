@@ -1,0 +1,107 @@
+{% comment %}
+  Editorial product exploration grid for collections.
+{% endcomment %}
+
+{% paginate collection.products by section.settings.products_per_page %}
+  <section
+    id="{{ section.settings.anchor_id | default: 'collection-grid' }}"
+    class="db-collection-grid spacing-style"
+    style="{% render 'spacing-style', settings: section.settings %}"
+  >
+    <div class="page-width db-collection-grid__inner">
+      <div class="db-collection-grid__grid" role="list">
+        {% for product in collection.products %}
+          {% assign poetic_line = product.metafields.custom.poetic_line | default: product.metafields.custom.descriptor | default: product.metafields.custom.editorial_note %}
+          <a class="db-collection-card" href="{{ product.url }}" role="listitem">
+            <div class="db-collection-card__media">
+              {% if product.featured_image != blank %}
+                <img
+                  src="{{ product.featured_image | image_url: width: 1200 }}"
+                  alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                  loading="lazy"
+                  width="{{ product.featured_image.width }}"
+                  height="{{ product.featured_image.height }}"
+                >
+              {% else %}
+                <div class="db-collection-card__placeholder" aria-hidden="true"></div>
+              {% endif %}
+            </div>
+            <div class="db-collection-card__content">
+              <h3 class="db-collection-card__title">{{ product.title }}</h3>
+              {% if section.settings.show_descriptor and poetic_line != blank %}
+                <p class="db-collection-card__descriptor">{{ poetic_line }}</p>
+              {% endif %}
+              {% if section.settings.show_price %}
+                <p class="db-collection-card__price">{{ product.price | money }}</p>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <div class="db-collection-grid__pagination">
+          {{ paginate | default_pagination }}
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "DB Collection grid",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "show_descriptor",
+      "label": "Show poetic descriptor (metafield)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor ID",
+      "default": "collection-grid"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "DB Collection grid"
+    }
+  ]
+}
+{% endschema %}

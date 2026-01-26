@@ -1,0 +1,5 @@
+node_modules
+.theme-kit-access
+.env
+.DS_Store
+theme-dev.log

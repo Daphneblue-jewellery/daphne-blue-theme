@@ -1,0 +1,98 @@
+{% comment %}
+  Editorial split section for collection landing pages.
+{% endcomment %}
+
+<section
+  class="db-collection-split spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width db-collection-split__inner">
+    <div class="db-collection-split__content">
+      {% if section.settings.kicker != blank %}
+        <p class="db-collection-split__kicker">{{ section.settings.kicker }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="db-collection-split__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.body != blank %}
+        <div class="db-collection-split__body">
+          {{ section.settings.body }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="db-collection-split__media">
+      {% if section.settings.image != blank %}
+        <img
+          src="{{ section.settings.image | image_url: width: 1600 }}"
+          alt="{{ section.settings.image_alt | default: section.settings.heading | escape }}"
+          loading="lazy"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+        >
+      {% else %}
+        <div class="db-collection-split__placeholder" aria-hidden="true"></div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DB Collection split",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Collection essence"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Rooted in light and texture"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body",
+      "default": "<p>Grounded palettes, softened edges, and the feeling of morning light through trees. The Land collection is a quieter rhythm — familiar on the skin and easy to return to, day after day.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Daphne Blue jewellery in warm natural light"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "DB Collection split"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,67 @@
+{% if request.page_type == 'index' %}
+  {% liquid
+    assign element_items = 'the-land|The Land,the-sea|The Sea,the-sky|The Sky,the-stars|The Stars' | split: ','
+    assign piece_items = 'necklaces|Necklaces,rings|Rings,earrings|Earrings,bracelets|Bracelets,anklets|Anklets,gift-ready|Gift-ready,sets|Sets' | split: ','
+    assign optional_handles = 'gift-ready,sets' | split: ','
+  %}
+
+  <div class="predictive-search-curated" data-search-curated>
+    <p class="predictive-search-curated__heading">Shop by element</p>
+    <ul class="predictive-search-curated__list" role="list">
+      {% for item in element_items %}
+        {% assign parts = item | split: '|' %}
+        {% assign handle = parts[0] %}
+        {% assign title = parts[1] %}
+        {% assign collection = collections[handle] %}
+        {% if collection != blank %}
+          {% assign url = collection.url %}
+        {% else %}
+          {% assign url = routes.collections_url | append: '/' | append: handle %}
+        {% endif %}
+        <li class="predictive-search-curated__item">
+          <a
+            class="predictive-search-curated__link"
+            href="{{ url }}"
+            data-search-category-link
+            data-search-curated-link
+          >
+            {{ title }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <div class="predictive-search-curated__divider" role="presentation"></div>
+
+    <p class="predictive-search-curated__heading">Shop by piece</p>
+    <ul class="predictive-search-curated__list" role="list">
+      {% for item in piece_items %}
+        {% assign parts = item | split: '|' %}
+        {% assign handle = parts[0] %}
+        {% assign title = parts[1] %}
+        {% assign collection = collections[handle] %}
+        {% assign should_render = true %}
+        {% if collection == blank and optional_handles contains handle %}
+          {% assign should_render = false %}
+        {% endif %}
+        {% if should_render %}
+          {% if collection != blank %}
+            {% assign url = collection.url %}
+          {% else %}
+            {% assign url = routes.collections_url | append: '/' | append: handle %}
+          {% endif %}
+          <li class="predictive-search-curated__item">
+            <a
+              class="predictive-search-curated__link"
+              href="{{ url }}"
+              data-search-category-link
+              data-search-curated-link
+            >
+              {{ title }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}

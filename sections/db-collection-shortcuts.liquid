@@ -1,0 +1,177 @@
+{% comment %}
+  Collection shortcuts / Shop the edit strip.
+{% endcomment %}
+
+<section
+  class="db-collection-shortcuts"
+  {% if section.settings.anchor_id != blank %}
+    id="{{ section.settings.anchor_id | escape }}"
+  {% endif %}
+>
+  <div class="page-width db-collection-shortcuts__inner">
+    {% if section.settings.heading != blank or section.settings.subheading != blank %}
+      <div class="db-collection-shortcuts__header">
+        {% if section.settings.heading != blank %}
+          <h2 class="db-collection-shortcuts__title">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.subheading != blank %}
+          <p class="db-collection-shortcuts__subtitle">{{ section.settings.subheading }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    {% if section.blocks.size > 0 %}
+      <div class="db-collection-shortcuts__grid" role="list">
+        {% for block in section.blocks %}
+          {% liquid
+            assign assigned_collection = nil
+            if block.settings.collection != blank
+              assign assigned_collection = collections[block.settings.collection]
+            endif
+
+            assign link = block.settings.filter_url
+            if block.settings.link_type == 'anchor'
+              assign anchor_id = block.settings.anchor_id | strip
+              if anchor_id != blank
+                assign link = '#' | append: anchor_id
+              endif
+            elsif assigned_collection
+              assign link = assigned_collection.url
+            endif
+
+            assign tile_label = block.settings.label
+            if tile_label == blank and assigned_collection
+              assign tile_label = assigned_collection.title
+            endif
+
+            assign tile_sublabel = block.settings.sublabel
+            if tile_sublabel == blank and assigned_collection and assigned_collection.description != blank
+              assign tile_sublabel = assigned_collection.description | strip_html | truncatewords: 14
+            endif
+
+            assign tile_image = block.settings.image
+            if tile_image == blank and assigned_collection and assigned_collection.image
+              assign tile_image = assigned_collection.image
+            endif
+          %}
+
+          <a
+            class="db-collection-shortcuts__tile"
+            href="{{ link | default: assigned_collection.url | default: '#' }}"
+            role="listitem"
+            aria-label="{{ tile_label | escape }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="db-collection-shortcuts__media">
+              {% if tile_image != blank %}
+                <img
+                  src="{{ tile_image | image_url: width: 1200 }}"
+                  alt="{{ tile_image.alt | default: tile_label | escape }}"
+                  loading="lazy"
+                  width="{{ tile_image.width }}"
+                  height="{{ tile_image.height }}"
+                >
+              {% else %}
+                <div class="db-collection-shortcuts__placeholder" aria-hidden="true"></div>
+              {% endif %}
+            </div>
+            <div class="db-collection-shortcuts__content">
+              {% if tile_label != blank %}
+                <span class="db-collection-shortcuts__label">{{ tile_label }}</span>
+              {% endif %}
+              {% if tile_sublabel != blank %}
+                <span class="db-collection-shortcuts__sublabel">{{ tile_sublabel }}</span>
+              {% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection shortcuts",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop the edit"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Three quiet ways to explore."
+    },
+    {
+      "type": "text",
+      "id": "anchor_id",
+      "label": "Anchor ID",
+      "info": "Optional: add a custom anchor so other sections can link here."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "shortcut",
+      "name": "Shortcut tile",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection (optional)"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Everyday ritual"
+        },
+        {
+          "type": "text",
+          "id": "sublabel",
+          "label": "Sublabel"
+        },
+        {
+          "type": "select",
+          "id": "link_type",
+          "label": "Link type",
+          "options": [
+            {
+              "value": "filter",
+              "label": "Filter URL"
+            },
+            {
+              "value": "anchor",
+              "label": "Anchor"
+            }
+          ],
+          "default": "filter"
+        },
+        {
+          "type": "url",
+          "id": "filter_url",
+          "label": "Filter URL"
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection shortcuts"
+    }
+  ]
+}
+{% endschema %}

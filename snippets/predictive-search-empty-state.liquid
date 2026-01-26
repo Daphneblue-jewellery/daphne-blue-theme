@@ -1,0 +1,80 @@
+{% doc %}
+  Renders the predictive search empty state
+
+  @param {number} shadow_opacity - shadow opacity for the empty state container shadow
+  @param {string} products_test_id - a playwright test id, used to differentiate empty state from 'real' search results
+  @param {boolean} [load_empty_state] - Load the empty state or not
+
+  @example
+  {% render 'predictive-search-empty-state', shadow_opacity: 0.1, products_test_id: 'empty-state' %}
+{% enddoc %}
+
+<div
+  id="predictive-search-results"
+  class="predictive-search-dropdown"
+  role="listbox"
+  aria-expanded="false"
+  style="--color-shadow: rgb(var(--color-foreground-rgb) / {{ shadow_opacity }});"
+>
+  {% if load_empty_state %}
+    <div class="predictive-search-results__inner">
+      {% if request.page_type == 'index' %}
+        {% render 'predictive-search-curated-links' %}
+      {% else %}
+        {% liquid
+          assign collection = settings.empty_state_collection | default: collections.all
+          assign default_title = 'content.search_results_resource_products' | t
+          assign title = settings.empty_state_collection.title | default: default_title
+          assign search_categories_menu = settings.search_categories_menu
+          assign search_category_links = search_categories_menu.links
+        %}
+        {% if search_category_links != blank %}
+          <div class="predictive-search-categories" data-search-categories>
+            <p
+              id="predictive-search-categories-label"
+              class="visually-hidden"
+            >
+              {{ 'content.search_results_resource_collections' | t }}
+            </p>
+            <ul
+              class="predictive-search-categories__list"
+              role="list"
+              aria-labelledby="predictive-search-categories-label"
+            >
+              {% for link in search_category_links %}
+                <li class="predictive-search-categories__item">
+                  <a
+                    class="predictive-search-categories__link"
+                    href="{{ link.url }}"
+                    data-search-category-link
+                  >
+                    <span class="predictive-search-categories__text">{{ link.title }}</span>
+                    <span class="predictive-search-categories__icon">
+                      {{ 'icon-arrow.svg' | inline_asset_content }}
+                    </span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        {% paginate collection.products by 4 %}
+          {% assign products = collection.products %}
+          {% comment %} Only show products section if there are products to display {% endcomment %}
+          {% if products.size > 0 %}
+            {% render 'predictive-search-products-list',
+              products_test_id: products_test_id,
+              title: title,
+              products: products,
+              limit: 4
+            %}
+          {% else %}
+            <div class="predictive-search-results__no-results">
+              <p>{{ 'content.no_products_found' | t }}</p>
+            </div>
+          {% endif %}
+        {% endpaginate %}
+      {% endif %}
+    </div>
+  {% endif %}
+</div>

@@ -1,0 +1,261 @@
+{% comment %}
+  Daphne Blue editorial collection hero.
+{% endcomment %}
+
+{% assign show_image = section.settings.show_image %}
+{% if show_image == nil %}
+  {% assign show_image = true %}
+{% endif %}
+
+{% assign hero_image = blank %}
+{% if show_image %}
+  {% assign hero_image = section.settings.image | default: collection.image %}
+{% endif %}
+{% assign heading_text = section.settings.heading | default: collection.title %}
+{% assign hero_height_vh = section.settings.height_vh | default: 65 %}
+{% assign center_content = section.settings.center_content | default: false %}
+
+<section
+  class="db-collection-hero{% unless show_image %} db-collection-hero--no-media{% endunless %}{% if center_content %} db-collection-hero--centered{% endif %}{% if template.suffix == 'the-land' %} db-collection-hero--land{% endif %} spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %} --db-collection-hero-height: {{ hero_height_vh }}vh;"
+>
+  {% if show_image %}
+    <div class="db-collection-hero__media">
+      {% if hero_image != blank %}
+        <img
+          src="{{ hero_image | image_url: width: 2400 }}"
+          alt="{{ section.settings.image_alt | default: heading_text | escape }}"
+          loading="lazy"
+          width="{{ hero_image.width }}"
+          height="{{ hero_image.height }}"
+          class="db-collection-hero__image"
+        >
+      {% else %}
+        <div class="db-collection-hero__placeholder" aria-hidden="true"></div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="db-collection-hero__content">
+    <div class="page-width db-collection-hero__content-inner">
+      {% if section.settings.subline != blank %}
+        <p class="db-collection-hero__subline">{{ section.settings.subline }}</p>
+      {% endif %}
+      {% if heading_text != blank %}
+        <h1 class="db-collection-hero__heading">{{ heading_text }}</h1>
+      {% endif %}
+      {% if section.settings.poetic_line != blank %}
+        <p class="db-collection-hero__poetic">{{ section.settings.poetic_line }}</p>
+      {% endif %}
+      <div class="db-collection-hero__actions">
+        {% if section.settings.cta_label != blank and section.settings.cta_link != blank %}
+          <a class="db-collection-hero__cta button button-primary" href="{{ section.settings.cta_link }}">
+            <span class="db-collection-hero__cta-label">{{ section.settings.cta_label }}</span>
+            <span class="db-collection-hero__cta-arrow" aria-hidden="true">→</span>
+          </a>
+        {% endif %}
+        {% if section.settings.secondary_label != blank and section.settings.secondary_link != blank %}
+          <a class="db-collection-hero__secondary" href="{{ section.settings.secondary_link }}">
+            <span class="db-collection-hero__secondary-label">{{ section.settings.secondary_label }}</span>
+            <span class="db-collection-hero__secondary-arrow" aria-hidden="true">→</span>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .db-collection-hero__actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .db-collection-hero__cta.button {
+    pointer-events: auto;
+  }
+
+  .db-collection-hero__content-inner {
+    max-width: min(620px, 62cqw);
+  }
+
+  .db-collection-hero--centered .db-collection-hero__content {
+    align-items: center;
+  }
+
+  .db-collection-hero--land .db-collection-hero__content {
+    align-items: center;
+  }
+
+  .db-collection-hero--land .db-collection-hero__content-inner {
+    padding: clamp(32px, 6vh, 56px) 0;
+  }
+
+  .db-collection-hero--land .db-collection-hero__heading {
+    margin-bottom: 14px;
+  }
+
+  .db-collection-hero--land .db-collection-hero__poetic {
+    margin-bottom: 20px;
+  }
+
+  .db-collection-hero__secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-body--family);
+    font-size: 0.98rem;
+    color: rgb(250 250 248 / 0.82);
+    text-decoration: none;
+    border-bottom: 1px solid rgb(250 250 248 / 0.25);
+    transition: color 420ms ease-out, border-color 420ms ease-out, transform 420ms ease-out;
+  }
+
+  .db-collection-hero--no-media .db-collection-hero__secondary {
+    color: rgb(var(--color-foreground-rgb) / 0.74);
+    border-bottom-color: rgb(var(--color-foreground-rgb) / 0.18);
+  }
+
+  .db-collection-hero__secondary:hover,
+  .db-collection-hero__secondary:focus-visible {
+    color: rgb(250 250 248 / 1);
+    border-bottom-color: currentColor;
+    transform: translateX(2px);
+  }
+
+  .db-collection-hero__secondary:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgb(250 250 248 / 0.18);
+    border-radius: 6px;
+  }
+
+  .db-collection-hero__secondary-arrow {
+    display: inline-block;
+    transition: transform 420ms ease-out;
+  }
+
+  .db-collection-hero__secondary:hover .db-collection-hero__secondary-arrow,
+  .db-collection-hero__secondary:focus-visible .db-collection-hero__secondary-arrow {
+    transform: translateX(3px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .db-collection-hero__secondary,
+    .db-collection-hero__secondary-arrow {
+      transition: none;
+    }
+  }
+
+  .db-collection-hero--land .db-collection-hero__placeholder {
+    background-image:
+      linear-gradient(180deg, rgb(0 0 0 / 0.08) 0%, rgb(0 0 0 / 0) 60%),
+      url({{ 'land-placeholder-1.jpg' | asset_url }});
+    background-size: cover;
+    background-position: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "DB Collection hero",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "Show hero image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Daphne Blue collection hero image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "subline",
+      "label": "Subline",
+      "default": "Quiet pieces for everyday ritual"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading (optional)",
+      "default": "The Land Collection"
+    },
+    {
+      "type": "text",
+      "id": "poetic_line",
+      "label": "Poetic line (optional)",
+      "default": "Earthy tones, softened textures, and slow mornings"
+    },
+    {
+      "type": "range",
+      "id": "height_vh",
+      "label": "Hero height (vh)",
+      "min": 40,
+      "max": 80,
+      "step": 1,
+      "default": 65
+    },
+    {
+      "type": "checkbox",
+      "id": "center_content",
+      "label": "Center content vertically",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Explore the collection"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
+    },
+    {
+      "type": "text",
+      "id": "secondary_label",
+      "label": "Secondary link label",
+      "default": "Explore all themes"
+    },
+    {
+      "type": "url",
+      "id": "secondary_link",
+      "label": "Secondary link"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "DB Collection hero"
+    }
+  ]
+}
+{% endschema %}

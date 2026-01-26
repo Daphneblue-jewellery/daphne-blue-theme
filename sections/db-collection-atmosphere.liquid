@@ -1,0 +1,81 @@
+{% comment %}
+  Atmospheric break for collection pages.
+{% endcomment %}
+
+<section
+  class="db-collection-atmosphere spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="db-collection-atmosphere__inner{% if section.settings.full_bleed %} db-collection-atmosphere__inner--full{% else %} page-width{% endif %}">
+    {% if section.settings.image != blank %}
+      <figure class="db-collection-atmosphere__media">
+        <img
+          src="{{ section.settings.image | image_url: width: 2000 }}"
+          alt="{{ section.settings.image_alt | default: section.settings.caption | escape }}"
+          loading="lazy"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+        >
+        {% if section.settings.caption != blank %}
+          <figcaption class="db-collection-atmosphere__caption">{{ section.settings.caption }}</figcaption>
+        {% endif %}
+      </figure>
+    {% else %}
+      <div class="db-collection-atmosphere__placeholder" aria-hidden="true"></div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "DB Collection atmosphere",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Atmospheric collection image"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption (optional)",
+      "default": "Light held gently, worn with ease."
+    },
+    {
+      "type": "checkbox",
+      "id": "full_bleed",
+      "label": "Full-bleed image",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "DB Collection atmosphere"
+    }
+  ]
+}
+{% endschema %}
