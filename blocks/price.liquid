@@ -4,6 +4,28 @@
   assign block_settings = block.settings
   assign product_resource = closest.product
   assign selected_variant = product_resource.selected_or_first_available_variant
+  assign db_class = ''
+  if section.settings.db_mode
+    if section.type == 'product-information'
+      if block.id == 'db_price'
+        assign db_class = 'db-product__price'
+      endif
+    endif
+  elsif template contains 'product.db' or template contains 'product.daphne'
+    if section.type == 'product-information'
+      if block.id == 'db_price'
+        assign db_class = 'db-product__price'
+      endif
+    endif
+  elsif template.name == 'product'
+    if template.suffix == 'db' or template.suffix == 'daphne'
+      if section.type == 'product-information'
+        if block.id == 'db_price'
+          assign db_class = 'db-product__price'
+        endif
+      endif
+    endif
+  endif
 -%}
 
 {% liquid
@@ -37,7 +59,7 @@
 %}
 
 <product-price
-  class="text-block {{ text_block_classes }} text-{{ block_settings.alignment }} {{ block_settings.type_preset | default: 'paragraph' }} spacing-style"
+  class="text-block {{ text_block_classes }} text-{{ block_settings.alignment }} {{ block_settings.type_preset | default: 'paragraph' }} spacing-style {{ db_class }}"
   data-block-id="{{ block.id }}"
   data-product-id="{{ product_resource.id }}"
   style="

@@ -1,11 +1,28 @@
 
 
 {%- assign block_settings = block.settings -%}
+{%- assign is_db_template = false -%}
+{%- if section.settings.db_mode -%}
+  {%- if section.type == 'product-information' -%}
+    {%- assign is_db_template = true -%}
+  {%- endif -%}
+{%- elsif template contains 'product.db' or template contains 'product.daphne' -%}
+  {%- if section.type == 'product-information' -%}
+    {%- assign is_db_template = true -%}
+  {%- endif -%}
+{%- elsif template.name == 'product' -%}
+  {%- if template.suffix == 'db' or template.suffix == 'daphne' -%}
+    {%- if section.type == 'product-information' -%}
+      {%- assign is_db_template = true -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endif -%}
 
 <div
   id="ProductInformation-{{ section.id }}"
   class="
     product-details
+    {% if is_db_template %} db-product__info{% endif %}
     {% if block_settings.sticky_details_desktop %} sticky-content--desktop{% endif %}
     {% if block_settings.height == 'fill' -%} full-height--desktop{% endif -%}
   "

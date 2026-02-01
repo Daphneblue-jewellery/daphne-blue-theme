@@ -2,6 +2,22 @@
 {% liquid
   assign block_settings = block.settings
   assign product = closest.product
+  assign is_db_template = false
+  if section.settings.db_mode
+    if section.type == 'product-information'
+      assign is_db_template = true
+    endif
+  elsif template contains 'product.db' or template contains 'product.daphne'
+    if section.type == 'product-information'
+      assign is_db_template = true
+    endif
+  elsif template.name == 'product'
+    if template.suffix == 'db' or template.suffix == 'daphne'
+      if section.type == 'product-information'
+        assign is_db_template = true
+      endif
+    endif
+  endif
   if request.visual_preview_mode and product == blank
     assign product = collections.all.products.first
   endif
@@ -37,6 +53,9 @@
   endif
 %}
 
+{% if is_db_template %}
+  <div class="db-product__cta">
+{% endif %}
 <span
   class="buy-buttons-block buy-buttons-block--{{ block.id }}"
   {{ block.shopify_attributes }}
@@ -136,12 +155,14 @@
             add_to_cart_text: add_to_cart_text
           %}
 
-          {% content_for 'block',
-            type: 'accelerated-checkout',
-            id: 'accelerated-checkout',
-            can_add_to_cart: can_add_to_cart,
-            form_obj: form
-          %}
+          {% unless is_db_template %}
+            {% content_for 'block',
+              type: 'accelerated-checkout',
+              id: 'accelerated-checkout',
+              can_add_to_cart: can_add_to_cart,
+              form_obj: form
+            %}
+          {% endunless %}
         </div>
       {%- endform -%}
     </product-form-component>
@@ -158,6 +179,9 @@
     </div>
   {%- endif -%}
 </span>
+{% if is_db_template %}
+  </div>
+{% endif %}
 
 {% if block_settings.show_pickup_availability %}
   <script

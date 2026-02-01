@@ -3,6 +3,16 @@
   class="no-js{% if request.design_mode %} shopify-design-mode{% endif %}"
   lang="{{ request.locale.iso_code }}"
 >
+  {%- liquid
+    assign is_db_template = false
+    if template contains 'product.db' or template contains 'product.daphne'
+      assign is_db_template = true
+    elsif template.name == 'product'
+      if template.suffix == 'db' or template.suffix == 'daphne'
+        assign is_db_template = true
+      endif
+    endif
+  -%}
   <head>
     {%- if settings.favicon != blank -%}
       <link
@@ -22,6 +32,9 @@
 
     {%- render 'meta-tags' -%}
     {%- render 'stylesheets' -%}
+    {% if is_db_template %}
+      {{ 'db-product.css' | asset_url | stylesheet_tag }}
+    {% endif %}
     {%- render 'fonts' -%}
     {%- render 'scripts' -%}
     {%- render 'theme-styles-variables' -%}
@@ -34,7 +47,7 @@
     {{ content_for_header }}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}{% if is_db_template %} db-product{% endif %}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
     <div id="header-group">
       {% sections 'header-group' %}

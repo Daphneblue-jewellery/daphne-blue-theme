@@ -2,12 +2,34 @@
 
 {% liquid
   assign product_resource = closest.product
+  assign is_db_template = false
+  if section.settings.db_mode
+    if section.type == 'product-information'
+      assign is_db_template = true
+    endif
+  elsif template contains 'product.db' or template contains 'product.daphne'
+    if section.type == 'product-information'
+      assign is_db_template = true
+    endif
+  elsif template.name == 'product'
+    if template.suffix == 'db' or template.suffix == 'daphne'
+      if section.type == 'product-information'
+        assign is_db_template = true
+      endif
+    endif
+  endif
   if request.visual_preview_mode and product_resource == blank
     assign product_resource = collections.all.products.first
   endif
 -%}
 
-{% render 'variant-main-picker', product_resource: product_resource %}
+{% if is_db_template %}
+  <div class="db-product__variants">
+{% endif %}
+  {% render 'variant-main-picker', product_resource: product_resource %}
+{% if is_db_template %}
+  </div>
+{% endif %}
 
 {% schema %}
 {

@@ -1,6 +1,17 @@
 
 
 {% liquid
+  assign is_db_template = false
+  if section.settings.db_mode
+    assign is_db_template = true
+  elsif template contains 'product.db' or template contains 'product.daphne'
+    assign is_db_template = true
+  elsif template.name == 'product'
+    if template.suffix == 'db' or template.suffix == 'daphne'
+      assign is_db_template = true
+    endif
+  endif
+
   if section.settings.desktop_media_position == 'left'
     assign render_order = 'media,product-details'
   else
@@ -12,9 +23,20 @@
     assign product_has_media = false
   endif
 
+  assign use_media_placeholder = false
+  if is_db_template and product_has_media == false
+    assign use_media_placeholder = true
+  endif
+
+  assign render_media = false
+  if product_has_media or use_media_placeholder
+    assign render_media = true
+  endif
+  assign placeholder_ratio = 1
+
   assign product_grid_class = 'product-information__grid'
 
-  if product_has_media == false
+  if render_media == false
     assign product_grid_class = product_grid_class | append: ' product-information--media-none'
   elsif section.settings.desktop_media_position == 'right'
     assign product_grid_class = product_grid_class | append: ' product-information--media-right'
@@ -42,12 +64,19 @@
   {{ closest.product | structured_data }}
 </script>
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+{% if is_db_template %}
+  {{ 'db-product.css' | asset_url | stylesheet_tag }}
+{% endif %}
+
+<div class="section-background color-{{ section.settings.color_scheme }}{% if is_db_template %} db-product-background{% endif %}"></div>
 <div
-  class="product-information section section--{{ content_width }} spacing-style color-{{ section.settings.color_scheme }} relative"
+  class="product-information{% if is_db_template %} db-product-landing{% endif %} section section--{{ content_width }} spacing-style color-{{ section.settings.color_scheme }} relative"
   style="{% render 'spacing-style', settings: section.settings %} --gap: {{ section.settings.gap }}px;"
 >
-  {% if section.settings.desktop_media_position == 'left' and product_has_media %}
+  {% if is_db_template %}
+    <div class="db-product">
+  {% endif %}
+  {% if section.settings.desktop_media_position == 'left' and render_media %}
     {% assign product_href = '#ProductInformation-' | append: section.id %}
     {% render 'skip-to-content-link', href: product_href, text: 'accessibility.skip_to_product_info' %}
   {% endif %}
@@ -58,14 +87,27 @@
     {% assign render_order_array = render_order | split: ',' %}
     {% capture media %}
       <div
-        class="product-information__media"
+        class="product-information__media{% if is_db_template %} db-product__media{% endif %}"
         data-testid="product-information-media"
       >
-        {%- content_for 'block',
-          type: '_product-media-gallery',
-          id: 'media-gallery',
-          closest.product: closest.product
-        -%}
+        <div class="db-product-media">
+          {% if product_has_media %}
+            {%- content_for 'block',
+              type: '_product-media-gallery',
+              id: 'media-gallery',
+              closest.product: closest.product
+            -%}
+          {% else %}
+            <div class="db-product-media__placeholder" style="--ratio: {{ placeholder_ratio }};">
+              <img
+                src="https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?auto=format&fit=crop&w=1600&q=80"
+                alt="{{ closest.product.title | escape }}"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+          {% endif %}
+        </div>
       </div>
     {% endcapture %}
 
@@ -78,7 +120,7 @@
     {% endcapture %}
 
     {% for block in render_order_array %}
-      {% if block == 'media' and product_has_media %}
+      {% if block == 'media' and render_media %}
         {{ media }}
       {% elsif block == 'product-details' %}
         {{ details }}
@@ -87,6 +129,9 @@
   </div>
 
   {% content_for 'blocks' %}
+  {% if is_db_template %}
+    </div>
+  {% endif %}
 </div>
 
 {% stylesheet %}
@@ -298,6 +343,13 @@
     {
       "type": "header",
       "content": "t:content.layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "db_mode",
+      "label": "DB product template",
+      "default": false,
+      "info": "Enable Daphne Blue layout for product.db."
     },
     {
       "type": "select",

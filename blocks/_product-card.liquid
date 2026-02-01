@@ -19,6 +19,17 @@
 {% else %}
   {% capture children %}
     {% content_for 'blocks', closest.product: product %}
+    {% if template contains 'product.db' or template contains 'product.daphne' %}
+      {% if product != blank and product.available == false %}
+        <p class="db-product-card__availability">Unavailable</p>
+      {% endif %}
+    {% elsif template.name == 'product' %}
+      {% if template.suffix == 'db' or template.suffix == 'daphne' %}
+        {% if product != blank and product.available == false %}
+          <p class="db-product-card__availability">Unavailable</p>
+        {% endif %}
+      {% endif %}
+    {% endif %}
   {% endcapture %}
 
   {% render 'product-card', children: children, product: product, placeholder_id: placeholder_id %}
