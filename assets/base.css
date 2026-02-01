@@ -1297,16 +1297,31 @@ results-list[initialized] {
 .db-editorial-moment__link {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-8);
-  text-decoration-color: currentcolor;
-  text-underline-offset: 0.18em;
-  transition: text-decoration-color var(--hover-transition-duration) var(--hover-transition-timing),
-    transform var(--hover-transition-duration) var(--hover-transition-timing);
+  gap: 6px;
+  color: rgb(var(--color-foreground-rgb) / 0.6);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  opacity: 0.75;
+  transition: opacity var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    color var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    text-decoration-color var(--db-motion-duration-fast) var(--db-motion-ease-out);
 }
 
 .db-editorial-moment__link:is(:hover, :focus-visible) {
-  text-decoration-color: transparent;
-  transform: translateX(4px);
+  opacity: 1;
+  color: var(--db-color-daphne-blue);
+  text-decoration-color: currentColor;
+}
+
+.db-editorial-moment__link:focus-visible {
+  outline: 2px solid var(--db-focus-ring-color);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.db-editorial-moment__link:active {
+  opacity: 0.92;
 }
 
 /* Dialog */
@@ -4628,8 +4643,8 @@ text-component {
 /* Keep the newsletter heading visually consistent with other footer headings */
 .footer-content .text-block--newsletter_heading > * {
   font-family: var(--db-type-press-family);
-  font-size: var(--db-type-press-size);
-  line-height: var(--db-type-press-line-height);
+  font-size: 0.72rem;
+  line-height: 1.4;
   letter-spacing: var(--db-type-press-letter-spacing);
   text-transform: var(--db-type-press-case);
   font-weight: var(--font-h6--weight, 600);
@@ -4685,8 +4700,31 @@ text-component {
   max-width: 36ch;
 }
 
+.footer-content .text-block--newsletter_copy > * {
+  margin: 0 0 12px;
+  max-width: 34ch;
+}
+
+.footer-content .group-block:has(.text-block--newsletter_heading) .group-block-content {
+  --gap: 10px;
+  max-width: 360px;
+  align-items: flex-start;
+}
+
+.footer-content .email-signup-block {
+  align-self: flex-start;
+  width: 100%;
+  max-width: 360px;
+}
+
+.footer-content .email-signup__form {
+  gap: 10px;
+}
+
 .footer-content .email-signup__input-group {
   --border-width: 1px;
+  --footer-email-underline-color: rgb(var(--color-foreground-rgb));
+  padding-block-end: 4px;
 }
 
 .footer-content .email-signup__input {
@@ -4716,6 +4754,28 @@ text-component {
 .footer-content .email-signup__button:hover .email-signup__button-icon,
 .footer-content .email-signup__button:focus-visible .email-signup__button-icon {
   transform: translateX(3px);
+}
+
+.footer-content .email-signup__input-group:hover .email-signup__input--underline {
+  --box-shadow-color: var(--footer-email-underline-color);
+  --box-shadow-multiplier: 2.25;
+  box-shadow: 0 calc(var(--border-width) * var(--box-shadow-multiplier)) 0 var(--footer-email-underline-color);
+}
+
+.footer-content .email-signup__input--underline:focus-visible {
+  --box-shadow-color: var(--footer-email-underline-color);
+  --box-shadow-multiplier: 2.5;
+  box-shadow: 0 calc(var(--border-width) * var(--box-shadow-multiplier)) 0 var(--footer-email-underline-color);
+  outline: none;
+}
+
+.footer-content .email-signup__input-group:hover .email-signup__button,
+.footer-content .email-signup__input--underline:focus-visible + .email-signup__button {
+  color: var(--footer-email-underline-color);
+}
+
+.footer-content .email-signup__input--underline {
+  transition: box-shadow 300ms ease, color 300ms ease;
 }
 
 .footer-content .social-icons__wrapper {
@@ -5026,16 +5086,30 @@ text-component {
   letter-spacing: var(--db-type-press-letter-spacing);
   text-transform: var(--db-type-press-case);
   color: rgb(var(--color-foreground-rgb) / 0.6);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: color var(--db-motion-duration-fast) var(--db-motion-ease),
-    border-color var(--db-motion-duration-fast) var(--db-motion-ease);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  opacity: 0.75;
+  transition: opacity var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    color var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    text-decoration-color var(--db-motion-duration-fast) var(--db-motion-ease-out);
 }
 
 .db-editorial-moment__link:hover,
 .db-editorial-moment__link:focus-visible {
-  color: #6FA9B8;
-  border-color: currentColor;
+  opacity: 1;
+  color: var(--db-color-daphne-blue);
+  text-decoration-color: currentColor;
+}
+
+.db-editorial-moment__link:focus-visible {
+  outline: 2px solid var(--db-focus-ring-color);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.db-editorial-moment__link:active {
+  opacity: 0.92;
 }
 
 @media screen and (max-width: 749px) {
@@ -5061,14 +5135,16 @@ text-component {
 }
 
 .db-curated-discovery__inner {
-  --db-edge-gap: clamp(18px, 4vw, 48px);
+  /* Align with Begin section container spacing */
+  --db-curated-max-width: 1600px;
+  --db-curated-inline-padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 36px;
-  max-width: calc(100vw - 2 * var(--db-edge-gap));
+  max-width: var(--db-curated-max-width);
   width: 100%;
   margin-inline: auto;
-  padding-inline: var(--db-edge-gap);
+  padding-inline: var(--db-curated-inline-padding);
 }
 
 .db-curated-discovery__header {
@@ -5433,6 +5509,53 @@ text-component {
   .hero .hero__content-wrapper .button .db-hero-cta__arrow {
     transform: none;
   }
+}
+
+/* The Land collection hero: force copy to the true center of the full-bleed media */
+main[data-template*='the-land'] .hero .hero__content-wrapper,
+main[data-template*='the-sea'] .hero .hero__content-wrapper,
+main[data-template*='the-sky'] .hero .hero__content-wrapper,
+main[data-template*='the-stars'] .hero .hero__content-wrapper {
+  position: absolute;
+  inset: 0;
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  left: 0 !important;
+  right: 0 !important;
+  transform: none !important;
+  padding-inline: 0 !important;
+}
+
+main[data-template*='the-land'] .hero .hero__content-wrapper .text-block,
+main[data-template*='the-sea'] .hero .hero__content-wrapper .text-block,
+main[data-template*='the-sky'] .hero .hero__content-wrapper .text-block,
+main[data-template*='the-stars'] .hero .hero__content-wrapper .text-block {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) translateX(-35px) !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  text-align: center !important;
+}
+
+main[data-template*='the-land'] .hero .hero__content-wrapper .text-block > *,
+main[data-template*='the-sea'] .hero .hero__content-wrapper .text-block > *,
+main[data-template*='the-sky'] .hero .hero__content-wrapper .text-block > *,
+main[data-template*='the-stars'] .hero .hero__content-wrapper .text-block > * {
+  margin: 0 !important;
+}
+
+main[data-template*='the-land'] .hero .hero__content-wrapper .db-land-cta,
+main[data-template*='the-sea'] .hero .hero__content-wrapper .db-land-cta,
+main[data-template*='the-sky'] .hero .hero__content-wrapper .db-land-cta,
+main[data-template*='the-stars'] .hero .hero__content-wrapper .db-land-cta {
+  position: absolute !important;
+  left: 50% !important;
+  top: calc(50% + clamp(3.5rem, 7vw, 5.75rem)) !important;
+  transform: translateX(-50%) !important;
+  margin: 0 !important;
 }
 
 /* Collection: editorial landing */
@@ -6112,7 +6235,7 @@ text-component {
   font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgb(var(--color-foreground-rgb) / 0.6);
+  color: rgb(var(--color-foreground-rgb) / 0.65);
   margin: 0;
 }
 
@@ -6122,7 +6245,7 @@ text-component {
   font-size: 0.75rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgb(var(--color-foreground-rgb) / 0.6);
+  color: rgb(var(--color-foreground-rgb) / 0.65);
 }
 
 .db-collection-facets .facets-controls__chips {
@@ -6161,7 +6284,7 @@ text-component {
   padding-block: 12px;
   font-family: var(--font-body--family);
   font-size: 0.95rem;
-  color: rgb(var(--color-foreground-rgb) / 0.8);
+  color: rgb(var(--color-foreground-rgb) / 0.65);
 }
 
 .db-collection-facets .facets__summary .icon-caret {

@@ -76,16 +76,39 @@
   }
 
   .cart-drawer__close-button {
-    margin-right: calc(var(--padding-sm) * -1);
+    position: relative;
+    top: auto;
+    right: auto;
+    z-index: auto;
+    width: var(--minimum-touch-target);
+    height: var(--minimum-touch-target);
+    min-width: var(--minimum-touch-target);
+    min-height: var(--minimum-touch-target);
+    padding: 0;
+    margin: 0;
+    color: var(--color-foreground);
+    border-radius: 50%;
+    background-color: transparent;
+    box-shadow: none;
+    --button-color: currentColor;
+    --button-background-color: transparent;
+    --button-border-color: transparent;
+    --button-border-width: 0;
+    --button-shadow: none;
+    --button-shadow-hover: none;
+    --button-shadow-active: none;
   }
 
   .cart-drawer--empty .cart-drawer__content {
-    text-align: center;
+    text-align: left;
     min-height: auto;
+    padding: var(--drawer-content-block-padding) var(--drawer-padding);
+    gap: var(--padding-md);
   }
 
   .cart-drawer--empty .cart-drawer__heading {
-    margin-bottom: var(--margin-md);
+    margin: 0;
+    color: rgb(var(--color-foreground-rgb) / 0.9);
   }
 
   .cart-drawer__items .cart-items__table-row {
@@ -134,7 +157,11 @@
 
   .cart-drawer__heading--empty {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    font-family: var(--font-body--family);
+    font-style: var(--font-body--style);
+    font-weight: var(--font-body--weight);
+    letter-spacing: 0.01em;
   }
 
   .cart-drawer__items {
@@ -163,8 +190,8 @@
   .cart-drawer--empty .cart-drawer__inner {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: stretch;
+    justify-content: flex-start;
     height: 100dvh;
     margin-top: 0;
   }
@@ -174,21 +201,25 @@
   }
 
   .cart-drawer--empty .cart-drawer__header {
-    justify-content: right;
+    justify-content: flex-start;
     border-bottom: none;
-    padding-bottom: 0;
+    padding: var(--drawer-content-block-padding) var(--drawer-padding) 0;
   }
 
   .cart-drawer--empty .cart-drawer__heading {
-    text-align: center;
+    text-align: left;
   }
 
   .cart-drawer:not(:has(.cart-form)) .cart-items__wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    text-align: center;
+    text-align: left;
+  }
+
+  .cart-drawer--empty .cart-drawer__items {
+    padding-inline: 0;
   }
 
   header-actions {

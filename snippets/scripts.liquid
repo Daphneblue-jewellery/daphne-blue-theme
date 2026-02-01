@@ -198,6 +198,13 @@
   type="module"
   fetchpriority="low"
 ></script>
+{% if template contains 'the-sea' %}
+  <script
+    src="{{ 'hero-video.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+{% endif %}
 <script
   src="{{ 'component-quantity-selector.js' | asset_url }}"
   type="module"

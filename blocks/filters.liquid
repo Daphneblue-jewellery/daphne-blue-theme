@@ -15,19 +15,12 @@
 
 {%- liquid
   assign is_land_collection = false
-  assign is_sea_collection = false
   if template.suffix == 'the-land'
     assign is_land_collection = true
-  endif
-  if template.suffix == 'the-sea'
-    assign is_sea_collection = true
   endif
 
   assign block_settings = block.settings
   assign use_db_filter_rail = false
-  if is_sea_collection and block_settings.enable_filtering and block_settings.filter_style == 'horizontal'
-    assign use_db_filter_rail = true
-  endif
   assign products_count = results_size
   assign sort_by = results.sort_by | default: results.default_sort_by
   assign filters = filters | default: results.filters
@@ -291,7 +284,7 @@
                       endif
                     %}
                     {% render 'overflow-list',
-                      class: 'facets__overflow-list db-filter-rail__overflow',
+                      class: 'facets__overflow-list',
                       children: rendered_filters,
                       more-attributes: more_attributes,
                       minimum-items: 2

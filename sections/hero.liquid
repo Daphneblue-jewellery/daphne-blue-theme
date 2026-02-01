@@ -641,6 +641,65 @@
     text-align: center;
   }
 
+  /* Hard-center the hero copy on homepage hero */
+  #Hero-hero_TCphkR .hero__content-wrapper {
+    display: grid;
+    place-content: center;
+    place-items: center;
+    text-align: center;
+    inset: 0;
+    padding-inline: var(--page-margin, 0px);
+  }
+
+  #Hero-hero_TCphkR .hero__content-wrapper .group-block-content,
+  #Hero-hero_TCphkR .hero__content-wrapper :is(.text-block, .button) {
+    margin-inline: auto;
+  }
+
+  {% if template.name == 'collection' and template.suffix == 'the-land' %}
+    /* The Land hero: force the title itself to the true center of the video */
+    #Hero-{{ section.id }} .hero__content-wrapper {
+      position: absolute;
+      inset: 0;
+      grid-column: 1 / -1 !important;
+      width: 100% !important;
+      left: 0 !important;
+      right: 0 !important;
+      transform: none !important;
+      padding-inline: 0 !important;
+      --section-top-offset: 0px !important;
+    }
+
+    #Hero-{{ section.id }} .text-block {
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: max-content !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      text-align: center !important;
+    }
+
+    #Hero-{{ section.id }} .text-block > * {
+      margin: 0 !important;
+    }
+
+    #Hero-{{ section.id }} .db-land-cta {
+      position: absolute !important;
+      left: 50% !important;
+      top: calc(50% + clamp(3.5rem, 7vw, 5.75rem)) !important;
+      transform: translateX(-50%) !important;
+      margin: 0 !important;
+    }
+  {% endif %}
+
+  /* Remove header height offset so Land hero uses full allotted height */
+  #Hero-db_land_hero {
+    --hero-height-offset: 0px;
+    min-height: var(--hero-min-height);
+  }
+
   .hero__media-wrapper {
     position: absolute;
     inset: 0;
@@ -836,11 +895,26 @@
     #Hero-{{ section.id }} .hero__media-wrapper {
       background-image: url("{{ 'db-home-hero-still-life.jpg' | asset_url }}");
       background-size: cover;
-      background-position: 38% 42%;
+      background-position: 40% 45%;
       background-repeat: no-repeat;
-      background-color: #f7f2e8;
+      background-color: #f3eee4;
       --hero-media-count: 1;
       --hero-media-count-mobile: 1;
+      isolation: isolate;
+    }
+
+    #Hero-{{ section.id }} .hero__media-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("{{ 'land-placeholder-1.jpg' | asset_url }}");
+      background-size: cover;
+      background-position: 56% 58%;
+      opacity: 0.3;
+      mix-blend-mode: multiply;
+      filter: saturate(0.6) contrast(1.08) brightness(0.96);
+      pointer-events: none;
+      z-index: var(--layer-base);
     }
 
     #Hero-{{ section.id }} .hero__media-wrapper img,
@@ -851,16 +925,30 @@
     }
 
     #Hero-{{ section.id }} .overlay {
-      background: linear-gradient(180deg, rgb(0 0 0 / 0.18), rgb(0 0 0 / 0));
+      background: linear-gradient(180deg, rgb(66 56 45 / 0.3), rgb(66 56 45 / 0.06));
+    }
+
+    #Hero-{{ section.id }} .hero__content-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: var(--gap);
     }
 
     @media (max-width: 749px) {
       #Hero-{{ section.id }} .hero__media-wrapper {
+        background-position: 50% 48%;
+      }
+
+      #Hero-{{ section.id }} .hero__media-wrapper::before {
         background-position: 50% 50%;
+        opacity: 0.26;
       }
 
       #Hero-{{ section.id }} .overlay {
-        background: linear-gradient(180deg, rgb(0 0 0 / 0.22), rgb(0 0 0 / 0));
+        background: linear-gradient(180deg, rgb(66 56 45 / 0.36), rgb(66 56 45 / 0.1));
       }
     }
   {% endif %}

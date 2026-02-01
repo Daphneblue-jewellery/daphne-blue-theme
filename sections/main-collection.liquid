@@ -14,11 +14,8 @@
 {% endfor %}
 
 {% assign is_land_collection = false %}
-{% assign is_sea_collection = false %}
 {% if template.suffix == 'the-land' %}
   {% assign is_land_collection = true %}
-{% elsif template.suffix == 'the-sea' %}
-  {% assign is_sea_collection = true %}
 {% endif %}
 
 {% assign placeholder_children = '' %}
@@ -45,13 +42,6 @@
     type="module"
     fetchpriority="low"
   ></script>
-{% endif %}
-
-{% if is_sea_collection %}
-  <style>
-    .db-sea-collection .collection-wrapper { row-gap: var(--db-sea-filter-rail-gap); }
-    .db-sea-collection .facets-block-wrapper { width: 100%; }
-  </style>
 {% endif %}
 
 {% javascript %}
@@ -165,7 +155,7 @@
 {% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <results-list
-  class="section product-grid-container color-{{ section.settings.color_scheme }}{% if use_sidebar_filters %} db-collection-facets{% endif %}{% if is_land_collection %} db-land-collection{% endif %}{% if is_sea_collection %} db-sea-collection{% endif %}"
+  class="section product-grid-container color-{{ section.settings.color_scheme }}{% if use_sidebar_filters %} db-collection-facets{% endif %}{% if is_land_collection %} db-land-collection{% endif %}"
   style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
   section-id="{{ section.id }}"
   infinite-scroll="{{ section.settings.enable_infinite_scroll }}"
@@ -307,6 +297,7 @@
   /* Land collection enhancements */
   .db-land-collection {
     --land-filters-offset: calc(var(--header-group-height, 72px) + 10px);
+    --db-land-press-opacity: 0.65;
   }
 
   .db-land-collection .main-collection-grid {
@@ -335,6 +326,40 @@
 
   .db-land-collection .facets__form-wrapper--fallback {
     display: none;
+  }
+
+  .db-land-collection .facets--horizontal .facets__summary {
+    color: rgb(var(--color-foreground-rgb) / var(--db-land-press-opacity));
+    --icon-opacity: var(--db-land-press-opacity);
+  }
+
+  .db-land-collection .facets--horizontal .facets__label,
+  .db-land-collection .facets--horizontal .facets__status,
+  .db-land-collection .facets--horizontal .products-count-wrapper,
+  .db-land-collection .facets--horizontal .facets--filters-title {
+    color: rgb(var(--color-foreground-rgb) / var(--db-land-press-opacity));
+  }
+
+  main[data-template*='the-sea'] .facets--horizontal .facets__summary,
+  main[data-template*='the-sky'] .facets--horizontal .facets__summary,
+  main[data-template*='the-stars'] .facets--horizontal .facets__summary {
+    color: rgb(var(--color-foreground-rgb) / 0.65);
+    --icon-opacity: 0.65;
+  }
+
+  main[data-template*='the-sea'] .facets--horizontal .facets__label,
+  main[data-template*='the-sky'] .facets--horizontal .facets__label,
+  main[data-template*='the-stars'] .facets--horizontal .facets__label,
+  main[data-template*='the-sea'] .facets--horizontal .facets__status,
+  main[data-template*='the-sky'] .facets--horizontal .facets__status,
+  main[data-template*='the-stars'] .facets--horizontal .facets__status,
+  main[data-template*='the-sea'] .facets--horizontal .products-count-wrapper,
+  main[data-template*='the-sky'] .facets--horizontal .products-count-wrapper,
+  main[data-template*='the-stars'] .facets--horizontal .products-count-wrapper,
+  main[data-template*='the-sea'] .facets--horizontal .facets--filters-title,
+  main[data-template*='the-sky'] .facets--horizontal .facets--filters-title,
+  main[data-template*='the-stars'] .facets--horizontal .facets--filters-title {
+    color: rgb(var(--color-foreground-rgb) / 0.65);
   }
 
   @media (prefers-reduced-motion: reduce) {

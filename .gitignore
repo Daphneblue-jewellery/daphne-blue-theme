@@ -3,3 +3,4 @@ node_modules
 .env
 .DS_Store
 theme-dev.log
+node_modules

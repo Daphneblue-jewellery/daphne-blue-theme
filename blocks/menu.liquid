@@ -9,6 +9,18 @@
   if show_as_accordion == true and block_settings.accordion_dividers == true
     assign dividers_enabled = true
   endif
+
+  assign render_links = menu.links
+  assign heading_normalized = heading | strip | downcase
+  if menu and heading_normalized != blank
+    for menu_link in menu.links
+      assign link_title_normalized = menu_link.title | strip | downcase
+      if link_title_normalized == heading_normalized and menu_link.links.size > 0
+        assign render_links = menu_link.links
+        break
+      endif
+    endfor
+  endif
 %}
 
 {% if menu != blank or heading != blank %}
@@ -54,7 +66,7 @@
       <div class="details-content">
         {% if menu %}
           <ul class="list-unstyled">
-            {% for link in menu.links %}
+            {% for link in render_links %}
               <li class="menu__item {{ block_settings.link_preset }}">
                 <a href="{{ link.url }}">
                   {{ link.title }}

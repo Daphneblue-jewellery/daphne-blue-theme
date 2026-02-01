@@ -81,6 +81,17 @@
   {% assign price = product.price %}
 {% endunless %}
 
+{% assign product_has_swatches = false %}
+{% unless onboarding %}
+  {% for product_option in product.options_with_values %}
+    {% assign swatch_count = product_option.values | map: 'swatch' | compact | size %}
+    {% if swatch_count > 0 %}
+      {% assign product_has_swatches = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endunless %}
+
 <a class="db-editorial-card" href="{{ target_url }}" {% if onboarding %}aria-hidden="true"{% endif %}>
   <div class="db-editorial-card__media" aria-hidden="true">
     {% if featured_image %}
@@ -108,6 +119,30 @@
     <h3 class="db-editorial-card__title">{% unless onboarding %}{{ product.title }}{% else %}&nbsp;{% endunless %}</h3>
     <div class="db-editorial-card__meta">
       <span class="db-editorial-card__price">{% if price %}{{ price | money }}{% else %}&nbsp;{% endif %}</span>
+      {% if product_has_swatches %}
+        <div class="db-editorial-card__swatches" aria-hidden="true">
+          <ul class="db-editorial-card__swatch-list" role="list">
+            {% for product_option in product.options_with_values %}
+              {% assign swatch_count = product_option.values | map: 'swatch' | compact | size %}
+              {% if swatch_count == 0 %}
+                {% continue %}
+              {% endif %}
+              {% for product_option_value in product_option.values %}
+                {% if product_option_value.swatch == blank %}
+                  {% continue %}
+                {% endif %}
+                <li class="db-editorial-card__swatch">
+                  {% render 'swatch',
+                    swatch: product_option_value.swatch,
+                    variant_image: product_option_value.variant.featured_media
+                  %}
+                </li>
+              {% endfor %}
+              {% break %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
     </div>
   </div>
 </a>
@@ -182,9 +217,9 @@
 
   .db-editorial-card__meta {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
     margin-top: 0;
   }
 
@@ -195,6 +230,42 @@
     opacity: 0;
     transform: translateY(4px);
     transition: opacity 520ms ease-out, transform 520ms ease-out;
+  }
+
+  .db-editorial-card__swatches {
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 520ms ease-out, transform 520ms ease-out;
+    --variant-picker-swatch-width-unitless: 12;
+    --variant-picker-swatch-height-unitless: 12;
+    --variant-picker-swatch-width: 12px;
+    --variant-picker-swatch-height: 12px;
+    --variant-picker-swatch-radius: 999px;
+    --style-border-swatch-width: 1px;
+    --style-border-swatch-opacity: 18%;
+  }
+
+  .db-editorial-card__swatch-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .db-editorial-card__swatch {
+    display: flex;
+  }
+
+  .db-editorial-card__swatch .swatch {
+    --min-width-unitless: 12;
+    --min-height-unitless: 12;
+    --min-width: 12px;
+    --min-height: 12px;
+    --max-swatch-size: 22px;
+    filter: saturate(0.75) brightness(1.03);
+    opacity: 0.85;
   }
 
   .db-editorial-card:hover .db-editorial-card__media img,
@@ -210,6 +281,12 @@
 
   .db-editorial-card:hover .db-editorial-card__price,
   .db-editorial-card:focus-visible .db-editorial-card__price {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .db-editorial-card:hover .db-editorial-card__swatches,
+  .db-editorial-card:focus-visible .db-editorial-card__swatches {
     opacity: 1;
     transform: translateY(0);
   }
