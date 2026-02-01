@@ -3,13 +3,26 @@
 {% liquid
   assign product = closest.product
   assign placeholder_id = placeholder_id
+  assign is_editorial_collection = false
+
+  if template.suffix == 'the-land' or template.suffix == 'the-sea' or template.suffix == 'the-sky' or template.suffix == 'the-stars'
+    assign is_editorial_collection = true
+  elsif collection
+    if collection.handle == 'the-land' or collection.handle == 'the-sea' or collection.handle == 'the-sky' or collection.handle == 'the-stars'
+      assign is_editorial_collection = true
+    endif
+  endif
 -%}
 
-{% capture children %}
-  {% content_for 'blocks', closest.product: product %}
-{% endcapture %}
+{% if is_editorial_collection %}
+  {% render 'db-product-card', product: product, placeholder_id: placeholder_id, block: block %}
+{% else %}
+  {% capture children %}
+    {% content_for 'blocks', closest.product: product %}
+  {% endcapture %}
 
-{% render 'product-card', children: children, product: product, placeholder_id: placeholder_id %}
+  {% render 'product-card', children: children, product: product, placeholder_id: placeholder_id %}
+{% endif %}
 
 {% schema %}
 {

@@ -14,8 +14,11 @@
 {% endfor %}
 
 {% assign is_land_collection = false %}
+{% assign is_sea_collection = false %}
 {% if template.suffix == 'the-land' %}
   {% assign is_land_collection = true %}
+{% elsif template.suffix == 'the-sea' %}
+  {% assign is_sea_collection = true %}
 {% endif %}
 
 {% assign placeholder_children = '' %}
@@ -42,6 +45,13 @@
     type="module"
     fetchpriority="low"
   ></script>
+{% endif %}
+
+{% if is_sea_collection %}
+  <style>
+    .db-sea-collection .collection-wrapper { row-gap: var(--db-sea-filter-rail-gap); }
+    .db-sea-collection .facets-block-wrapper { width: 100%; }
+  </style>
 {% endif %}
 
 {% javascript %}
@@ -71,6 +81,7 @@
     const clickHandler = (event) => {
       const chip = event.target.closest('[data-land-filter-chip]');
       if (!chip) return;
+      if (chip.getAttribute('aria-disabled') === 'true') return;
       event.preventDefault();
 
       const value = (chip.dataset.value || '').toLowerCase();
@@ -81,9 +92,27 @@
         return (input.value || '').toLowerCase() === value;
       });
 
+      const setChipState = (targetValue, isActive) => {
+        landRoot
+          .querySelectorAll('[data-land-filter-chip]')
+          .forEach((chipEl) => {
+            const chipValue = (chipEl.dataset.value || '').toLowerCase();
+            if (chipValue === targetValue) {
+              chipEl.classList.toggle('is-active', isActive);
+              chipEl.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            }
+          });
+      };
+
       if (match) {
+        let nextState = true;
+        if (match.type === 'checkbox') {
+          nextState = !match.checked;
+        }
+
         match.click();
         match.dispatchEvent(new Event('change', { bubbles: true }));
+        setChipState(value, nextState);
         const form = match.closest('form');
         if (form) form.dispatchEvent(new Event('submit', { bubbles: true }));
         return;
@@ -136,7 +165,7 @@
 {% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <results-list
-  class="section product-grid-container color-{{ section.settings.color_scheme }}{% if use_sidebar_filters %} db-collection-facets{% endif %}{% if is_land_collection %} db-land-collection{% endif %}"
+  class="section product-grid-container color-{{ section.settings.color_scheme }}{% if use_sidebar_filters %} db-collection-facets{% endif %}{% if is_land_collection %} db-land-collection{% endif %}{% if is_sea_collection %} db-sea-collection{% endif %}"
   style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
   section-id="{{ section.id }}"
   infinite-scroll="{{ section.settings.enable_infinite_scroll }}"
@@ -183,31 +212,6 @@
                   {% # theme-check-enable %}
                 {% endif %}
               </li>
-              {% if is_land_collection and paginate.current_page == 1 and forloop.index == 8 %}
-                <li class="product-grid__item product-grid__item--editorial" aria-label="Editorial moment">
-                  <div class="db-land-editorial">
-                    <div class="db-land-editorial__media">
-                      <img
-                        src="{{ 'land-placeholder-5.jpg' | asset_url }}"
-                        alt="Earthy texture for The Land"
-                        loading="lazy"
-                        width="1200"
-                        height="1500"
-                      >
-                    </div>
-                    <div class="db-land-editorial__content">
-                      <p class="db-land-editorial__kicker">A Land moment</p>
-                      <h3 class="db-land-editorial__title">Rooted by nature</h3>
-                      <p class="db-land-editorial__copy">Warm metals and grounding stones — designed to layer, designed to last.</p>
-                      <ul class="db-land-editorial__list" aria-label="Materials">
-                        <li>Warm metals</li>
-                        <li>Grounded stones</li>
-                        <li>Made to layer</li>
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-              {% endif %}
             {% endfor %}
           {% endcapture %}
 
@@ -317,87 +321,6 @@
 
   .db-land-collection .db-land-controls { display: none; }
 
-  .db-land-collection .product-grid__item--editorial {
-    grid-column: 1 / -1;
-    list-style: none;
-    padding: 0;
-  }
-
-  .db-land-collection .db-land-editorial {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-    gap: clamp(20px, 5vw, 48px);
-    align-items: center;
-    padding: clamp(18px, 4vw, 32px);
-    background: linear-gradient(135deg, rgb(var(--color-foreground-rgb) / 0.02), rgb(var(--color-foreground-rgb) / 0));
-    border-radius: 18px;
-    border: 1px solid rgb(var(--color-foreground-rgb) / 0.06);
-  }
-
-  .db-land-collection .db-land-editorial__media {
-    position: relative;
-    overflow: hidden;
-    border-radius: 16px;
-  }
-
-  .db-land-collection .db-land-editorial__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    aspect-ratio: 4 / 5;
-  }
-
-  .db-land-collection .db-land-editorial__content {
-    display: grid;
-    gap: 10px;
-  }
-
-  .db-land-collection .db-land-editorial__kicker {
-    margin: 0;
-    font-family: var(--db-type-press-family);
-    font-size: var(--db-type-press-size);
-    letter-spacing: var(--db-type-press-letter-spacing);
-    text-transform: var(--db-type-press-case);
-    color: rgb(var(--color-foreground-rgb) / 0.6);
-  }
-
-  .db-land-collection .db-land-editorial__title {
-    margin: 0;
-    font-family: var(--font-heading--family);
-    font-size: clamp(1.6rem, 2vw, 2.2rem);
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    color: var(--color-foreground-heading);
-  }
-
-  .db-land-collection .db-land-editorial__copy {
-    margin: 0;
-    font-family: var(--font-body--family);
-    font-size: 1rem;
-    line-height: 1.7;
-    color: rgb(var(--color-foreground-rgb) / 0.72);
-  }
-
-  .db-land-collection .db-land-editorial__list {
-    list-style: none;
-    padding: 0;
-    margin: 4px 0 0;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    font-family: var(--font-body--family);
-    font-size: 0.95rem;
-    color: rgb(var(--color-foreground-rgb) / 0.78);
-  }
-
-  .db-land-collection .db-land-editorial__list li {
-    padding: 6px 10px;
-    border-radius: 999px;
-    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
-    background: rgb(var(--color-background-rgb));
-  }
-
   .db-land-collection .facets__filters-wrapper--fallback {
     display: none;
   }
@@ -414,12 +337,6 @@
     display: none;
   }
 
-  @media (max-width: 989px) {
-    .db-land-collection .db-land-editorial {
-      grid-template-columns: 1fr;
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     .db-land-collection .db-land-chip {
       transition: none;
@@ -433,192 +350,275 @@
     width: 100%;
   }
 
-  .db-land-collection .db-filter-rail {
+  .db-land-collection .db-land-filter-rail {
+    --db-land-transition: 520ms cubic-bezier(0.18, 0.88, 0.24, 1);
+
     width: 100%;
-    background: rgb(var(--color-background-rgb));
-    border: 1px solid rgb(var(--color-foreground-rgb) / 0.06);
-    border-radius: 16px;
-    padding: clamp(10px, 2vw, 16px);
-  }
-
-  .db-land-collection .db-filter-rail__row {
+    padding: clamp(14px, 3vw, 22px) 0 clamp(10px, 2vw, 18px);
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    gap: clamp(12px, 2vw, 18px);
-  }
-
-  @media (max-width: 749px) {
-    .db-land-collection .db-filter-rail__row {
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .db-land-collection .db-filter-rail__meta {
-      order: -1;
-      width: 100%;
-    }
-  }
-
-  .db-land-collection .db-filter-rail__controls {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 10px;
-    min-width: 0;
-  }
-
-  .db-land-collection .db-filter-rail__meta {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    justify-content: flex-end;
-    color: rgb(var(--color-foreground-rgb) / 0.7);
-    font-family: var(--font-body--family);
-    font-size: 0.95rem;
-    letter-spacing: 0.01em;
-    min-width: 0;
-  }
-
-  .db-land-collection .db-filter-rail__count {
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .db-land-collection .db-filter-rail__status {
-    margin: 10px 0 0;
-    color: rgb(var(--color-foreground-rgb) / 0.65);
-    font-size: 0.95rem;
-  }
-
-  .db-land-collection .db-filter-rail .facets__filters-wrapper {
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    row-gap: 12px;
-  }
-
-  .db-land-collection .db-filter-rail details {
+    gap: clamp(12px, 2vw, 20px);
+    background: transparent;
+    border: none;
     position: relative;
   }
 
-  .db-land-collection .db-filter-rail .facets__summary {
-    border: 1px solid rgb(var(--color-foreground-rgb) / 0.08);
-    border-radius: 16px;
-    padding: 9px 12px;
-    min-height: 38px;
-    gap: 8px;
-    background: rgb(var(--color-foreground-rgb) / 0.02);
+  .db-land-collection .db-land-filter-rail__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: clamp(12px, 2vw, 18px);
+  }
+
+  .db-land-collection .db-land-filter-rail__copy {
+    display: grid;
+    gap: 6px;
+    max-width: min(620px, 70%);
+  }
+
+  .db-land-collection .db-land-filter-rail__eyebrow {
+    margin: 0;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.86rem;
+    color: rgb(var(--color-foreground-rgb) / 0.6);
+    font-family: var(--db-type-press-family);
+  }
+
+  .db-land-collection .db-land-filter-rail__lede {
+    margin: 0;
+    font-family: var(--font-body--family);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgb(var(--color-foreground-rgb) / 0.7);
+  }
+
+  .db-land-collection .db-land-filter-rail__sort {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: rgb(var(--color-foreground-rgb) / 0.55);
+    opacity: 0.85;
+  }
+
+  .db-land-collection .db-land-filter-rail__sort .facets__summary {
+    padding: 2px 0;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    text-decoration: underline transparent 0.12em;
+    text-underline-offset: 0.14em;
+    color: currentColor;
+    transition: color var(--db-land-transition), text-decoration-color var(--db-land-transition), transform var(--db-land-transition);
+  }
+
+  .db-land-collection .db-land-filter-rail__sort .facets__summary .icon-caret {
+    height: var(--icon-size-xs);
+    width: var(--icon-size-xs);
+    transition: transform var(--db-land-transition), color var(--db-land-transition);
+  }
+
+  .db-land-collection .db-land-filter-rail__sort .facets__summary:is(:hover, :focus-visible, :active) {
     color: rgb(var(--color-foreground-rgb) / 0.82);
-    letter-spacing: 0.01em;
-    font-size: 0.96rem;
-    text-decoration: underline transparent 0.1em;
-    text-underline-offset: 0.18em;
-    transition: color 520ms var(--animation-easing), border-color 520ms var(--animation-easing), background-color 520ms var(--animation-easing), text-decoration-color 520ms var(--animation-easing);
-  }
-
-  .db-land-collection .db-filter-rail .facets__summary .icon-caret {
-    transition: transform 520ms var(--animation-easing), color 520ms var(--animation-easing);
-  }
-
-  .db-land-collection .db-filter-rail .facets__summary:hover,
-  .db-land-collection .db-filter-rail .facets__summary:focus-visible,
-  .db-land-collection .db-filter-rail details[open] > .facets__summary {
-    color: rgb(var(--color-foreground-rgb));
-    border-color: rgb(var(--color-foreground-rgb) / 0.18);
-    background: rgb(var(--color-foreground-rgb) / 0.04);
     text-decoration-color: currentColor;
+    transform: translateX(2px);
   }
 
-  .db-land-collection .db-filter-rail .facets__summary:hover .icon-caret,
-  .db-land-collection .db-filter-rail .facets__summary:focus-visible .icon-caret,
-  .db-land-collection .db-filter-rail details[open] .icon-caret {
-    transform: translateY(-2px);
+  .db-land-collection .db-land-filter-rail__sort .facets__summary:is(:hover, :focus-visible, :active) .icon-caret {
+    transform: translateY(-1px);
     color: currentColor;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .db-land-collection .db-filter-rail .facets__summary .icon-caret {
-      transition: none;
-      transform: none;
-    }
+  .db-land-collection .db-land-filter-rail__layer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(14px, 2vw, 20px);
+    padding: 6px 0;
+    box-shadow: inset 0 -1px 0 rgb(var(--color-foreground-rgb) / 0.06);
   }
 
-  .db-land-collection .db-filter-rail .facets__panel-content,
-  .db-land-collection .db-filter-rail .sorting-filter__options {
+  .db-land-collection .db-land-filter-rail__layer--secondary {
+    padding-top: 2px;
+    box-shadow: inset 0 -1px 0 rgb(var(--color-foreground-rgb) / 0.04);
+  }
+
+  .db-land-collection .db-land-filter-rail__label {
+    font-family: var(--db-type-press-family);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    color: rgb(var(--color-foreground-rgb) / 0.62);
+    min-width: max-content;
+  }
+
+  .db-land-collection .db-land-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(12px, 2vw, 18px);
+    row-gap: clamp(8px, 1vw, 14px);
+  }
+
+  .db-land-collection .db-land-chip {
+    position: relative;
+    background: none;
+    border: none;
+    padding: 4px 0;
+    color: rgb(var(--color-foreground-rgb) / 0.78);
+    font-family: var(--font-body--family);
+    font-size: 1rem;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: opacity var(--db-land-transition), transform var(--db-land-transition), color var(--db-land-transition), text-decoration-color var(--db-land-transition);
+  }
+
+  .db-land-collection .db-land-chip::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    opacity: 0;
+    transform: translateY(4px) scaleX(0.9);
+    transition: opacity var(--db-land-transition), transform var(--db-land-transition);
+  }
+
+  .db-land-collection .db-land-chip:is(:hover, :focus-visible) {
+    opacity: 0.82;
+    transform: translateX(2px);
+  }
+
+  .db-land-collection .db-land-chip:is(:hover, :focus-visible)::after {
+    opacity: 0.4;
+    transform: translateY(0) scaleX(1);
+  }
+
+  .db-land-collection .db-land-chip.is-active {
+    color: rgb(var(--color-foreground-rgb));
+    opacity: 1;
+  }
+
+  .db-land-collection .db-land-chip.is-active::after {
+    opacity: 0.9;
+    transform: translateY(0) scaleX(1);
+  }
+
+  .db-land-collection .db-land-chip.is-disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .db-land-collection .db-land-chip.is-disabled:is(:hover, :focus-visible) {
+    transform: none;
+  }
+
+  .db-land-collection .db-land-chip--secondary {
+    color: rgb(var(--color-foreground-rgb) / 0.65);
+  }
+
+  .db-land-collection .db-land-chip--secondary.is-active {
+    color: rgb(var(--color-foreground-rgb) / 0.9);
+  }
+
+  .db-land-collection .db-land-filter-rail__status-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(10px, 2vw, 16px);
+    padding-top: 2px;
+  }
+
+  .db-land-collection .db-land-filter-rail__status-text {
+    margin: 0;
+    font-size: 0.95rem;
+    color: rgb(var(--color-foreground-rgb) / 0.64);
+    line-height: 1.6;
+  }
+
+  .db-land-collection .db-land-filter-rail__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .db-land-collection .db-land-filter-rail__clear {
+    color: rgb(var(--color-foreground-rgb) / 0.6);
+    text-decoration: underline transparent 0.12em;
+    text-underline-offset: 0.16em;
+    transition: color var(--db-land-transition), text-decoration-color var(--db-land-transition), transform var(--db-land-transition);
+    padding: 4px 0;
+  }
+
+  .db-land-collection .db-land-filter-rail__clear:is(:hover, :focus-visible) {
+    color: rgb(var(--color-foreground-rgb));
+    text-decoration-color: currentColor;
+    transform: translateX(2px);
+  }
+
+  .db-land-collection .db-land-filter-rail__native {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .db-land-collection .db-land-filter-rail .facets__filters-wrapper {
+    margin: 0;
+  }
+
+  .db-land-collection .db-land-filter-rail .facets__summary {
+    border: none;
+    background: transparent;
+    padding: 0;
+    min-height: auto;
+    color: rgb(var(--color-foreground-rgb) / 0.7);
+  }
+
+  .db-land-collection .db-land-filter-rail .facets__panel-content,
+  .db-land-collection .db-land-filter-rail .sorting-filter__options {
     border-radius: 14px;
     border: 1px solid rgb(var(--color-foreground-rgb) / 0.08);
-    box-shadow: none;
+    box-shadow: 0 16px 30px rgb(0 0 0 / 0.04);
     background: rgb(var(--color-background-rgb));
     padding: var(--padding-sm);
     margin-top: 6px;
   }
 
-  .db-land-collection .db-filter-rail .facets__panel-content::-webkit-scrollbar,
-  .db-land-collection .db-filter-rail .sorting-filter__options::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  .db-land-collection .db-filter-rail .facets__panel-content::-webkit-scrollbar-thumb,
-  .db-land-collection .db-filter-rail .sorting-filter__options::-webkit-scrollbar-thumb {
-    background: rgb(var(--color-foreground-rgb) / 0.14);
-    border-radius: 999px;
-  }
-
-  .db-land-collection .db-filter-rail .facets__panel-content::-webkit-scrollbar-track,
-  .db-land-collection .db-filter-rail .sorting-filter__options::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .db-land-collection .db-filter-rail .facets__inputs-wrapper {
-    padding: 0;
-    margin: 0;
-  }
-
-  .db-land-collection .db-filter-rail .facets__filters-wrapper .facets__summary {
-    width: auto;
-  }
-
-  .db-land-collection .db-filter-rail .facets__overflow-list {
-    gap: 10px;
-  }
-
-  .db-land-collection .db-filter-rail .facets-remove--toolbar {
-    margin: 0;
-    padding: 0;
-    gap: 8px;
-  }
-
-  .db-land-collection .db-filter-rail .facets__clear-all-link {
-    padding: 0;
-  }
-
-  .db-land-collection .db-filter-rail .facets__label,
-  .db-land-collection .db-filter-rail .clear-filter {
-    letter-spacing: 0.01em;
-  }
-
-  .db-land-collection .db-filter-rail .sorting-filter {
-    position: relative;
-  }
-
-  .db-land-collection .db-filter-rail .sorting-filter__container {
-    padding: 0;
-    margin: 0;
-  }
-
-  .db-land-collection .db-filter-rail .sorting-filter__options {
-    right: 0;
-  }
-
-  .db-land-collection .db-filter-rail .products-count-wrapper {
+  .db-land-collection .db-land-filter-rail .products-count-wrapper {
     display: none !important;
   }
 
-  .db-land-collection .db-filter-rail .facets__filters-wrapper .facets__summary .icon-caret {
-    height: var(--icon-size-xs);
-    width: var(--icon-size-xs);
+  @media (max-width: 989px) {
+    .db-land-collection .db-land-filter-rail__header {
+      flex-direction: column;
+    }
+
+    .db-land-collection .db-land-filter-rail__copy {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .db-land-collection .db-land-filter-rail {
+      gap: 12px;
+      padding-inline: max(var(--padding-sm), var(--padding-inline-start)) max(var(--padding-sm), var(--padding-inline-end));
+    }
+
+    .db-land-collection .db-land-filter-rail__layer {
+      gap: 12px;
+    }
+
+    .db-land-collection .db-land-filter-rail__label {
+      width: 100%;
+    }
   }
 {% endstylesheet %}
 

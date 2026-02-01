@@ -15,13 +15,17 @@
 
 {%- liquid
   assign is_land_collection = false
+  assign is_sea_collection = false
   if template.suffix == 'the-land'
     assign is_land_collection = true
+  endif
+  if template.suffix == 'the-sea'
+    assign is_sea_collection = true
   endif
 
   assign block_settings = block.settings
   assign use_db_filter_rail = false
-  if is_land_collection and block_settings.enable_filtering and block_settings.filter_style == 'horizontal'
+  if is_sea_collection and block_settings.enable_filtering and block_settings.filter_style == 'horizontal'
     assign use_db_filter_rail = true
   endif
   assign products_count = results_size
@@ -287,7 +291,7 @@
                       endif
                     %}
                     {% render 'overflow-list',
-                      class: 'facets__overflow-list',
+                      class: 'facets__overflow-list db-filter-rail__overflow',
                       children: rendered_filters,
                       more-attributes: more_attributes,
                       minimum-items: 2
@@ -298,10 +302,269 @@
                 {% endcapture %}
 
                 {% if use_db_filter_rail %}
-                  <div class="db-filter-rail">
-                    <div class="db-filter-rail__row">
-                      <div class="db-filter-rail__controls">
-                        <span class="db-filter-rail__label">Filter</span>
+                  {% if is_land_collection %}
+                    {%- liquid
+                      assign curated_feelings = 'Soft|soft,Grounded|grounded,Luminous|luminous,Effortless|effortless,Quiet|quiet,Golden|golden' | split: ','
+                      assign curated_pieces = 'Necklace|necklace,Ring|ring,Earring|earring,Bracelet|bracelet' | split: ','
+                      assign feeling_filter = nil
+                      assign piece_filter = nil
+                      for filter in filters
+                        assign label_down = filter.label | strip | downcase
+                        assign label_has_feel = false
+                        if label_down contains 'feel'
+                          assign label_has_feel = true
+                        endif
+
+                        assign label_has_mood = false
+                        if label_down contains 'mood'
+                          assign label_has_mood = true
+                        endif
+
+                        assign is_feeling_label = false
+                        if label_has_feel or label_has_mood
+                          assign is_feeling_label = true
+                        endif
+
+                        assign label_has_piece = false
+                        if label_down contains 'piece'
+                          assign label_has_piece = true
+                        endif
+
+                        assign label_has_type = false
+                        if label_down contains 'type'
+                          assign label_has_type = true
+                        endif
+
+                        assign label_has_style = false
+                        if label_down contains 'style'
+                          assign label_has_style = true
+                        endif
+
+                        assign label_has_category = false
+                        if label_down contains 'category'
+                          assign label_has_category = true
+                        endif
+
+                        assign is_piece_label = false
+                        if label_has_piece or label_has_type or label_has_style or label_has_category
+                          assign is_piece_label = true
+                        endif
+
+                        if feeling_filter == nil and is_feeling_label
+                          assign feeling_filter = filter
+                        endif
+                        if piece_filter == nil and is_piece_label
+                          assign piece_filter = filter
+                        endif
+                      endfor
+                      assign active_chips = ''
+                    -%}
+
+                    <div class="db-filter-rail db-land-filter-rail" aria-label="Explore by feeling">
+                      <div class="db-land-filter-rail__header">
+                        <div class="db-land-filter-rail__copy">
+                          <p class="db-land-filter-rail__eyebrow">Explore by feeling</p>
+                          <p class="db-land-filter-rail__lede">Refine your pieces softly — begin with a mood, then a piece.</p>
+                        </div>
+                        <div class="db-land-filter-rail__sort">
+                          {% if block_settings.enable_sorting %}
+                            {% render 'sorting',
+                              results: results,
+                              sort_by: sort_by,
+                              filter_style: block_settings.filter_style,
+                              suffix: 'desktop',
+                              sort_position: 'desktop',
+                              should_use_select_on_mobile: false,
+                              section_id: section.id
+                            %}
+                          {% endif %}
+
+                          {% if block_settings.enable_grid_density %}
+                            {% render 'grid-density-controls', viewport: 'desktop' %}
+                          {% endif %}
+                        </div>
+                      </div>
+
+                      <div class="db-land-filter-rail__layer db-land-filter-rail__layer--primary">
+                        <div class="db-land-filter-rail__label">By feeling</div>
+                        <div class="db-land-chip-row" role="list">
+                          {% for entry in curated_feelings %}
+                            {% liquid
+                              assign parts = entry | split: '|'
+                              assign chip_label = parts[0] | strip
+                              assign handle = parts[1] | default: parts[0] | strip | downcase
+                              assign handle_plural = handle | append: 's'
+                              assign handle_plural_es = handle | append: 'es'
+                              assign match_value = ''
+                              assign chip_active = false
+                              if feeling_filter
+                                for option in feeling_filter.values
+                                  assign option_label = option.label | strip | downcase
+                                  assign option_matches_handle = false
+                                  if option_label == handle
+                                    assign option_matches_handle = true
+                                  endif
+
+                                  assign option_matches_plural = false
+                                  if option_label == handle_plural
+                                    assign option_matches_plural = true
+                                  endif
+
+                                  assign option_matches_plural_es = false
+                                  if option_label == handle_plural_es
+                                    assign option_matches_plural_es = true
+                                  endif
+
+                                  assign option_contains_handle = false
+                                  if option_label contains handle
+                                    assign option_contains_handle = true
+                                  endif
+
+                                  assign option_matches = false
+                                  if option_matches_handle or option_matches_plural or option_matches_plural_es or option_contains_handle
+                                    assign option_matches = true
+                                  endif
+                                  if option_matches
+                                    assign match_value = option.value
+                                    if option.active
+                                      assign chip_active = true
+                                      assign active_chips = active_chips | append: chip_label | append: '|'
+                                    endif
+                                    break
+                                  endif
+                                endfor
+                              endif
+                              assign chip_disabled = false
+                              if match_value == ''
+                                assign chip_disabled = true
+                              endif
+                            %}
+                            <button
+                              type="button"
+                              class="db-land-chip{% if chip_active %} is-active{% endif %}{% if chip_disabled %} is-disabled{% endif %}"
+                              data-land-filter-chip
+                              data-value="{{ match_value | default: chip_label }}"
+                              aria-pressed="{{ chip_active }}"
+                              {% if chip_disabled %}aria-disabled="true"{% endif %}
+                              role="listitem"
+                            >
+                              {{ chip_label }}
+                            </button>
+                          {% endfor %}
+                        </div>
+                      </div>
+
+                      <div class="db-land-filter-rail__layer db-land-filter-rail__layer--secondary">
+                        <div class="db-land-filter-rail__label">By piece</div>
+                        <div class="db-land-chip-row" role="list">
+                          {% for entry in curated_pieces %}
+                            {% liquid
+                              assign parts = entry | split: '|'
+                              assign chip_label = parts[0] | strip
+                              assign handle = parts[1] | default: parts[0] | strip | downcase
+                              assign handle_plural = handle | append: 's'
+                              assign handle_plural_es = handle | append: 'es'
+                              assign match_value = ''
+                              assign chip_active = false
+                              if piece_filter
+                                for option in piece_filter.values
+                                  assign option_label = option.label | strip | downcase
+                                  assign option_matches_handle = false
+                                  if option_label == handle
+                                    assign option_matches_handle = true
+                                  endif
+
+                                  assign option_matches_plural = false
+                                  if option_label == handle_plural
+                                    assign option_matches_plural = true
+                                  endif
+
+                                  assign option_matches_plural_es = false
+                                  if option_label == handle_plural_es
+                                    assign option_matches_plural_es = true
+                                  endif
+
+                                  assign option_contains_handle = false
+                                  if option_label contains handle
+                                    assign option_contains_handle = true
+                                  endif
+
+                                  assign option_matches = false
+                                  if option_matches_handle or option_matches_plural or option_matches_plural_es or option_contains_handle
+                                    assign option_matches = true
+                                  endif
+                                  if option_matches
+                                    assign match_value = option.value
+                                    if option.active
+                                      assign chip_active = true
+                                      assign active_chips = active_chips | append: chip_label | append: '|'
+                                    endif
+                                    break
+                                  endif
+                                endfor
+                              endif
+                              assign chip_disabled = false
+                              if match_value == ''
+                                assign chip_disabled = true
+                              endif
+                            %}
+                            <button
+                              type="button"
+                              class="db-land-chip db-land-chip--secondary{% if chip_active %} is-active{% endif %}{% if chip_disabled %} is-disabled{% endif %}"
+                              data-land-filter-chip
+                              data-value="{{ match_value | default: chip_label }}"
+                              aria-pressed="{{ chip_active }}"
+                              {% if chip_disabled %}aria-disabled="true"{% endif %}
+                              role="listitem"
+                            >
+                              {{ chip_label }}
+                            </button>
+                          {% endfor %}
+                        </div>
+                      </div>
+
+                      {% liquid
+                        assign active_chip_list = active_chips | split: '|' | compact
+                        assign status_text = 'Let the mood lead. Choose a feeling to begin.'
+                        if active_chip_list.size > 0
+                          assign status_text = active_chip_list | array_to_sentence_string
+                          if products_count and products_count > 0
+                            assign pieces_label = ' pieces'
+                            if products_count == 1
+                              assign pieces_label = ' piece'
+                            endif
+                            assign status_text = status_text | append: ' · ' | append: products_count | append: pieces_label
+                          endif
+                        elsif products_count and products_count > 0
+                          assign pieces_label = ' pieces'
+                          if products_count == 1
+                            assign pieces_label = ' piece'
+                          endif
+                          assign status_text = products_count | append: pieces_label | append: ', waiting for a feeling.'
+                        endif
+                      %}
+
+                      <div class="db-land-filter-rail__status-row">
+                        <div class="db-land-filter-rail__status-text">
+                          {{ status_text }}
+                        </div>
+                        <div class="db-land-filter-rail__actions">
+                          {% if is_active %}
+                            <facet-remove-component data-url="{{ results_url }}">
+                              <button
+                                type="button"
+                                class="db-land-filter-rail__clear button-unstyled"
+                                on:click="/removeFilter?form="
+                                on:keydown="/removeFilter?form="
+                              >
+                                Clear gently
+                              </button>
+                            </facet-remove-component>
+                          {% endif %}
+                        </div>
+                      </div>
+
+                      <div class="db-land-filter-rail__native" aria-hidden="true">
                         <div class="facets__filters-wrapper">
                           {{ filters_output }}
                         </div>
@@ -313,43 +576,61 @@
                           context: 'toolbar'
                         %}
                       </div>
-                      <div class="db-filter-rail__meta">
-                        {% liquid
-                          assign pieces_label = 'pieces'
-                          if products_count == 1
-                            assign pieces_label = 'piece'
-                          endif
-                        %}
-                        {% if products_count > 0 %}
-                          <span class="db-filter-rail__count">
-                            {{ products_count }} {{ pieces_label }}
-                          </span>
-                        {% endif %}
-
-                        {% if block_settings.enable_sorting %}
-                          {% render 'sorting',
-                            results: results,
-                            sort_by: sort_by,
-                            filter_style: block_settings.filter_style,
-                            suffix: 'desktop',
-                            sort_position: 'desktop',
-                            should_use_select_on_mobile: false,
-                            section_id: section.id
-                          %}
-                        {% endif %}
-
-                        {% if block_settings.enable_grid_density %}
-                          {% render 'grid-density-controls', viewport: 'desktop' %}
-                        {% endif %}
-                      </div>
                     </div>
-                    <div class="db-filter-rail__divider" aria-hidden="true"></div>
-                    {% if products_count == 0 and is_active %}
-                      <p class="db-filter-rail__status" role="status">
-                        No pieces match these filters.
-                      </p>
-                    {% endif %}
-                  </div>
+                  {% else %}
+                    <div class="db-filter-rail">
+                      <div class="db-filter-rail__row">
+                        <div class="db-filter-rail__controls">
+                          <span class="db-filter-rail__label">Filter</span>
+                          <div class="facets__filters-wrapper">
+                            {{ filters_output }}
+                          </div>
+                          {% render 'filter-remove-buttons',
+                            filters: filters,
+                            results_url: results_url,
+                            show_filter_label: block_settings.show_filter_label,
+                            should_show_clear_all: true,
+                            context: 'toolbar'
+                          %}
+                        </div>
+                        <div class="db-filter-rail__meta">
+                          {% liquid
+                            assign pieces_label = 'pieces'
+                            if products_count == 1
+                              assign pieces_label = 'piece'
+                            endif
+                          %}
+                          {% if products_count > 0 %}
+                            <span class="db-filter-rail__count">
+                              {{ products_count }} {{ pieces_label }}
+                            </span>
+                          {% endif %}
+
+                          {% if block_settings.enable_sorting %}
+                            {% render 'sorting',
+                              results: results,
+                              sort_by: sort_by,
+                              filter_style: block_settings.filter_style,
+                              suffix: 'desktop',
+                              sort_position: 'desktop',
+                              should_use_select_on_mobile: false,
+                              section_id: section.id
+                            %}
+                          {% endif %}
+
+                          {% if block_settings.enable_grid_density %}
+                            {% render 'grid-density-controls', viewport: 'desktop' %}
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="db-filter-rail__divider" aria-hidden="true"></div>
+                      {% if products_count == 0 and is_active %}
+                        <p class="db-filter-rail__status" role="status">
+                          No pieces match these filters.
+                        </p>
+                      {% endif %}
+                    </div>
+                  {% endif %}
                 {% else %}
                   <div class="facets__filters-wrapper">
                     {{ filters_output }}

@@ -84,7 +84,7 @@
     "custom_liquid_press": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "<div class=\"db-press-strip db-type--press\">\n  <span class=\"db-press-strip__label\">For the woman who...</span>\n  <div class=\"db-press-strip__logos\">\n    <span>VOGUE</span>\n    <span>ELLE</span>\n    <span>GRAZIA</span>\n    <span>STYLIST</span>\n  </div>\n</div>",
+        "custom_liquid": "<div class=\"db-press-strip db-type--press\">\n  <span class=\"db-press-strip__label\">For the woman who stays soft, even when the world feels heavy</span>\n</div>",
         "color_scheme": "scheme-1",
         "section_width": "page-width",
         "padding-block-start": 0,
@@ -98,14 +98,14 @@
           "type": "filters",
           "static": true,
           "settings": {
-            "enable_filtering": false,
+            "enable_filtering": true,
             "filter_style": "horizontal",
             "filter_width": "centered",
             "text_label_case": "default",
             "show_swatch_label": false,
             "show_filter_label": false,
             "enable_sorting": true,
-            "enable_grid_density": false,
+            "enable_grid_density": true,
             "inherit_color_scheme": true,
             "color_scheme": "",
             "padding-block-start": 6,
