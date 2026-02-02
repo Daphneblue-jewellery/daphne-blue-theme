@@ -5515,7 +5515,8 @@ text-component {
 main[data-template*='the-land'] .hero .hero__content-wrapper,
 main[data-template*='the-sea'] .hero .hero__content-wrapper,
 main[data-template*='the-sky'] .hero .hero__content-wrapper,
-main[data-template*='the-stars'] .hero .hero__content-wrapper {
+main[data-template*='the-stars'] .hero .hero__content-wrapper,
+main[data-template*='category'] .hero .hero__content-wrapper {
   position: absolute;
   inset: 0;
   grid-column: 1 / -1 !important;
@@ -5529,7 +5530,8 @@ main[data-template*='the-stars'] .hero .hero__content-wrapper {
 main[data-template*='the-land'] .hero .hero__content-wrapper .text-block,
 main[data-template*='the-sea'] .hero .hero__content-wrapper .text-block,
 main[data-template*='the-sky'] .hero .hero__content-wrapper .text-block,
-main[data-template*='the-stars'] .hero .hero__content-wrapper .text-block {
+main[data-template*='the-stars'] .hero .hero__content-wrapper .text-block,
+main[data-template*='category'] .hero .hero__content-wrapper .text-block {
   position: absolute !important;
   left: 50% !important;
   top: 50% !important;
@@ -5543,14 +5545,16 @@ main[data-template*='the-stars'] .hero .hero__content-wrapper .text-block {
 main[data-template*='the-land'] .hero .hero__content-wrapper .text-block > *,
 main[data-template*='the-sea'] .hero .hero__content-wrapper .text-block > *,
 main[data-template*='the-sky'] .hero .hero__content-wrapper .text-block > *,
-main[data-template*='the-stars'] .hero .hero__content-wrapper .text-block > * {
+main[data-template*='the-stars'] .hero .hero__content-wrapper .text-block > *,
+main[data-template*='category'] .hero .hero__content-wrapper .text-block > * {
   margin: 0 !important;
 }
 
 main[data-template*='the-land'] .hero .hero__content-wrapper .db-land-cta,
 main[data-template*='the-sea'] .hero .hero__content-wrapper .db-land-cta,
 main[data-template*='the-sky'] .hero .hero__content-wrapper .db-land-cta,
-main[data-template*='the-stars'] .hero .hero__content-wrapper .db-land-cta {
+main[data-template*='the-stars'] .hero .hero__content-wrapper .db-land-cta,
+main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
   position: absolute !important;
   left: 50% !important;
   top: calc(50% + clamp(3.5rem, 7vw, 5.75rem)) !important;

@@ -4,10 +4,10 @@
   assign is_db_template = false
   if section.settings.db_mode
     assign is_db_template = true
-  elsif template contains 'product.db' or template contains 'product.daphne'
+  elsif template contains 'product.db' or template contains 'product.db1' or template contains 'product.daphne'
     assign is_db_template = true
   elsif template.name == 'product'
-    if template.suffix == 'db' or template.suffix == 'daphne'
+    if template.suffix == 'db' or template.suffix == 'db1' or template.suffix == 'daphne'
       assign is_db_template = true
     endif
   endif

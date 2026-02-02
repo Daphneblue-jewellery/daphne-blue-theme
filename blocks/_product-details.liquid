@@ -6,12 +6,12 @@
   {%- if section.type == 'product-information' -%}
     {%- assign is_db_template = true -%}
   {%- endif -%}
-{%- elsif template contains 'product.db' or template contains 'product.daphne' -%}
+{%- elsif template contains 'product.db' or template contains 'product.db1' or template contains 'product.daphne' -%}
   {%- if section.type == 'product-information' -%}
     {%- assign is_db_template = true -%}
   {%- endif -%}
 {%- elsif template.name == 'product' -%}
-  {%- if template.suffix == 'db' or template.suffix == 'daphne' -%}
+  {%- if template.suffix == 'db' or template.suffix == 'db1' or template.suffix == 'daphne' -%}
     {%- if section.type == 'product-information' -%}
       {%- assign is_db_template = true -%}
     {%- endif -%}
