@@ -2,20 +2,8 @@
 
 {%- assign block_settings = block.settings -%}
 {%- assign is_db_template = false -%}
-{%- if section.settings.db_mode -%}
-  {%- if section.type == 'product-information' -%}
-    {%- assign is_db_template = true -%}
-  {%- endif -%}
-{%- elsif template contains 'product.db' or template contains 'product.db1' or template contains 'product.daphne' -%}
-  {%- if section.type == 'product-information' -%}
-    {%- assign is_db_template = true -%}
-  {%- endif -%}
-{%- elsif template.name == 'product' -%}
-  {%- if template.suffix == 'db' or template.suffix == 'db1' or template.suffix == 'daphne' -%}
-    {%- if section.type == 'product-information' -%}
-      {%- assign is_db_template = true -%}
-    {%- endif -%}
-  {%- endif -%}
+{%- if section.type == 'product-information' and template.name == 'product' -%}
+  {%- assign is_db_template = true -%}
 {%- endif -%}
 
 <div

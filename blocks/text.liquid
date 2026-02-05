@@ -1,30 +1,10 @@
 
 {% assign db_class = '' %}
-{% if section.settings.db_mode %}
-  {% if section.type == 'product-information' %}
-    {% if block.id == 'db_title' %}
-      {% assign db_class = 'db-product__title' %}
-    {% elsif block.id == 'db_desc' %}
-      {% assign db_class = 'db-product__desc' %}
-    {% endif %}
-  {% endif %}
-{% elsif template contains 'product.db' or template contains 'product.db1' or template contains 'product.daphne' %}
-  {% if section.type == 'product-information' %}
-    {% if block.id == 'db_title' %}
-      {% assign db_class = 'db-product__title' %}
-    {% elsif block.id == 'db_desc' %}
-      {% assign db_class = 'db-product__desc' %}
-    {% endif %}
-  {% endif %}
-{% elsif template.name == 'product' %}
-  {% if template.suffix == 'db' or template.suffix == 'db1' or template.suffix == 'daphne' %}
-    {% if section.type == 'product-information' %}
-      {% if block.id == 'db_title' %}
-        {% assign db_class = 'db-product__title' %}
-      {% elsif block.id == 'db_desc' %}
-        {% assign db_class = 'db-product__desc' %}
-      {% endif %}
-    {% endif %}
+{% if section.type == 'product-information' and template.name == 'product' %}
+  {% if block.id == 'db_title' %}
+    {% assign db_class = 'db-product__title' %}
+  {% elsif block.id == 'db_desc' %}
+    {% assign db_class = 'db-product__desc' %}
   {% endif %}
 {% endif %}
 
