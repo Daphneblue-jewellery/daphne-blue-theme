@@ -298,7 +298,7 @@
 }
 
 .db-product .db-product__variants .variant-option__button-label:has(:checked) .swatch {
-  box-shadow: 0 0 0 1.5px var(--db-product-ink);
+  box-shadow: 0 0 0 1px rgb(var(--db-color-charcoal-ink-rgb) / 0.3);
 }
 
 .db-product .db-product__variants .variant-option__button-label:hover .swatch {
