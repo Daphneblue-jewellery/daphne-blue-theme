@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash:*)",
+      "Bash(npx shopify theme dev:*)",
+      "mcp__devtools__navigate_page",
+      "Bash(grep:*)",
+      "mcp__devtools__take_snapshot",
+      "mcp__devtools__evaluate_script",
+      "Bash(python3:*)",
+      "mcp__devtools__list_pages",
+      "Bash(for f in templates/article.json templates/page.json templates/blog.json templates/404.json templates/product.json templates/product.db.json templates/product.db1.json templates/search.json templates/password.json templates/page.contact.json templates/collection.celestial.json templates/list-collections.json)",
+      "Bash(do sed -i '' 's/var\\(--font-primary--family\\)/var\\(--font-body--family\\)/g' \"$f\")",
+      "Bash(done)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(ls:*)",
+      "mcp__devtools__take_screenshot",
+      "mcp__browser-use__browser_navigate",
+      "mcp__browser-use__browser_get_state",
+      "mcp__browser-use__browser_extract_content",
+      "Bash(curl:*)",
+      "Bash(gh auth:*)",
+      "Bash(lsof:*)",
+      "Bash(brew list:*)",
+      "Bash(npm run:*)",
+      "mcp__devtools__click",
+      "mcp__devtools__press_key",
+      "Bash(git checkout:*)",
+      "mcp__devtools__new_page"
+    ]
+  }
+}
