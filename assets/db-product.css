@@ -160,6 +160,10 @@
 }
 
 /* ── Details panel — no card, just content ── */
+.db-product .db-product__info .text-block {
+  margin-inline: 0 !important;
+}
+
 .db-product .db-product__info .group-block {
   background: transparent;
   border-radius: 0;
