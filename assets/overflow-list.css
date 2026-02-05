@@ -34,8 +34,8 @@ slot[name='more'] .button {
   background: none;
   padding: 0;
   margin: 0;
-  font-family: var(--font-paragraph-family);
-  font-size: var(--font-paragraph-size);
+  font-family: var(--font-paragraph--family);
+  font-size: var(--font-paragraph--size);
   text-transform: var(--text-transform);
   color: currentcolor;
   text-align: start;
