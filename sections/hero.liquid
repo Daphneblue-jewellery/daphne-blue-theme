@@ -656,43 +656,10 @@
     margin-inline: auto;
   }
 
-  {% if template.name == 'collection' and template.suffix == 'the-land' %}
-    /* The Land hero: force the title itself to the true center of the video */
-    #Hero-{{ section.id }} .hero__content-wrapper {
-      position: absolute;
-      inset: 0;
-      grid-column: 1 / -1 !important;
-      width: 100% !important;
-      left: 0 !important;
-      right: 0 !important;
-      transform: none !important;
-      padding-inline: 0 !important;
-      --section-top-offset: 0px !important;
-    }
-
-    #Hero-{{ section.id }} .text-block {
-      position: absolute !important;
-      left: 50% !important;
-      top: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      width: max-content !important;
-      max-width: 100% !important;
-      margin: 0 !important;
-      text-align: center !important;
-    }
-
-    #Hero-{{ section.id }} .text-block > * {
-      margin: 0 !important;
-    }
-
-    #Hero-{{ section.id }} .db-land-cta {
-      position: absolute !important;
-      left: 50% !important;
-      top: calc(50% + clamp(3.5rem, 7vw, 5.75rem)) !important;
-      transform: translateX(-50%) !important;
-      margin: 0 !important;
-    }
-  {% endif %}
+  /* The Land hero centering rules live in base.css scoped via
+     main[data-template*='the-land'] — do NOT duplicate here because
+     {{ section.id }} is empty inside {% stylesheet %} blocks, which
+     causes the selector to leak globally. */
 
   /* Remove header height offset so Land hero uses full allotted height */
   #Hero-db_land_hero {
@@ -892,6 +859,11 @@
     Apply tactile still-life asset as background while keeping layout, typography, and CTA styling intact.
   {% endcomment %}
   {% if section.id == 'hero_TCphkR' %}
+    /* Tighter fluid clamp so the headline never overflows the page-width container */
+    #Hero-{{ section.id }} .text-block.custom-font-size {
+      --font-size: clamp(2.4rem, 6vw, 7.5rem);
+    }
+
     #Hero-{{ section.id }} .hero__media-wrapper {
       background-image: url("{{ 'db-home-hero-still-life.jpg' | asset_url }}");
       background-size: cover;
@@ -1679,7 +1651,7 @@
                     "max_width": "normal",
                     "alignment": "left",
                     "type_preset": "h2",
-                    "font": "var(--font-primary--family)",
+                    "font": "var(--font-body--family)",
                     "font_size": "",
                     "line_height": "normal",
                     "letter_spacing": "normal",
@@ -1707,7 +1679,7 @@
                 "max_width": "none",
                 "alignment": "left",
                 "type_preset": "rte",
-                "font": "var(--font-primary--family)",
+                "font": "var(--font-body--family)",
                 "font_size": "",
                 "line_height": "normal",
                 "letter_spacing": "normal",
