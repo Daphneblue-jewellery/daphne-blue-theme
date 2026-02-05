@@ -293,12 +293,12 @@
   border-radius: 50%;
   border: none;
   box-shadow: none;
-  transition: box-shadow var(--db-motion-duration-fast) var(--db-motion-ease-out),
+  transition: transform var(--db-motion-duration-fast) var(--db-motion-ease-out),
     opacity var(--db-motion-duration-fast) var(--db-motion-ease-out);
 }
 
 .db-product .db-product__variants .variant-option__button-label:has(:checked) .swatch {
-  box-shadow: 0 0 0 1px rgb(var(--db-color-charcoal-ink-rgb) / 0.3);
+  transform: scale(1.08);
 }
 
 .db-product .db-product__variants .variant-option__button-label:hover .swatch {
