@@ -193,6 +193,8 @@
 .db-product .db-product__cta {
   width: 100%;
   max-width: 100%;
+  padding-inline: 0 !important;
+  margin-inline: 0;
 }
 
 .db-product .db-product__title {
@@ -216,6 +218,12 @@
 }
 
 /* ── Typography — Title ── */
+.db-product .db-product__title,
+.db-product .db-product__title * {
+  padding-inline: 0 !important;
+  margin-inline: 0;
+}
+
 .db-product .db-product__title h1,
 .db-product .db-product__title h2,
 .db-product .db-product__title h3 {
@@ -232,6 +240,12 @@
 }
 
 /* ── Typography — Price (press-style, quiet) ── */
+.db-product .db-product__price,
+.db-product .db-product__price * {
+  padding-inline: 0 !important;
+  margin-inline: 0;
+}
+
 .db-product .db-product__price .price,
 .db-product .db-product__price .price-item {
   font-family: var(--db-type-press-family);
