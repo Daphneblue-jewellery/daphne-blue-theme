@@ -5,12 +5,8 @@
 >
   {%- liquid
     assign is_db_template = false
-    if template contains 'product.db' or template contains 'product.daphne'
+    if template.name == 'product'
       assign is_db_template = true
-    elsif template.name == 'product'
-      if template.suffix == 'db' or template.suffix == 'daphne'
-        assign is_db_template = true
-      endif
     endif
   -%}
   <head>

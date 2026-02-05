@@ -2,14 +2,8 @@
 
 {% liquid
   assign is_db_template = false
-  if section.settings.db_mode
+  if template.name == 'product'
     assign is_db_template = true
-  elsif template contains 'product.db' or template contains 'product.db1' or template contains 'product.daphne'
-    assign is_db_template = true
-  elsif template.name == 'product'
-    if template.suffix == 'db' or template.suffix == 'db1' or template.suffix == 'daphne'
-      assign is_db_template = true
-    endif
   endif
 
   if section.settings.desktop_media_position == 'left'
