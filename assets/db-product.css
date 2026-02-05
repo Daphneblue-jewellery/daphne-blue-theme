@@ -291,26 +291,25 @@
 /* Color swatches — minimal flat circles */
 .db-product .db-product__variants .swatch {
   border-radius: 50%;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(var(--db-color-charcoal-ink-rgb) / 0.15);
-  transition: border-color var(--db-motion-duration-fast) var(--db-motion-ease-out),
+  border: none;
+  box-shadow: 0 0 0 1px rgb(var(--db-color-charcoal-ink-rgb) / 0.08) inset;
+  transition: box-shadow var(--db-motion-duration-fast) var(--db-motion-ease-out),
     transform var(--db-motion-duration-fast) var(--db-motion-ease-out);
 }
 
 .db-product .db-product__variants .variant-option__button-label:has(:checked) .swatch {
-  border-color: var(--db-product-ink);
-  border-width: 2px;
+  box-shadow: 0 0 0 1px var(--db-product-ink) inset,
+    0 0 0 1px var(--db-product-ink);
 }
 
 .db-product .db-product__variants .variant-option__button-label:hover .swatch {
-  border-color: rgb(var(--db-color-charcoal-ink-rgb) / 0.4);
-  transform: scale(1.1);
+  box-shadow: 0 0 0 1px rgb(var(--db-color-charcoal-ink-rgb) / 0.2) inset;
+  transform: scale(1.05);
 }
 
 .db-product .db-product__variants .variant-option__button-label:has([data-option-available='false']) .swatch {
-  opacity: 0.35;
-  border-style: dashed;
+  opacity: 0.25;
+  box-shadow: 0 0 0 1px rgb(var(--db-color-charcoal-ink-rgb) / 0.15) inset;
 }
 
 .db-product .db-product__variants .variant-option__button-label {
