@@ -289,24 +289,29 @@
 }
 
 /* Color swatches — minimal flat circles */
-.db-product .db-product__variants .swatch {
-  border-radius: 50%;
-  border: none;
-  box-shadow: none;
+.db-product .db-product__variants .swatch,
+.db-product .db-product__variants .variant-option__button-label .swatch {
+  border-radius: 50% !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
   transition: transform var(--db-motion-duration-fast) var(--db-motion-ease-out),
-    opacity var(--db-motion-duration-fast) var(--db-motion-ease-out);
+    opacity var(--db-motion-duration-fast) var(--db-motion-ease-out) !important;
 }
 
 .db-product .db-product__variants .variant-option__button-label:has(:checked) .swatch {
-  transform: scale(1.08);
+  transform: scale(1.08) !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 .db-product .db-product__variants .variant-option__button-label:hover .swatch {
-  opacity: 0.8;
+  opacity: 0.8 !important;
 }
 
 .db-product .db-product__variants .variant-option__button-label:has([data-option-available='false']) .swatch {
-  opacity: 0.25;
+  opacity: 0.25 !important;
 }
 
 .db-product .db-product__variants .variant-option__button-label {
