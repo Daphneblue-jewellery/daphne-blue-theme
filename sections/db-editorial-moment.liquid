@@ -30,6 +30,9 @@
       </div>
 
       <div class="db-editorial-moment__content">
+        {% if section.settings.eyebrow != blank %}
+          <p class="db-editorial-moment__eyebrow db-type--press">{{ section.settings.eyebrow }}</p>
+        {% endif %}
         {% if section.settings.heading != blank %}
           <h2 class="db-editorial-moment__heading">{{ section.settings.heading }}</h2>
         {% endif %}
@@ -53,6 +56,12 @@
 {
   "name": "Editorial brand moment",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "info": "Small uppercase label above the heading"
+    },
     {
       "type": "image_picker",
       "id": "image",

@@ -5081,6 +5081,11 @@ text-component {
   margin: 0 0 14px;
 }
 
+.db-editorial-moment__eyebrow {
+  color: rgb(var(--color-foreground-rgb) / 0.6);
+  margin: 0 0 var(--db-space-xs);
+}
+
 .db-editorial-moment__subline {
   font-family: var(--db-type-press-family);
   font-size: var(--db-type-press-size);
@@ -5089,7 +5094,7 @@ text-component {
   text-transform: var(--db-type-press-case);
   color: var(--db-color-charcoal-ink);
   opacity: 0.8;
-  margin: 0 0 24px;
+  margin: 0 0 var(--db-space-lg);
 }
 
 .db-editorial-moment__body {
