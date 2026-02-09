@@ -4724,17 +4724,10 @@ text-component {
   color: rgb(var(--color-foreground-rgb) / 0.6);
 }
 
-/* Keep the newsletter heading visually consistent with other footer headings */
-.footer-content .text-block--newsletter_heading > * {
-  font-family: var(--db-type-press-family);
-  font-size: 0.72rem;
-  line-height: 1.4;
-  letter-spacing: var(--db-type-press-letter-spacing);
-  text-transform: var(--db-type-press-case);
-  font-weight: var(--font-h6--weight, 600);
-  color: rgb(var(--color-foreground-rgb) / 0.6);
-  margin: 0 0 6px;
-  white-space: nowrap;
+/* Newsletter group — ensure text doesn't clip in narrow footer column */
+.footer-content .group-block .text-block > * {
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .footer-content .menu__heading,
