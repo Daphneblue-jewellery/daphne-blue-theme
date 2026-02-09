@@ -4578,6 +4578,53 @@ text-component {
   }
 }
 
+/* Trust strip */
+.db-trust-strip {
+  display: flex;
+  justify-content: center;
+  gap: var(--db-section-gap-sm);
+  padding: var(--db-space-lg) 0;
+}
+
+.db-trust-strip__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--db-space-sm);
+  text-align: center;
+}
+
+.db-trust-strip__icon {
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
+  border-radius: var(--db-radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--db-color-daphne-blue);
+}
+
+.db-trust-strip__text {
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  line-height: var(--db-type-press-line-height);
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.6);
+}
+
+@media screen and (max-width: 749px) {
+  .db-trust-strip {
+    flex-wrap: wrap;
+    gap: var(--db-space-lg);
+  }
+
+  .db-trust-strip__item {
+    flex: 0 0 calc(50% - var(--db-space-lg) / 2);
+  }
+}
+
 .db-button {
   font-family: var(--db-button-font-family);
   font-style: var(--db-button-font-style);
