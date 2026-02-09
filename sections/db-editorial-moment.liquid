@@ -40,7 +40,7 @@
           <div class="db-editorial-moment__body">{{ section.settings.body }}</div>
         {% endif %}
         {% if section.settings.link_label != blank and section.settings.link_url != blank %}
-          <a class="db-editorial-moment__link" href="{{ section.settings.link_url }}">
+          <a class="db-link db-editorial-moment__link" href="{{ section.settings.link_url }}">
             {{ section.settings.link_label }}
           </a>
         {% endif %}

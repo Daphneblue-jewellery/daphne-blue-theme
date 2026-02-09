@@ -1291,36 +1291,6 @@ results-list[initialized] {
   margin: 0 0 var(--space-16);
 }
 
-.db-editorial-moment__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: rgb(var(--color-foreground-rgb) / 0.6);
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: 4px;
-  opacity: 0.98;
-  transition: opacity var(--db-motion-duration-fast) var(--db-motion-ease-out),
-    color var(--db-motion-duration-fast) var(--db-motion-ease-out),
-    text-decoration-color var(--db-motion-duration-fast) var(--db-motion-ease-out);
-}
-
-.db-editorial-moment__link:is(:hover, :focus-visible) {
-  opacity: 1;
-  color: var(--db-color-daphne-blue);
-  text-decoration-color: currentColor;
-}
-
-.db-editorial-moment__link:focus-visible {
-  outline: 2px solid var(--db-focus-ring-color);
-  outline-offset: 4px;
-  border-radius: var(--db-radius-sm);
-}
-
-.db-editorial-moment__link:active {
-  opacity: 0.92;
-}
-
 /* Dialog */
 .dialog-modal {
   border: none;
@@ -4641,6 +4611,41 @@ text-component {
   }
 }
 
+/* Text-link CTA — the default DB interaction style */
+.db-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--db-space-xs);
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  line-height: 1.4;
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.65);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: opacity var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    color var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    text-decoration-color var(--db-motion-duration-fast) var(--db-motion-ease-out);
+}
+
+.db-link:hover,
+.db-link:focus-visible {
+  color: var(--db-color-daphne-blue);
+  text-decoration-color: currentColor;
+}
+
+.db-link:focus-visible {
+  outline: 2px solid var(--db-focus-ring-color);
+  outline-offset: 4px;
+  border-radius: var(--db-radius-sm);
+}
+
+.db-link:active {
+  opacity: 0.92;
+}
+
 .header .menu-list__link,
 .menu-drawer .menu-drawer__menu-item-text {
   font-family: var(--db-type-press-family);
@@ -4983,22 +4988,13 @@ text-component {
   margin-bottom: 0;
 }
 
+/* Inherits from .db-link — add class="db-link" in markup */
 .db-brand-story__cta {
-  font-family: var(--db-type-press-family);
-  font-size: var(--db-type-press-size);
-  line-height: var(--db-type-press-line-height);
-  letter-spacing: var(--db-type-press-letter-spacing);
-  text-transform: var(--db-type-press-case);
-  color: rgb(var(--color-foreground-rgb) / 0.65);
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: color 0.3s ease;
 }
 
 .db-brand-story__cta:hover {
-  color: var(--db-color-charcoal-ink);
+  text-decoration: none;
 }
 
 @media screen and (max-width: 749px) {
@@ -5108,40 +5104,9 @@ text-component {
   margin: 0;
 }
 
+/* Inherits from .db-link — add class="db-link" in markup */
 .db-editorial-moment__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--db-type-press-family);
-  font-size: 0.7rem;
-  line-height: 1.4;
-  letter-spacing: var(--db-type-press-letter-spacing);
-  text-transform: var(--db-type-press-case);
-  color: rgb(var(--color-foreground-rgb) / 0.6);
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: 4px;
-  opacity: 0.98;
-  transition: opacity var(--db-motion-duration-fast) var(--db-motion-ease-out),
-    color var(--db-motion-duration-fast) var(--db-motion-ease-out),
-    text-decoration-color var(--db-motion-duration-fast) var(--db-motion-ease-out);
-}
-
-.db-editorial-moment__link:hover,
-.db-editorial-moment__link:focus-visible {
-  opacity: 1;
-  color: var(--db-color-daphne-blue);
-  text-decoration-color: currentColor;
-}
-
-.db-editorial-moment__link:focus-visible {
-  outline: 2px solid var(--db-focus-ring-color);
-  outline-offset: 4px;
-  border-radius: var(--db-radius-sm);
-}
-
-.db-editorial-moment__link:active {
-  opacity: 0.92;
+  gap: var(--db-space-xs);
 }
 
 @media screen and (max-width: 749px) {

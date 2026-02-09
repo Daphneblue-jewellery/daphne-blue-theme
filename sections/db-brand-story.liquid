@@ -32,7 +32,7 @@
         <div class="db-brand-story__body">{{ section.settings.body }}</div>
       {% endif %}
       {% if section.settings.cta_label != blank and section.settings.cta_link != blank %}
-        <a class="db-brand-story__cta" href="{{ section.settings.cta_link }}">
+        <a class="db-link db-brand-story__cta" href="{{ section.settings.cta_link }}">
           {{ section.settings.cta_label }}
         </a>
       {% endif %}
