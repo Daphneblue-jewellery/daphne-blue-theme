@@ -6,6 +6,20 @@
 ></script>
 
 {% liquid
+  assign is_db_template = false
+  if template contains 'product.db' or template contains 'product.db1' or template contains 'product.daphne'
+    assign is_db_template = true
+  elsif template.name == 'product'
+    if template.suffix == 'db' or template.suffix == 'db1' or template.suffix == 'daphne'
+      assign is_db_template = true
+    endif
+  endif
+
+  assign db_recs_class = ''
+  if is_db_template
+    assign db_recs_class = 'db-recs'
+  endif
+
   case section.settings.layout_type
     when 'grid'
       assign classes = 'resource-list--grid'
@@ -27,7 +41,7 @@
 
 <product-recommendations
   id="product-recommendations-{{ section.id }}"
-  class="product-recommendations"
+  class="product-recommendations {{ db_recs_class }}"
   data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.max_products }}"
   data-section-id="{{ section.id }}"
   data-product-id="{{ section.settings.product.id | default: product.id }}"
@@ -43,6 +57,7 @@
       section--{{ section.settings.section_width }}
       color-{{ section.settings.color_scheme }}
       section-resource-list
+      {% if is_db_template %}db-recs__inner{% endif %}
       spacing-style
       gap-style
     "
@@ -52,8 +67,11 @@
       {{ styles }}
     "
   >
-    <div class="section-resource-list__content">
+    <div class="section-resource-list__content{% if is_db_template %} db-recs__header{% endif %}">
       {% content_for 'blocks' %}
+      {% if is_db_template %}
+        <p class="db-recs__subheading">Curated pieces to complement your selection</p>
+      {% endif %}
     </div>
 
     {%- if recommendations.performed or section.settings.product == blank -%}
@@ -104,6 +122,7 @@
       <div
         class="
           resource-list
+          {% if is_db_template %}db-recs__list{% endif %}
           {% if section.settings.layout_type == 'carousel' %}
             force-full-width
           {% endif %}

@@ -193,10 +193,7 @@ h2,
 h3,
 h4,
 h5,
-h6 {h1, h2, h3, h4, h5, h6 {
-
-}
-
+h6 {
   overflow-wrap: break-word;
 }
 
@@ -1302,7 +1299,7 @@ results-list[initialized] {
   text-decoration: underline;
   text-decoration-color: transparent;
   text-underline-offset: 4px;
-  opacity: 0.75;
+  opacity: 0.98;
   transition: opacity var(--db-motion-duration-fast) var(--db-motion-ease-out),
     color var(--db-motion-duration-fast) var(--db-motion-ease-out),
     text-decoration-color var(--db-motion-duration-fast) var(--db-motion-ease-out);
@@ -4650,6 +4647,7 @@ text-component {
   font-weight: var(--font-h6--weight, 600);
   color: rgb(var(--color-foreground-rgb) / 0.6);
   margin: 0 0 6px;
+  white-space: nowrap;
 }
 
 .footer-content .menu__heading,
@@ -5089,7 +5087,7 @@ text-component {
   text-decoration: underline;
   text-decoration-color: transparent;
   text-underline-offset: 4px;
-  opacity: 0.75;
+  opacity: 0.98;
   transition: opacity var(--db-motion-duration-fast) var(--db-motion-ease-out),
     color var(--db-motion-duration-fast) var(--db-motion-ease-out),
     text-decoration-color var(--db-motion-duration-fast) var(--db-motion-ease-out);

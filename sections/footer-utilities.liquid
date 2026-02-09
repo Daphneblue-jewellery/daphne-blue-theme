@@ -81,7 +81,15 @@
           + .footer-utilities__text:nth-child(2)
           + .payment-icons:nth-child(3)
       ) {
-      grid-template-columns: 1fr auto auto;
+      grid-template-columns: 1fr auto 1fr;
+
+      .footer-utilities__text:nth-child(2) {
+        justify-self: center;
+      }
+
+      .footer-utilities__text:nth-child(2) .footer-policy-links {
+        justify-content: center;
+      }
 
       .payment-icons:nth-child(3) {
         justify-self: end;

@@ -156,6 +156,19 @@
   align-items: flex-start;
 }
 
+.db-product .db-product__info .group-block-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: auto;
+}
+
+.db-product .db-product__info .group-block-content > * {
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
 .db-product .db-product__title,
 .db-product .db-product__price,
 .db-product .db-product__desc,
@@ -388,6 +401,12 @@
 
 .db-product .product-recommendations .section-resource-list {
   padding-block: clamp(32px, 5vw, 72px);
+}
+
+.db-product .product-recommendations .section-resource-list {
+  display: flex;
+  flex-direction: column;
+  row-gap: clamp(20px, 4vw, 40px);
 }
 
 .db-product .product-recommendations .resource-list {

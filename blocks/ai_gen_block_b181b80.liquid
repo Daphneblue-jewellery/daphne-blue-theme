@@ -262,11 +262,11 @@
   <div class="ai-jewellery-carousel__container-{{ ai_gen_id }}">
     {% if block.settings.title != blank or block.settings.subtitle != blank %}
       <div class="ai-jewellery-carousel__header-{{ ai_gen_id }}">
-        {% if block.settings.title != blank %}
-          <h2 class="ai-jewellery-carousel__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
-        {% endif %}
         {% if block.settings.subtitle != blank %}
           <p class="ai-jewellery-carousel__subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</p>
+        {% endif %}
+        {% if block.settings.title != blank %}
+          <h2 class="ai-jewellery-carousel__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
         {% endif %}
       </div>
     {% endif %}
@@ -396,7 +396,7 @@
       "type": "text",
       "id": "subtitle",
       "label": "Subtitle",
-      "default": "Dainty jewellery inspired by nature"
+      "default": "The pieces we reach for, again and again"
     },
     {
       "type": "range",

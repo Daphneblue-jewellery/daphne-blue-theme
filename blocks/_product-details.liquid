@@ -33,6 +33,44 @@
   {% endif %}
 >
   {% capture children %}
+    {% if is_db_template %}
+      {% liquid
+        assign product_resource = closest.product
+        assign db_kicker = ''
+        assign db_ritual = ''
+
+        if product_resource.metafields.custom.kicker != blank
+          assign db_kicker = product_resource.metafields.custom.kicker
+        elsif product_resource.tags contains 'The Land'
+          assign db_kicker = 'The Land'
+        elsif product_resource.tags contains 'The Sea'
+          assign db_kicker = 'The Sea'
+        elsif product_resource.tags contains 'The Sky'
+          assign db_kicker = 'The Sky'
+        elsif product_resource.tags contains 'The Stars'
+          assign db_kicker = 'The Stars'
+        elsif product_resource.type != blank
+          assign db_kicker = product_resource.type
+        elsif product_resource.collections.size > 0
+          assign db_kicker = product_resource.collections.first.title
+        else
+          assign db_kicker = 'New arrival'
+        endif
+
+        if product_resource.metafields.custom.ritual_line != blank
+          assign db_ritual = product_resource.metafields.custom.ritual_line
+        else
+          assign db_ritual = 'Designed to be lived in -- from morning to moonlight.'
+        endif
+      %}
+
+      {% if db_kicker != blank %}
+        <p class="db-product__kicker">{{ db_kicker }}</p>
+      {% endif %}
+      {% if db_ritual != blank %}
+        <p class="db-product__ritual">{{ db_ritual }}</p>
+      {% endif %}
+    {% endif %}
     <div class="view-product-title">
       <a
         href="{{ product.selected_or_first_available_variant.url }}"

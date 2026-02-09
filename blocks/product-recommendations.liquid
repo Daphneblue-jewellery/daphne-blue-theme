@@ -14,6 +14,22 @@
 
 {% liquid
   assign block_settings = block.settings
+  assign is_db_template = false
+  if section.settings.db_mode and section.type == 'product-information'
+    assign is_db_template = true
+  elsif template contains 'product.db' or template contains 'product.db1' or template contains 'product.daphne'
+    assign is_db_template = true
+  elsif template.name == 'product'
+    if template.suffix == 'db' or template.suffix == 'db1' or template.suffix == 'daphne'
+      assign is_db_template = true
+    endif
+  endif
+
+  assign db_recs_class = ''
+  if is_db_template
+    assign db_recs_class = 'db-recs'
+  endif
+
   case block_settings.layout_type
     when 'grid'
       assign classes = 'resource-list--grid'
@@ -28,7 +44,7 @@
 
 <product-recommendations
   id="product-recommendations-{{ block.id }}"
-  class="product-recommendations"
+  class="product-recommendations {{ db_recs_class }}"
   data-url="{{ routes.product_recommendations_url }}?limit={{ block_settings.max_products }}"
   data-section-id="{{ section.id }}"
   data-product-id="{{ closest.product.id }}"
@@ -44,6 +60,7 @@
     class="
       color-{{ section.settings.color_scheme }}
       block-resource-list
+      {% if is_db_template %}db-recs__inner{% endif %}
       spacing-style
       gap-style
     "
@@ -55,8 +72,11 @@
       --resource-list-columns-mobile: repeat(auto-fill, minmax(9.25rem, 1fr));
     "
   >
-    <div class="section-resource-list__content">
+    <div class="section-resource-list__content{% if is_db_template %} db-recs__header{% endif %}">
       {% content_for 'blocks' %}
+      {% if is_db_template %}
+        <p class="db-recs__subheading">Curated pieces to complement your selection</p>
+      {% endif %}
     </div>
 
     {%- if recommendations.performed or closest.product == blank -%}
@@ -83,7 +103,7 @@
       %}
       {% capture list_items %}
         {% for product in products limit: block_settings.max_products %}
-          <div class="resource-list__item">
+          <div class="resource-list__item{% if is_db_template %} db-card{% endif %}">
             {% content_for 'block',
               type: '_product-card',
               id: 'static-product-card',
@@ -113,6 +133,7 @@
       <div
         class="
           resource-list
+          {% if is_db_template %}db-recs__list{% endif %}
           {% if block_settings.carousel_on_mobile and block_settings.layout_type != 'carousel' %}
             hidden--mobile
           {% endif %}
