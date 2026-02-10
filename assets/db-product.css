@@ -489,7 +489,12 @@ body.db-product-page product-recommendations .product-media {
   border-radius: var(--db-radius-md, 8px);
   background: rgb(var(--color-foreground-rgb) / 0.04);
   aspect-ratio: 1 / 1;
-  transition: opacity var(--db-motion-duration-fast, 120ms) var(--db-motion-ease-out, ease-out);
+  overflow: hidden;
+}
+
+body.db-product-page product-recommendations .card-gallery img,
+body.db-product-page product-recommendations .product-media img {
+  transition: transform 520ms ease-out, filter 520ms ease-out;
 }
 
 /* Clip images to border-radius without clipping quick-add button */
@@ -499,8 +504,10 @@ body.db-product-page product-recommendations .card-gallery .product-media {
   overflow: hidden;
 }
 
-body.db-product-page product-recommendations .product-card:hover .card-gallery {
-  opacity: 0.88;
+body.db-product-page product-recommendations .product-card:hover .card-gallery img,
+body.db-product-page product-recommendations .product-card:focus-within .card-gallery img {
+  transform: scale(1.025);
+  filter: brightness(1.04);
 }
 
 /* Card title */
@@ -510,6 +517,17 @@ body.db-product-page product-recommendations .product-card .text-block * {
   font-size: 0.95rem;
   line-height: 1.4;
   color: var(--db-product-ink, #2E2E2E);
+  text-decoration: underline transparent 0.08em;
+  text-underline-offset: 0.22em;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color 520ms ease-out;
+}
+
+body.db-product-page product-recommendations .product-card:hover .text-block,
+body.db-product-page product-recommendations .product-card:hover .text-block *,
+body.db-product-page product-recommendations .product-card:focus-within .text-block,
+body.db-product-page product-recommendations .product-card:focus-within .text-block * {
+  text-decoration-color: rgb(var(--color-foreground-rgb) / 0.28);
 }
 
 /* Card price */
@@ -519,6 +537,7 @@ body.db-product-page product-recommendations .product-card product-price * {
   font-size: 0.72rem !important;
   letter-spacing: 0.14em !important;
   color: var(--db-product-muted, rgb(46 46 46 / 0.62)) !important;
+  text-decoration: none !important;
 }
 
 /* Hide gallery title placeholder (shows product name over image) */

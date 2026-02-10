@@ -18,6 +18,22 @@
   {% assign is_land_collection = true %}
 {% endif %}
 
+{% assign is_piece_category = false %}
+{% if template.suffix == 'piece-category' %}
+  {% assign is_piece_category = true %}
+{% endif %}
+
+{% comment %} Fallback: detect piece-type collections by handle when template_suffix isn't set {% endcomment %}
+{% unless is_piece_category or is_land_collection %}
+  {% assign piece_handles = 'necklaces,rings,earrings,bracelets' | split: ',' %}
+  {% for h in piece_handles %}
+    {% if collection.handle == h %}
+      {% assign is_piece_category = true %}
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endunless %}
+
 {% assign placeholder_children = '' %}
   {% if is_land_collection %}
     {% assign land_placeholder_images = 'land-placeholder-1.jpg|land-placeholder-2.jpg|land-placeholder-3.jpg|land-placeholder-4.jpg|land-placeholder-5.jpg|land-placeholder-6.jpg|land-placeholder-7.jpg|land-placeholder-8.jpg' | split: '|' %}
@@ -155,7 +171,7 @@
 {% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <results-list
-  class="section product-grid-container color-{{ section.settings.color_scheme }}{% if use_sidebar_filters %} db-collection-facets{% endif %}{% if is_land_collection %} db-land-collection{% endif %}"
+  class="section product-grid-container color-{{ section.settings.color_scheme }}{% if use_sidebar_filters %} db-collection-facets{% endif %}{% if is_land_collection %} db-land-collection{% endif %}{% if is_piece_category %} db-piece-collection{% endif %}"
   style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
   section-id="{{ section.id }}"
   infinite-scroll="{{ section.settings.enable_infinite_scroll }}"
@@ -163,6 +179,17 @@
   {% render 'skip-to-content-link', href: '#ResultsList', text: 'accessibility.skip_to_results_list' %}
 
 {% if is_land_collection %}
+{% endif %}
+
+{% if is_piece_category %}
+  <div class="db-piece-header page-width">
+    <span class="db-piece-header__eyebrow db-type--press">{{ collection.title | upcase }}</span>
+    <h1 class="db-piece-header__title">{{ collection.title }}</h1>
+    {% if collection.description != blank %}
+      <p class="db-piece-header__description">{{ collection.description }}</p>
+    {% endif %}
+    <span class="db-piece-header__count db-type--press">{{ collection.products_count }} pieces</span>
+  </div>
 {% endif %}
 
   {% if use_sidebar_filters %}

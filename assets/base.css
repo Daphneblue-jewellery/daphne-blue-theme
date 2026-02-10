@@ -2912,8 +2912,255 @@ fly-to-cart {
 }
 
 /* ------------------------------------------------------------------------------ */
-
+/* Piece-category collection pages (Necklaces, Rings, Bracelets, etc.)            */
 /* ------------------------------------------------------------------------------ */
+
+.db-piece-collection {
+  --db-piece-transition: 520ms cubic-bezier(0.18, 0.88, 0.24, 1);
+}
+
+/* ---- Collection header ---- */
+.db-piece-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  padding: clamp(2rem, 5vw, 3.5rem) var(--page-margin) clamp(1.2rem, 3vw, 2rem);
+}
+
+.db-piece-header__eyebrow {
+  font-family: var(--font-body--family);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground-rgb) / 0.5);
+  margin: 0;
+}
+
+.db-piece-header__title {
+  font-family: "Maragsa Display", serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: rgb(var(--color-foreground-rgb));
+  margin: 0;
+}
+
+.db-piece-header__description {
+  font-family: var(--font-body--family);
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  line-height: 1.65;
+  color: rgb(var(--color-foreground-rgb) / 0.6);
+  max-width: 480px;
+  margin: 4px 0 0;
+}
+
+.db-piece-header__count {
+  font-family: var(--font-body--family);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground-rgb) / 0.38);
+  margin-top: 4px;
+}
+
+/* ---- Horizontal filters — softer editorial styling ---- */
+.db-piece-collection .facets--horizontal {
+  border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.06);
+  padding-block-end: 12px;
+}
+
+.db-piece-collection .facets--horizontal .facets__summary {
+  color: rgb(var(--color-foreground-rgb) / 0.6);
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+  border: none;
+  background: transparent;
+  padding: 6px 2px;
+  min-height: auto;
+  transition: color var(--db-piece-transition);
+  --icon-opacity: 0.5;
+}
+
+.db-piece-collection .facets--horizontal .facets__summary:is(:hover, :focus-visible) {
+  color: rgb(var(--color-foreground-rgb) / 0.85);
+  --icon-opacity: 0.75;
+}
+
+.db-piece-collection .facets--horizontal .facets__label,
+.db-piece-collection .facets--horizontal .facets__status,
+.db-piece-collection .facets--horizontal .products-count-wrapper {
+  color: rgb(var(--color-foreground-rgb) / 0.55);
+  font-size: 0.85rem;
+}
+
+.db-piece-collection .facets--horizontal .facets__panel-content,
+.db-piece-collection .facets--horizontal .sorting-filter__options {
+  border-radius: 12px;
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.06);
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.04);
+  background: rgb(var(--color-background-rgb));
+  padding: var(--padding-sm);
+  margin-top: 6px;
+}
+
+/* Hide fallback wrappers (piece-category always uses horizontal) */
+.db-piece-collection .facets__filters-wrapper--fallback,
+.db-piece-collection .facets__status--fallback-note,
+.db-piece-collection .facets__form-wrapper--fallback,
+.db-piece-collection .facets__status--fallback {
+  display: none;
+}
+
+/* ---- Product cards — editorial hover system ---- */
+.db-piece-collection .product-grid__card {
+  border-radius: 0;
+}
+
+.db-piece-collection .card-gallery {
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Hide the fallback title placeholder inside gallery (we have a proper title block below) */
+.db-piece-collection .product-card-gallery__title-placeholder {
+  display: none;
+}
+
+/* Ensure gallery has minimum height when no product images are present */
+.db-piece-collection .card-gallery:not(:has(img)) {
+  aspect-ratio: 4 / 5;
+  background: rgb(var(--color-foreground-rgb) / 0.03);
+}
+
+.db-piece-collection .card-gallery img {
+  transition: transform var(--db-piece-transition), filter var(--db-piece-transition);
+}
+
+.db-piece-collection .product-grid__item:hover .card-gallery img,
+.db-piece-collection .product-grid__item:focus-within .card-gallery img {
+  transform: scale(1.025);
+  filter: brightness(1.04);
+}
+
+/* Reset Horizon's global .text-block absolute positioning (hero overlay leak) */
+.db-piece-collection .product-grid__item .text-block,
+.db-piece-collection .product-grid__item product-price {
+  position: relative !important;
+  transform: none !important;
+  top: auto !important;
+  left: auto !important;
+  width: 100% !important;
+  text-align: left;
+}
+
+/* Fix display:contents on <a> wrappers breaking width chain */
+.db-piece-collection .product-grid__item .product-card__content > a {
+  display: block;
+  width: 100%;
+}
+
+/* Card content — flex column so gallery + text stack properly */
+.db-piece-collection .product-card__content {
+  display: flex;
+  flex-direction: column;
+  height: auto !important;
+}
+
+.db-piece-collection .product-card__content .card-gallery {
+  flex-shrink: 0;
+}
+
+/* Title — match PDP recommendation card styling */
+.db-piece-collection .product-grid__item .product-card__title {
+  font-family: var(--font-body--family) !important;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: normal;
+}
+
+/* Title — underline reveal on hover */
+.db-piece-collection .product-grid__item .text-block a,
+.db-piece-collection .product-grid__item .product-title a {
+  text-decoration: underline transparent;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-color var(--db-piece-transition);
+}
+
+.db-piece-collection .product-grid__item:hover .text-block a,
+.db-piece-collection .product-grid__item:hover .product-title a,
+.db-piece-collection .product-grid__item:focus-within .text-block a,
+.db-piece-collection .product-grid__item:focus-within .product-title a {
+  text-decoration-color: rgb(var(--color-foreground-rgb) / 0.28);
+}
+
+/* Price — match PDP recommendation card styling */
+.db-piece-collection .product-grid__item .price {
+  font-family: var(--font-body--family) !important;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: rgb(var(--color-foreground-rgb) / 0.62);
+}
+
+.db-piece-collection .product-grid__item .price *,
+.db-piece-collection .product-grid__item .price a {
+  text-decoration: none !important;
+}
+
+/* ---- Grid spacing ---- */
+.db-piece-collection .main-collection-grid {
+  padding: var(--padding-block-start) var(--page-margin) var(--padding-block-end) var(--page-margin);
+}
+
+/* ---- Pills (active filter removal) — softer ---- */
+.db-piece-collection .pills__pill {
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  border-radius: 20px;
+  background-color: rgb(var(--color-foreground-rgb) / 0.04);
+}
+
+.db-piece-collection .pills__pill:hover {
+  background-color: rgb(var(--color-foreground-rgb) / 0.08);
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 749px) {
+  .db-piece-header {
+    padding: clamp(1.5rem, 4vw, 2.5rem) var(--page-margin) clamp(1rem, 2vw, 1.5rem);
+    gap: 6px;
+  }
+
+  .db-piece-header__title {
+    font-size: clamp(1.75rem, 5vw, 2.25rem);
+  }
+
+  .db-piece-header__description {
+    font-size: 0.88rem;
+  }
+
+  .db-piece-collection .main-collection-grid {
+    padding: var(--grid--margin--mobile, 0) var(--page-margin);
+  }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .db-piece-collection .card-gallery img,
+  .db-piece-collection .product-grid__item .text-block a,
+  .db-piece-collection .product-grid__item .product-title a,
+  .db-piece-collection .product-grid__item .swatch {
+    transition: none;
+  }
+
+  .db-piece-collection .product-grid__item:hover .card-gallery img {
+    transform: none;
+    filter: none;
+  }
+}
 
 /* ------------------------------------------------------------------------------ */
 
