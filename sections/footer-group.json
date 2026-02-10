@@ -8,7 +8,7 @@
         "explore_menu": {
           "type": "menu",
           "settings": {
-            "menu": "footer-explore",
+            "menu": "main-menu",
             "heading": "EXPLORE",
             "menu_spacing": 8,
             "show_as_accordion": false,
@@ -46,7 +46,7 @@
         "daphne_menu": {
           "type": "menu",
           "settings": {
-            "menu": "footer-daphne-blue",
+            "menu": "page-bottom",
             "heading": "DAPHNE BLUE",
             "menu_spacing": 8,
             "show_as_accordion": false,
