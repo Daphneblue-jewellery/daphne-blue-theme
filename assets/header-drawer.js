@@ -85,7 +85,7 @@ class HeaderDrawer extends Component {
     if (!summary) return;
 
     this.#setDrawerMode(event, details);
-    if (details === this.refs.details && this.#drawerSearchInput && this.#drawerSuggestions) {
+    if (details === this.refs.details && this.dataset.drawerMode === 'search' && this.#drawerSearchInput && this.#drawerSuggestions) {
       this.#activateSearchMode();
     }
     summary.setAttribute('aria-expanded', 'true');
@@ -105,6 +105,14 @@ class HeaderDrawer extends Component {
   openSearch(event) {
     this.#ensureDrawerVisibleForSearch();
     this.#activateSearchMode();
+
+    // Ensure the <details> element is open — openSearch() is called
+    // programmatically (no native <summary> click to toggle it open).
+    const details = this.refs.details;
+    if (!details.open) {
+      details.open = true;
+    }
+
     this.open(event);
   }
 
@@ -174,7 +182,6 @@ class HeaderDrawer extends Component {
   #setupDrawerSearch() {
     if (!this.#drawerSearchInput || !this.#drawerSuggestions) return;
 
-    this.#drawerSuggestions.hidden = true;
     this.classList.remove('header-drawer--search');
     this.#drawerSearchInput.addEventListener('focus', this.#activateSearchMode);
     this.#drawerSearchInput.addEventListener('input', this.#activateSearchMode);
@@ -183,9 +190,6 @@ class HeaderDrawer extends Component {
   #showDrawerSuggestions = () => {
     this.dataset.drawerMode = 'search';
     this.classList.add('header-drawer--search');
-    if (this.#drawerSuggestions) {
-      this.#drawerSuggestions.hidden = false;
-    }
   };
 
   #activateSearchMode = () => {
@@ -197,10 +201,6 @@ class HeaderDrawer extends Component {
   };
 
   #resetDrawerSearch() {
-    if (this.#drawerSuggestions) {
-      this.#drawerSuggestions.hidden = true;
-    }
-
     if (this.#drawerSearchInput) {
       this.#drawerSearchInput.value = '';
     }

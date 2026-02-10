@@ -41,6 +41,7 @@ class AccordionCustom extends HTMLElement {
 
     this.addEventListener('keydown', this.#handleKeyDown, { signal });
     this.summary.addEventListener('click', this.handleClick, { signal });
+    this.details.addEventListener('toggle', this.#handleToggle, { signal });
     mediaQueryLarge.addEventListener('change', this.#handleMediaQueryChange, { signal });
   }
 
@@ -84,6 +85,22 @@ class AccordionCustom extends HTMLElement {
       (isMobile && this.hasAttribute('open-by-default-on-mobile')) ||
       (!isMobile && this.hasAttribute('open-by-default-on-desktop'));
   }
+
+  /**
+   * When this accordion opens, close sibling accordion rows.
+   */
+  #handleToggle = () => {
+    if (!this.details.open) return;
+
+    const parent = this.closest('.accordion');
+    if (!parent) return;
+
+    parent.querySelectorAll('accordion-custom').forEach((sibling) => {
+      if (sibling !== this && sibling.details.open) {
+        sibling.details.open = false;
+      }
+    });
+  };
 
   /**
    * Handles keydown events for the accordion

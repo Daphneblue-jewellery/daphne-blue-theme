@@ -27,22 +27,25 @@ class HeaderSearch extends Component {
       this.#isGlobalListenerBound = true;
     }
 
-    if (!this.#categories.length) {
-      this.refs.placeholder.textContent = this.#prefix;
-      return;
-    }
+    // Set placeholder text — deferred to ensure refs are ready
+    requestAnimationFrame(() => {
+      if (!this.#categories.length) {
+        this.refs.placeholder.textContent = this.#prefix;
+        return;
+      }
 
-    if (prefersReducedMotion() || this.#categories.length === 1) {
-      this.refs.placeholder.textContent = this.#buildText(this.#categories[0] || '');
-      return;
-    }
+      if (prefersReducedMotion() || this.#categories.length === 1) {
+        this.refs.placeholder.textContent = this.#buildText(this.#categories[0] || '');
+        return;
+      }
 
-    this.addEventListener('mouseenter', this.#pause);
-    this.addEventListener('mouseleave', this.#resume);
-    this.addEventListener('focusin', this.#pause);
-    this.addEventListener('focusout', this.#resume);
+      this.addEventListener('mouseenter', this.#pause);
+      this.addEventListener('mouseleave', this.#resume);
+      this.addEventListener('focusin', this.#pause);
+      this.addEventListener('focusout', this.#resume);
 
-    this.#resume();
+      this.#resume();
+    });
   }
 
   disconnectedCallback() {
@@ -160,11 +163,15 @@ class HeaderSearch extends Component {
     const input = drawer.querySelector('[data-drawer-search-input]');
     if (!input) return;
 
-    input.value = `${input.value}${typedKey}`;
-    input.dispatchEvent(new Event('input', { bubbles: true }));
+    if (typedKey) {
+      input.value = `${input.value}${typedKey}`;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
     requestAnimationFrame(() => {
       input.focus();
-      input.setSelectionRange(input.value.length, input.value.length);
+      if (input.value.length > 0) {
+        input.setSelectionRange(input.value.length, input.value.length);
+      }
     });
   }
 }
