@@ -10,10 +10,7 @@
 }
 
 .db-product-background {
-  background:
-    radial-gradient(circle at 12% 16%, rgb(111 169 184 / 0.12), transparent 55%),
-    radial-gradient(circle at 86% 8%, rgb(201 162 77 / 0.08), transparent 48%),
-    linear-gradient(180deg, var(--db-color-soft-white) 0%, #f6f2eb 55%, var(--db-color-soft-sand) 100%);
+  background: var(--db-color-soft-white, #FAFAF8);
 }
 
 .db-product .product-information {
@@ -55,6 +52,7 @@
   padding: 0 !important;
   width: min(100%, 56ch);
   justify-self: start;
+  align-self: center;
   margin: 0;
   justify-content: flex-start;
   order: 1;
@@ -135,7 +133,7 @@
   border-radius: 0 !important;
   border: none !important;
   box-shadow: none !important;
-  padding: clamp(20px, 3.2vw, 32px) 0 !important;
+  padding: 0 !important;
 }
 
 .db-product .db-product__info > .group-block > .group-block-content {
@@ -193,18 +191,18 @@
 
 .db-product .db-product__price .price,
 .db-product .db-product__price .price-item {
-  color: var(--db-color-daphne-blue);
-  font-size: 1.05rem;
-  letter-spacing: 0.06em;
+  color: var(--db-product-muted);
+  font-size: 1.02rem;
+  letter-spacing: 0.04em;
 }
 
 /* ── Description ─────────────────────────────────────── */
 
 .db-product .db-product__desc {
   font-family: var(--font-body--family);
-  font-size: 1.02rem;
-  line-height: 1.7;
-  color: rgb(var(--color-foreground-rgb) / 0.78);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: rgb(var(--color-foreground-rgb) / 0.68);
   max-width: 56ch;
   padding-top: clamp(16px, 2vw, 24px);
   position: relative;
@@ -215,9 +213,9 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 32px;
+  width: 40px;
   height: 1px;
-  background: var(--db-product-border);
+  background: rgb(46 46 46 / 0.06);
 }
 
 /* ── Ritual ──────────────────────────────────────────── */
@@ -228,7 +226,7 @@
   font-style: italic;
   line-height: 1.6;
   color: var(--db-product-muted);
-  margin: 0;
+  margin: clamp(12px, 2vw, 20px) 0 0;
 }
 
 /* ── Variant picker ──────────────────────────────────── */
@@ -382,6 +380,53 @@
   color: var(--db-product-muted);
 }
 
+/* ── Product accordion (Aesop-style detail sections) ──── */
+
+.db-product .accordion {
+  margin-top: clamp(16px, 2.5vw, 24px);
+}
+
+/* Strip Horizon's accordion chrome — use DB press typography */
+.db-product .accordion .details__header {
+  font-family: var(--font-body--family) !important;
+  font-size: 0.7rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  line-height: 1.2 !important;
+  color: var(--db-product-ink, #2E2E2E) !important;
+  padding: 14px 0 !important;
+  min-height: auto !important;
+  cursor: pointer;
+}
+
+/* Divider lines: subtle, matching description separator */
+.db-product .accordion--dividers accordion-custom .details {
+  border-color: rgb(46 46 46 / 0.08) !important;
+}
+
+/* Plus/minus icon: small, muted */
+.db-product .accordion .icon-plus,
+.db-product .accordion .icon-caret {
+  width: 12px !important;
+  height: 12px !important;
+  color: var(--db-product-muted, rgb(46 46 46 / 0.5)) !important;
+  transition: transform 200ms ease;
+}
+
+/* Expanded content: body text styling */
+.db-product .accordion .details-content {
+  padding-block-end: 16px !important;
+}
+
+.db-product .accordion .details-content .text-block,
+.db-product .accordion .details-content .text-block * {
+  font-family: var(--font-body--family) !important;
+  font-size: 0.88rem !important;
+  line-height: 1.65 !important;
+  color: rgb(var(--color-foreground-rgb) / 0.68) !important;
+}
+
 /* ── Product recommendations ─────────────────────────────
    Scoped via body.db-product-page (class added by script
    in product-information.liquid when is_db_template = true).
@@ -432,10 +477,16 @@ body.db-product-page product-recommendations .product-card__content {
 body.db-product-page product-recommendations .card-gallery,
 body.db-product-page product-recommendations .product-media {
   border-radius: var(--db-radius-md, 8px);
-  overflow: hidden;
   background: var(--db-color-soft-sand, #F2EDE6);
   aspect-ratio: 3 / 4;
   transition: opacity var(--db-motion-duration-fast, 120ms) var(--db-motion-ease-out, ease-out);
+}
+
+/* Clip images to border-radius without clipping quick-add button */
+body.db-product-page product-recommendations .card-gallery slideshow,
+body.db-product-page product-recommendations .card-gallery .product-media {
+  border-radius: var(--db-radius-md, 8px);
+  overflow: hidden;
 }
 
 body.db-product-page product-recommendations .product-card:hover .card-gallery {
@@ -467,6 +518,12 @@ body.db-product-page product-recommendations .product-card-gallery__title-placeh
 
 /* Hide swatches in recs cards */
 body.db-product-page product-recommendations .product-card product-swatches {
+  display: none !important;
+}
+
+/* Hide badges (Sold out, Sale, etc.) in recs cards */
+body.db-product-page product-recommendations .product-badges,
+body.db-product-page product-recommendations .product-card .product-badge {
   display: none !important;
 }
 

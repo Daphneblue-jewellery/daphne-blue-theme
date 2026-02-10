@@ -1,0 +1,167 @@
+{% comment %}
+  Editorial favourites — a curated static grid of 3 products.
+  No carousel, no card chrome. Lookbook-style product presentation.
+{% endcomment %}
+
+{% liquid
+  assign products = section.settings.products
+  assign show_placeholders = false
+  if products == blank or products.size == 0
+    assign show_placeholders = true
+  endif
+%}
+
+<section
+  class="db-favourites spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width db-favourites__inner">
+    {% if section.settings.heading != blank %}
+      <div class="db-favourites__header">
+        <h2 class="db-favourites__heading">{{ section.settings.heading }}</h2>
+        {% if section.settings.subline != blank %}
+          <p class="db-favourites__subline">{{ section.settings.subline }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="db-favourites__grid">
+      {% if show_placeholders %}
+        {% assign placeholder_titles = 'Pearl Coast Necklace|Golden Tide Ring|Forest Light Studs' | split: '|' %}
+        {% assign placeholder_prices = '120|95|78' | split: '|' %}
+        {% for i in (0..2) %}
+          <div class="db-favourites__item">
+            <a class="db-favourites__link" href="#" aria-label="{{ placeholder_titles[i] }}">
+              <div class="db-favourites__media">
+                <div class="db-favourites__placeholder" aria-hidden="true">
+                  {% case i %}
+                    {% when 0 %}
+                      <svg viewBox="0 0 64 64" aria-hidden="true">
+                        <path d="M10 20c10 16 34 16 44 0"/>
+                        <path d="M32 28v6"/>
+                        <circle cx="32" cy="40" r="6"/>
+                      </svg>
+                    {% when 1 %}
+                      <svg viewBox="0 0 64 64" aria-hidden="true">
+                        <circle cx="32" cy="36" r="14"/>
+                        <circle cx="32" cy="16" r="4"/>
+                        <path d="M28 22l4-6 4 6"/>
+                      </svg>
+                    {% when 2 %}
+                      <svg viewBox="0 0 64 64" aria-hidden="true">
+                        <circle cx="22" cy="32" r="6"/>
+                        <circle cx="42" cy="32" r="6"/>
+                      </svg>
+                  {% endcase %}
+                </div>
+              </div>
+              <div class="db-favourites__details">
+                <h3 class="db-favourites__title">{{ placeholder_titles[i] }}</h3>
+                <span class="db-favourites__price">{{ shop.currency }} {{ placeholder_prices[i] }}</span>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        {% for product in products limit: 3 %}
+          <div class="db-favourites__item">
+            <a class="db-favourites__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+              <div class="db-favourites__media">
+                {% if product.featured_image %}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 1200 }}"
+                    alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                    loading="lazy"
+                    width="{{ product.featured_image.width }}"
+                    height="{{ product.featured_image.height }}"
+                    class="db-favourites__image"
+                  >
+                {% else %}
+                  <div class="db-favourites__placeholder" aria-hidden="true">
+                    <svg viewBox="0 0 64 64" aria-hidden="true">
+                      <circle cx="32" cy="36" r="14"/>
+                      <circle cx="32" cy="16" r="4"/>
+                      <path d="M28 22l4-6 4 6"/>
+                    </svg>
+                  </div>
+                {% endif %}
+              </div>
+              <div class="db-favourites__details">
+                <h3 class="db-favourites__title">{{ product.title }}</h3>
+                <span class="db-favourites__price">{{ product.price | money }}</span>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    {% if section.settings.link_label != blank and section.settings.link_url != blank %}
+      <div class="db-favourites__footer">
+        <a class="db-link db-favourites__view-all" href="{{ section.settings.link_url }}">
+          {{ section.settings.link_label }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Favourites",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Favourites"
+    },
+    {
+      "type": "text",
+      "id": "subline",
+      "label": "Subline",
+      "default": "The pieces we reach for, again and again"
+    },
+    {
+      "type": "product_list",
+      "id": "products",
+      "label": "Products",
+      "limit": 3
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "View all label",
+      "default": "View all \u2192"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "View all link"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "Favourites"
+    }
+  ]
+}
+{% endschema %}

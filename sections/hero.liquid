@@ -913,6 +913,17 @@
       gap: var(--gap);
     }
 
+    #Hero-{{ section.id }} .text-block {
+      max-width: 100% !important;
+      text-align: center !important;
+      margin-left: -10px !important;   /* optical nudge — balance visual weight of 'naturally,' vs 'you' */
+    }
+
+    /* Hide CTA button — headline speaks for itself */
+    #Hero-{{ section.id }} .button {
+      display: none !important;
+    }
+
     @media (max-width: 749px) {
       #Hero-{{ section.id }} .hero__media-wrapper {
         background-position: 50% 48%;
