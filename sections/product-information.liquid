@@ -66,6 +66,398 @@
 
 {% if is_db_template %}
   {{ 'db-product.css' | asset_url | stylesheet_tag }}
+  <style>
+    /* ── Description: editorial typography + separator ──── */
+    .db-product .db-product__desc {
+      font-family: var(--font-body--family) !important;
+      font-size: 1.02rem !important;
+      line-height: 1.7 !important;
+      color: rgb(var(--color-foreground-rgb) / 0.78) !important;
+      max-width: 56ch !important;
+      padding-top: clamp(20px, 3vw, 32px) !important;
+      padding-block-start: clamp(20px, 3vw, 32px) !important;
+      position: relative !important;
+      margin-top: 4px !important;
+    }
+    .db-product .db-product__desc::before {
+      content: '' !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 32px !important;
+      height: 1px !important;
+      background: rgb(46 46 46 / 0.08) !important;
+    }
+    /* Reset description inner wrappers (from rich text editor paste) */
+    .db-product .db-product__desc .page,
+    .db-product .db-product__desc .section,
+    .db-product .db-product__desc .layoutArea,
+    .db-product .db-product__desc .column {
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+    }
+    .db-product .db-product__desc p {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .db-product .db-product__desc span {
+      padding: 0 !important;
+    }
+    /* ── Inline overrides ────────────────────────────────────
+       These MUST be inline (not in db-product.css) because
+       Horizon's compiled_assets/styles.css and Shopify CDN
+       caching make external stylesheet rules lose specificity.
+       ─────────────────────────────────────────────────────── */
+
+    /* Flex-shrink collapse fix: Horizon's layout-panel-flex
+       sets height: 100% which makes children overlap */
+    .db-product .db-product__info > .group-block,
+    .db-product .db-product__info > .group-block.size-style {
+      background: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      padding: clamp(20px, 3.2vw, 32px) 0 !important;
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+    }
+    .db-product .db-product__info > .group-block > .group-block-content,
+    .db-product .db-product__info .layout-panel-flex,
+    .db-product .db-product__info .layout-panel-flex--column {
+      display: flex !important;
+      flex-direction: column !important;
+      height: auto !important;
+      max-height: none !important;
+      min-height: 0 !important;
+      align-items: flex-start !important;
+      position: relative !important;
+      gap: 12px !important;
+      flex-wrap: nowrap !important;
+      overflow: visible !important;
+    }
+    .db-product .db-product__info > .group-block > .group-block-content > * {
+      position: relative !important;
+      flex-shrink: 0 !important;
+      width: 100% !important;
+    }
+    /* Force inline elements (spans) to block — but respect hidden */
+    .db-product .db-product__info > .group-block > .group-block-content > span,
+    .db-product .db-product__info > .group-block > .group-block-content > rte-formatter {
+      display: block !important;
+    }
+    .db-product .db-product__info .view-product-title,
+    .db-product .db-product__info .hidden,
+    .db-product .product-form-text__error {
+      display: none !important;
+    }
+    .db-product .db-product__info .spacing-style {
+      position: relative !important;
+      padding-block-start: 0 !important;
+      padding-block-end: 0 !important;
+    }
+    /* The description rte-formatter IS both .db-product__desc AND
+       .spacing-style on the SAME element, with inline style
+       --padding-block-start: 0px. Use longhands (not shorthand)
+       to avoid shorthand/longhand !important cascade conflicts.
+       Extra .db-product__info raises specificity over the general reset. */
+    .db-product .db-product__info .db-product__desc.spacing-style {
+      padding-block-start: clamp(20px, 3vw, 32px) !important;
+    }
+
+    /* Grid: force 3fr/2fr editorial split over Horizon's subgrid */
+    .db-product .product-information__grid {
+      display: grid !important;
+      grid-column: 1 / -1 !important;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr) !important;
+      column-gap: clamp(24px, 4vw, 64px) !important;
+    }
+    .db-product .product-information__media {
+      grid-column: 1 / 2 !important;
+      grid-row: 1 !important;
+      padding: 0 !important;
+      order: 0 !important;
+    }
+    .db-product .product-details,
+    .db-product .product-details.sticky-content--desktop {
+      grid-column: 2 / 3 !important;
+      grid-row: 1 !important;
+      padding: 0 !important;
+      order: 1 !important;
+      height: auto !important;
+      max-height: none !important;
+      align-self: start !important;
+    }
+
+    /* Title: override Horizon's type_preset sizing.
+       Use Maragsa Display directly — --font-heading--family resolves
+       to Anonymous Pro (theme setting), not our custom heading font. */
+    .db-product h1 {
+      font-family: "Maragsa Display", serif !important;
+      font-size: clamp(1.8rem, 2.4vw, 2.6rem) !important;
+      font-weight: 400 !important;
+      letter-spacing: -0.02em !important;
+      margin: 0 !important;
+      overflow-wrap: break-word !important;
+      word-break: normal !important;
+      text-overflow: unset !important;
+      overflow: visible !important;
+      white-space: normal !important;
+      max-width: 100% !important;
+      --heading-font-size: clamp(1.8rem, 2.4vw, 2.6rem);
+      --font-h1--size: clamp(1.8rem, 2.4vw, 2.6rem);
+    }
+    /* Prevent text blocks from clipping content.
+       Also reset Horizon's global .text-block hero-centering rule:
+       .text-block { transform: translate(-50%, -50%); top: 50%; left: 50%; }
+       which leaks onto product page and shifts all text blocks. */
+    .db-product .db-product__info .text-block {
+      overflow: visible !important;
+      text-overflow: unset !important;
+      transform: none !important;
+      top: auto !important;
+      left: auto !important;
+    }
+
+    /* Hide Horizon's default product title link (we use our own) */
+    .db-product .view-product-title,
+    .db-product .db-product__info .view-product-title,
+    .db-product .group-block-content > .view-product-title,
+    .view-product-title {
+      display: none !important;
+      visibility: hidden !important;
+      height: 0 !important;
+      overflow: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      font-size: 0 !important;
+      line-height: 0 !important;
+    }
+
+    /* Kicker: small press-style label above title */
+    .db-product .db-product__kicker {
+      font-size: 0.7rem !important;
+      letter-spacing: 0.18em !important;
+      text-transform: uppercase !important;
+      color: var(--db-color-daphne-blue, #6FA9B8) !important;
+      margin: 0 0 4px 0 !important;
+      line-height: 1.2 !important;
+    }
+
+    /* Variant picker: strip ALL Horizon button/swatch chrome */
+    .db-product .variant-option__button-label {
+      border: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+      min-height: auto !important;
+      min-width: auto !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      position: relative !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      width: auto !important;
+      height: auto !important;
+      aspect-ratio: unset !important;
+    }
+    /* Swatch-mode labels: collapse visually but keep radio
+       inputs accessible. The legend shows "Colour Gold" so
+       the user knows the selection. */
+    .db-product .variant-option--swatches .variant-option__button-label--has-swatch {
+      display: none !important;
+    }
+    .db-product .variant-option__button-label::before,
+    .db-product .variant-option__button-label::after {
+      content: none !important;
+    }
+    /* Hide swatch circles, SVG strikethroughs, pills, checks */
+    .db-product .variant-option__button-label__pill,
+    .db-product .variant-option__button-label svg,
+    .db-product .variant-option__button-label .swatch,
+    .db-product .swatch,
+    .db-product .variant-option__button-label__check {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+    /* Radio input: invisible but clickable */
+    .db-product .variant-option__button-label input[type="radio"],
+    .db-product .variant-option--buttons input[type="radio"],
+    .db-product .variant-option--swatches input[type="radio"] {
+      position: absolute !important;
+      opacity: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      inset: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: 0 !important;
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      pointer-events: all !important;
+    }
+    /* Show variant name as text label instead of swatch */
+    .db-product .variant-option__button-label__text {
+      display: inline !important;
+      font-size: 0.72rem !important;
+      letter-spacing: 0.18em !important;
+      text-transform: uppercase !important;
+    }
+    /* The fieldset layout */
+    .db-product .variant-option--buttons,
+    .db-product .variant-option--swatches {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 10px 16px !important;
+      border: none !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    .db-product .variant-option--buttons legend,
+    .db-product .variant-option--swatches legend {
+      font-size: 0.7rem !important;
+      letter-spacing: 0.18em !important;
+      text-transform: uppercase !important;
+      color: var(--db-product-muted, rgb(46 46 46 / 0.62)) !important;
+      padding: 0 !important;
+      margin-bottom: 8px !important;
+      width: 100% !important;
+    }
+
+    /* CTA: text-link style, not Horizon's big button */
+    .db-product .db-product__cta .quantity-selector,
+    .db-product .quantity-selector,
+    .db-product quantity-selector-component {
+      display: none !important;
+    }
+    .db-product .db-product__cta {
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+      margin: 4px 0 0 0 !important;
+      overflow: visible !important;
+    }
+    .db-product .product-form-buttons {
+      display: flex !important;
+      flex-direction: column !important;
+      flex-wrap: nowrap !important;
+      gap: 8px !important;
+      align-items: flex-start !important;
+      height: auto !important;
+    }
+    .db-product .product-form-buttons > * {
+      flex: 0 0 auto !important;
+      display: block !important;
+      height: auto !important;
+      min-height: 0 !important;
+    }
+    .db-product .product-form-buttons > .hidden,
+    .db-product .product-form-buttons .product-form-text__error {
+      display: none !important;
+    }
+    .db-product .product-form-buttons .add-to-cart-button,
+    .db-product .product-form-buttons button,
+    .db-product .product-form-buttons .button,
+    .db-product .product-form-buttons .button--primary,
+    .db-product .product-form-buttons .button--secondary,
+    .db-product .product-form-buttons .button--solid,
+    .db-product .product-form-buttons .button--outline {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding: 4px 0 !important;
+      padding-block: 4px !important;
+      padding-inline: 0 !important;
+      height: auto !important;
+      min-height: auto !important;
+      min-width: 0 !important;
+      width: auto !important;
+      display: block !important;
+      position: relative !important;
+      flex: 0 0 auto !important;
+      font-family: var(--db-type-press-family) !important;
+      letter-spacing: 0.18em !important;
+      text-transform: uppercase !important;
+      font-size: 0.72rem !important;
+      color: var(--db-product-muted, rgb(46 46 46 / 0.62)) !important;
+    }
+    /* Ensure ALL buy-buttons internals are block-level with auto height */
+    .db-product .buy-buttons-block,
+    .db-product product-form-component,
+    .db-product product-form-component form,
+    .db-product .product-form-buttons > span,
+    .db-product add-to-cart-component {
+      display: block !important;
+      width: 100% !important;
+      height: auto !important;
+    }
+    /* The add-to-cart-text spans */
+    .db-product .add-to-cart-text--added {
+      display: none !important;
+    }
+
+    /* Badges: hide Horizon's default product badges */
+    .db-product .product-badges {
+      display: none !important;
+    }
+
+    /* Ritual: italic sign-off */
+    .db-product .db-product__ritual {
+      font-family: var(--font-body--family) !important;
+      font-size: 0.92rem !important;
+      font-style: italic !important;
+      line-height: 1.6 !important;
+      color: var(--db-product-muted, rgb(46 46 46 / 0.62)) !important;
+      margin: 0 !important;
+    }
+
+    /* Mobile: single column */
+    @media screen and (max-width: 749px) {
+      .db-product .product-information__grid {
+        grid-template-columns: 1fr !important;
+        column-gap: 0 !important;
+      }
+      .db-product .product-information__media,
+      .db-product .product-details {
+        grid-column: 1 / -1 !important;
+      }
+    }
+    /* ── Horizon resets for DB product recommendations ──── */
+    /* Scoped via body class added by script below */
+
+    body.db-product-page product-recommendations .text-block {
+      position: relative !important;
+      transform: none !important;
+      top: auto !important;
+      left: auto !important;
+      width: 100% !important;
+    }
+
+    body.db-product-page product-recommendations .product-card__content.layout-panel-flex {
+      height: auto !important;
+    }
+
+    body.db-product-page product-recommendations .product-card .spacing-style {
+      padding-block-start: 0 !important;
+      padding-block-end: 0 !important;
+    }
+
+    body.db-product-page product-recommendations .product-card__content {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    body.db-product-page product-recommendations .product-grid-view-zoom-out--details {
+      display: none !important;
+    }
+  </style>
+  <script>document.body.classList.add('db-product-page');</script>
 {% endif %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}{% if is_db_template %} db-product-background{% endif %}"></div>

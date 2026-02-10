@@ -5,25 +5,19 @@
   assign product_resource = closest.product
   assign selected_variant = product_resource.selected_or_first_available_variant
   assign db_class = ''
+  assign is_db = false
   if section.settings.db_mode
-    if section.type == 'product-information'
-      if block.id == 'db_price'
-        assign db_class = 'db-product__price'
-      endif
-    endif
+    assign is_db = true
   elsif template contains 'product.db' or template contains 'product.db1' or template contains 'product.daphne'
-    if section.type == 'product-information'
-      if block.id == 'db_price'
-        assign db_class = 'db-product__price'
-      endif
-    endif
+    assign is_db = true
   elsif template.name == 'product'
     if template.suffix == 'db' or template.suffix == 'db1' or template.suffix == 'daphne'
-      if section.type == 'product-information'
-        if block.id == 'db_price'
-          assign db_class = 'db-product__price'
-        endif
-      endif
+      assign is_db = true
+    endif
+  endif
+  if is_db
+    if block.id contains 'db_price'
+      assign db_class = 'db-product__price'
     endif
   endif
 -%}

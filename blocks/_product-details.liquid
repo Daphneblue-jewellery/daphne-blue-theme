@@ -3,18 +3,12 @@
 {%- assign block_settings = block.settings -%}
 {%- assign is_db_template = false -%}
 {%- if section.settings.db_mode -%}
-  {%- if section.type == 'product-information' -%}
-    {%- assign is_db_template = true -%}
-  {%- endif -%}
+  {%- assign is_db_template = true -%}
 {%- elsif template contains 'product.db' or template contains 'product.db1' or template contains 'product.daphne' -%}
-  {%- if section.type == 'product-information' -%}
-    {%- assign is_db_template = true -%}
-  {%- endif -%}
+  {%- assign is_db_template = true -%}
 {%- elsif template.name == 'product' -%}
   {%- if template.suffix == 'db' or template.suffix == 'db1' or template.suffix == 'daphne' -%}
-    {%- if section.type == 'product-information' -%}
-      {%- assign is_db_template = true -%}
-    {%- endif -%}
+    {%- assign is_db_template = true -%}
   {%- endif -%}
 {%- endif -%}
 
@@ -32,44 +26,41 @@
     data-view-transition-type="product-details"
   {% endif %}
 >
+  {% if is_db_template %}
+    {% liquid
+      assign product_resource = closest.product
+      assign db_kicker = ''
+      assign db_ritual = ''
+
+      if product_resource.metafields.custom.kicker != blank
+        assign db_kicker = product_resource.metafields.custom.kicker
+      elsif product_resource.tags contains 'The Land'
+        assign db_kicker = 'The Land'
+      elsif product_resource.tags contains 'The Sea'
+        assign db_kicker = 'The Sea'
+      elsif product_resource.tags contains 'The Sky'
+        assign db_kicker = 'The Sky'
+      elsif product_resource.tags contains 'The Stars'
+        assign db_kicker = 'The Stars'
+      elsif product_resource.type != blank
+        assign db_kicker = product_resource.type
+      elsif product_resource.collections.size > 0
+        assign db_kicker = product_resource.collections.first.title
+      else
+        assign db_kicker = 'New arrival'
+      endif
+
+      if product_resource.metafields.custom.ritual_line != blank
+        assign db_ritual = product_resource.metafields.custom.ritual_line
+      else
+        assign db_ritual = 'Designed to be lived in — from morning to moonlight.'
+      endif
+    %}
+  {% endif %}
+
   {% capture children %}
-    {% if is_db_template %}
-      {% liquid
-        assign product_resource = closest.product
-        assign db_kicker = ''
-        assign db_ritual = ''
-
-        if product_resource.metafields.custom.kicker != blank
-          assign db_kicker = product_resource.metafields.custom.kicker
-        elsif product_resource.tags contains 'The Land'
-          assign db_kicker = 'The Land'
-        elsif product_resource.tags contains 'The Sea'
-          assign db_kicker = 'The Sea'
-        elsif product_resource.tags contains 'The Sky'
-          assign db_kicker = 'The Sky'
-        elsif product_resource.tags contains 'The Stars'
-          assign db_kicker = 'The Stars'
-        elsif product_resource.type != blank
-          assign db_kicker = product_resource.type
-        elsif product_resource.collections.size > 0
-          assign db_kicker = product_resource.collections.first.title
-        else
-          assign db_kicker = 'New arrival'
-        endif
-
-        if product_resource.metafields.custom.ritual_line != blank
-          assign db_ritual = product_resource.metafields.custom.ritual_line
-        else
-          assign db_ritual = 'Designed to be lived in -- from morning to moonlight.'
-        endif
-      %}
-
-      {% if db_kicker != blank %}
-        <p class="db-product__kicker">{{ db_kicker }}</p>
-      {% endif %}
-      {% if db_ritual != blank %}
-        <p class="db-product__ritual">{{ db_ritual }}</p>
-      {% endif %}
+    {% if is_db_template and db_kicker != blank %}
+      <p class="db-product__kicker">{{ db_kicker }}</p>
     {% endif %}
     <div class="view-product-title">
       <a
@@ -80,6 +71,9 @@
       </a>
     </div>
     {% content_for 'blocks' %}
+    {% if is_db_template and db_ritual != blank %}
+      <p class="db-product__ritual">{{ db_ritual }}</p>
+    {% endif %}
   {% endcapture %}
 
   {% render 'group', children: children, settings: block_settings, shopify_attributes: block.shopify_attributes %}

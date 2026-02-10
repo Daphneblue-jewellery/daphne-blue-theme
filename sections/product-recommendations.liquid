@@ -6,20 +6,6 @@
 ></script>
 
 {% liquid
-  assign is_db_template = false
-  if template contains 'product.db' or template contains 'product.db1' or template contains 'product.daphne'
-    assign is_db_template = true
-  elsif template.name == 'product'
-    if template.suffix == 'db' or template.suffix == 'db1' or template.suffix == 'daphne'
-      assign is_db_template = true
-    endif
-  endif
-
-  assign db_recs_class = ''
-  if is_db_template
-    assign db_recs_class = 'db-recs'
-  endif
-
   case section.settings.layout_type
     when 'grid'
       assign classes = 'resource-list--grid'
@@ -41,7 +27,7 @@
 
 <product-recommendations
   id="product-recommendations-{{ section.id }}"
-  class="product-recommendations {{ db_recs_class }}"
+  class="product-recommendations"
   data-url="{{ routes.product_recommendations_url }}?limit={{ section.settings.max_products }}"
   data-section-id="{{ section.id }}"
   data-product-id="{{ section.settings.product.id | default: product.id }}"
@@ -57,7 +43,6 @@
       section--{{ section.settings.section_width }}
       color-{{ section.settings.color_scheme }}
       section-resource-list
-      {% if is_db_template %}db-recs__inner{% endif %}
       spacing-style
       gap-style
     "
@@ -67,41 +52,32 @@
       {{ styles }}
     "
   >
-    <div class="section-resource-list__content{% if is_db_template %} db-recs__header{% endif %}">
+    <div class="section-resource-list__content">
       {% content_for 'blocks' %}
-      {% if is_db_template %}
-        <p class="db-recs__subheading">Curated pieces to complement your selection</p>
-      {% endif %}
     </div>
 
     {%- if recommendations.performed or section.settings.product == blank -%}
       {% liquid
-        if section.settings.product == blank
-          assign products = null
-          # Onboarding mode: Show placeholder products
-          for i in (1..section.settings.max_products)
-            assign products = products | append: ', '
-            assign products = products | split: ','
-          endfor
-        elsif recommendations.performed and recommendations.products_count == 0
-          # No recommendations found, pull from catalog
-          if section.settings.recommendation_type == 'related'
-            assign products = collections.all.products | reject: 'id', section.settings.product.id
-          elsif section.settings.recommendation_type == 'complementary'
-            # Do not recommend the All collection as complementary products
-            assign products = null
-          endif
-
-        else
-          assign products = recommendations.products
-        endif
+        comment
+          TEMPORARY: Force collection fallback for dev testing.
+          The Shopify Recommendations API returns very few results on dev stores
+          with no purchase/browsing data. This pulls from collections.all so we
+          can validate the 4-card grid layout. Remove this block and restore the
+          original logic before going live.
+        endcomment
+        assign products = collections.all.products
+        assign current_product_id = section.settings.product.id | default: product.id
       %}
       {% capture list_items %}
-        {% for product in products limit: section.settings.max_products %}
+        {% assign db_items_shown = 0 %}
+        {% for product in products %}
+          {% if product.id == current_product_id %}{% continue %}{% endif %}
+          {% if db_items_shown >= section.settings.max_products %}{% break %}{% endif %}
           <div class="resource-list__item">
             {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: product %}
           </div>
-          {% unless forloop.last %}
+          {% assign db_items_shown = db_items_shown | plus: 1 %}
+          {% unless db_items_shown >= section.settings.max_products %}
             <!--@list/split-->
           {% endunless %}
         {% endfor %}
@@ -122,7 +98,6 @@
       <div
         class="
           resource-list
-          {% if is_db_template %}db-recs__list{% endif %}
           {% if section.settings.layout_type == 'carousel' %}
             force-full-width
           {% endif %}
@@ -245,6 +220,12 @@
     }
   ],
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "db_mode",
+      "label": "Daphne Blue mode",
+      "default": false
+    },
     {
       "type": "product",
       "id": "product",

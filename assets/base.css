@@ -4707,33 +4707,34 @@ text-component {
   row-gap: 56px;
 }
 
-.footer-content .group-block {
-  align-items: flex-start;
-}
-
 .footer-content .menu__heading,
-.footer-content .email-signup__heading,
-.footer-content .email-signup__heading *,
-.footer-content .text-block.h6 > *,
-.footer-content .group-block .text-block:is(.h1, .h2, .h3, .h4, .h5) > * {
+.footer-content .email-signup__heading {
   font-family: var(--db-type-press-family);
   font-size: 0.72rem;
   line-height: 1.4;
   letter-spacing: var(--db-type-press-letter-spacing);
   text-transform: var(--db-type-press-case);
   color: rgb(var(--color-foreground-rgb) / 0.6);
-}
-
-/* Newsletter group — ensure text doesn't clip in narrow footer column */
-.footer-content .group-block .text-block > * {
-  overflow-wrap: break-word;
-  word-break: break-word;
-}
-
-.footer-content .menu__heading,
-.footer-content .email-signup__heading,
-.footer-content .group-block .text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > * {
   margin-bottom: 6px;
+  padding-block: 0;
+}
+
+/* Newsletter description — injected below the heading */
+.footer-content .email-signup__heading {
+  margin-bottom: 20px;
+}
+
+.footer-content .email-signup__heading::after {
+  content: "Occasional notes, early access, and quiet moments from Daphne Blue";
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-body--family);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgb(var(--color-foreground-rgb) / 0.7);
+  max-width: 34ch;
 }
 
 .footer-content .menu__item,
@@ -4778,19 +4779,8 @@ text-component {
   max-width: 36ch;
 }
 
-.footer-content .text-block--newsletter_copy > * {
-  margin: 0 0 12px;
-  max-width: 34ch;
-}
-
-.footer-content .group-block:has(.text-block--newsletter_heading) .group-block-content {
-  --gap: 10px;
-  max-width: 360px;
-  align-items: flex-start;
-}
-
 .footer-content .email-signup-block {
-  align-self: flex-start;
+  align-self: start;
   width: 100%;
   max-width: 360px;
 }
