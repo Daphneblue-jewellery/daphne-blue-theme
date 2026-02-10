@@ -32,20 +32,26 @@
       assign db_kicker = ''
       assign db_ritual = ''
 
+      assign db_kicker_url = ''
       if product_resource.metafields.custom.kicker != blank
         assign db_kicker = product_resource.metafields.custom.kicker
       elsif product_resource.tags contains 'The Land'
         assign db_kicker = 'The Land'
+        assign db_kicker_url = '/collections/the-land'
       elsif product_resource.tags contains 'The Sea'
         assign db_kicker = 'The Sea'
+        assign db_kicker_url = '/collections/the-sea'
       elsif product_resource.tags contains 'The Sky'
         assign db_kicker = 'The Sky'
+        assign db_kicker_url = '/collections/the-sky'
       elsif product_resource.tags contains 'The Stars'
         assign db_kicker = 'The Stars'
+        assign db_kicker_url = '/collections/the-stars'
       elsif product_resource.type != blank
         assign db_kicker = product_resource.type
       elsif product_resource.collections.size > 0
         assign db_kicker = product_resource.collections.first.title
+        assign db_kicker_url = product_resource.collections.first.url
       else
         assign db_kicker = 'New arrival'
       endif
@@ -60,7 +66,13 @@
 
   {% capture children %}
     {% if is_db_template and db_kicker != blank %}
-      <p class="db-product__kicker">{{ db_kicker }}</p>
+      <p class="db-product__kicker">
+        {%- if db_kicker_url != blank -%}
+          <a href="{{ db_kicker_url }}" class="db-product__kicker-link">{{ db_kicker }}</a>
+        {%- else -%}
+          {{ db_kicker }}
+        {%- endif -%}
+      </p>
     {% endif %}
     <div class="view-product-title">
       <a

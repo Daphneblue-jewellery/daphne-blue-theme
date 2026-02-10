@@ -558,6 +558,20 @@
   </div>
 </div>
 
+{%- comment -%} Homepage hero overrides — must be inline <style> so {{ section.id }} resolves ({% stylesheet %} compiles away Liquid) {%- endcomment -%}
+<style>
+  #Hero-{{ section.id }} .text-block {
+    max-width: 100% !important;
+    text-align: center !important;
+    margin-left: -10px !important;   /* optical nudge — balance visual weight of 'naturally,' vs 'you' */
+  }
+
+  /* Hide CTA button — headline speaks for itself */
+  #Hero-{{ section.id }} .button {
+    display: none !important;
+  }
+</style>
+
 {% stylesheet %}
   .hero-wrapper {
     --hero-height-offset: 0px;
@@ -911,17 +925,6 @@
       justify-content: center;
       text-align: center;
       gap: var(--gap);
-    }
-
-    #Hero-{{ section.id }} .text-block {
-      max-width: 100% !important;
-      text-align: center !important;
-      margin-left: -10px !important;   /* optical nudge — balance visual weight of 'naturally,' vs 'you' */
-    }
-
-    /* Hide CTA button — headline speaks for itself */
-    #Hero-{{ section.id }} .button {
-      display: none !important;
     }
 
     @media (max-width: 749px) {

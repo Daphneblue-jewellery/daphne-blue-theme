@@ -6648,3 +6648,21 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
     filter: none;
   }
 }
+
+/* Filter sidebar: softer dividers + tighter spacing */
+.db-collection-facets .facets__panel {
+  border-bottom-color: rgb(var(--color-foreground-rgb) / 0.06);
+}
+
+.db-collection-facets .facets__summary {
+  padding-block: 14px;
+  font-size: 0.88rem;
+  letter-spacing: 0.01em;
+}
+
+/* Active filter count badge */
+.db-collection-facets .facets__count {
+  font-size: 0.7rem;
+  color: rgb(var(--color-foreground-rgb) / 0.45);
+  margin-left: 4px;
+}

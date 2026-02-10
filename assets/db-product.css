@@ -167,6 +167,16 @@
   margin: 0;
 }
 
+.db-product .db-product__kicker-link {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity var(--db-motion-duration-fast, 120ms) var(--db-motion-ease-out, ease-out);
+}
+
+.db-product .db-product__kicker-link:hover {
+  opacity: 0.6;
+}
+
 /* ── Title ───────────────────────────────────────────── */
 
 .db-product .db-product__title h1,
@@ -280,12 +290,12 @@
 }
 
 .db-product .db-product__variants .variant-option__button-label:has([data-option-available='false']) {
-  opacity: 0.45;
+  opacity: 0.35;
 }
 
-.db-product .db-product__variants .variant-option__button-label:has([data-option-available='false']) .variant-option__button-label__text::after {
-  content: ' \2192  Unavailable';
-  letter-spacing: 0.14em;
+.db-product .db-product__variants .variant-option__button-label:has([data-option-available='false']) .variant-option__button-label__text {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
 }
 
 /* ── CTA / Buy buttons ───────────────────────────────── */
@@ -477,8 +487,8 @@ body.db-product-page product-recommendations .product-card__content {
 body.db-product-page product-recommendations .card-gallery,
 body.db-product-page product-recommendations .product-media {
   border-radius: var(--db-radius-md, 8px);
-  background: var(--db-color-soft-sand, #F2EDE6);
-  aspect-ratio: 3 / 4;
+  background: rgb(var(--color-foreground-rgb) / 0.04);
+  aspect-ratio: 1 / 1;
   transition: opacity var(--db-motion-duration-fast, 120ms) var(--db-motion-ease-out, ease-out);
 }
 
