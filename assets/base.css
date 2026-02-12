@@ -5509,12 +5509,14 @@ text-component {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 520ms cubic-bezier(0.18, 0.88, 0.24, 1),
+    filter 520ms cubic-bezier(0.18, 0.88, 0.24, 1);
 }
 
 .db-favourites__link:hover .db-favourites__image,
 .db-favourites__link:focus-visible .db-favourites__image {
-  transform: scale(1.03);
+  transform: scale(1.025);
+  filter: brightness(1.04);
 }
 
 .db-favourites__placeholder {
@@ -5550,6 +5552,15 @@ text-component {
   color: var(--db-color-charcoal-ink);
   margin: 0;
   letter-spacing: 0.01em;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition: text-decoration-color 520ms cubic-bezier(0.18, 0.88, 0.24, 1);
+}
+
+.db-favourites__link:hover .db-favourites__title,
+.db-favourites__link:focus-visible .db-favourites__title {
+  text-decoration-color: rgb(var(--color-foreground-rgb) / 0.28);
 }
 
 .db-favourites__price {
@@ -5565,16 +5576,27 @@ text-component {
 }
 
 .db-favourites__view-all {
-  font-family: var(--font-body--family);
-  font-size: 0.85rem;
-  color: var(--db-color-charcoal-ink);
-  text-decoration: none;
-  letter-spacing: 0.02em;
-  transition: opacity var(--animation-speed, 0.2s) var(--animation-easing, ease);
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  line-height: 1.4;
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.65);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 4px;
+  transition: color var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    text-decoration-color var(--db-motion-duration-fast) var(--db-motion-ease-out);
 }
 
-.db-favourites__view-all:hover {
-  opacity: 0.6;
+.db-favourites__view-all:hover,
+.db-favourites__view-all:focus-visible {
+  color: var(--db-color-daphne-blue);
+  text-decoration-color: currentColor;
+}
+
+.db-favourites__view-all:active {
+  opacity: 0.92;
 }
 
 @media screen and (max-width: 768px) {
@@ -5589,6 +5611,13 @@ text-component {
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .db-favourites__grid {
     gap: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .db-favourites__image,
+  .db-favourites__title {
+    transition: none !important;
   }
 }
 
