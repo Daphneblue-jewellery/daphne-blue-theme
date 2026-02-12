@@ -7419,3 +7419,208 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
     transition: none !important;
   }
 }
+
+/* ================================================================
+   Account Popover & Drawer — Daphne Blue
+   CSS-only overrides for the Horizon account popover (desktop)
+   and account drawer (mobile bottom-sheet).
+   ================================================================ */
+
+/* ── Desktop popover panel ── */
+.account-popover__panel {
+  background-color: var(--db-color-soft-white) !important;
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.06) !important;
+  border-radius: var(--db-radius-md) !important;
+  box-shadow: 0 8px 32px rgb(0 0 0 / 0.08), 0 2px 8px rgb(0 0 0 / 0.04) !important;
+}
+
+/* ── Mobile drawer dialog ── */
+.account-drawer__dialog {
+  background-color: var(--db-color-soft-white) !important;
+  border-start-start-radius: 12px !important;
+  border-start-end-radius: 12px !important;
+}
+
+.account-drawer__dialog::backdrop {
+  background: rgb(46 46 46 / 0.18) !important;
+  backdrop-filter: blur(2px);
+}
+
+/* ── Mobile drawer close button ── */
+.account-drawer .account-drawer__close-button {
+  color: rgb(var(--color-foreground-rgb) / 0.35) !important;
+  transition: color var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    background-color var(--db-motion-duration-fast) var(--db-motion-ease-out) !important;
+}
+
+.account-drawer .account-drawer__close-button:hover {
+  color: rgb(var(--color-foreground-rgb) / 0.6) !important;
+  background-color: rgb(var(--color-foreground-rgb) / 0.04) !important;
+}
+
+.account-drawer .account-drawer__close-button:focus-visible {
+  outline: 2px solid var(--db-focus-ring-color) !important;
+  outline-offset: 2px !important;
+}
+
+.account-drawer .account-drawer__close-button svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* ── Header ── */
+.account-actions__header {
+  padding: 28px 28px 20px !important;
+}
+
+.account-actions__title.h5 {
+  font-family: var(--db-type-press-family) !important;
+  font-size: var(--db-type-press-size) !important;
+  line-height: var(--db-type-press-line-height) !important;
+  letter-spacing: var(--db-type-press-letter-spacing) !important;
+  text-transform: var(--db-type-press-case) !important;
+  font-weight: var(--font-body--weight) !important;
+  color: rgb(var(--color-foreground-rgb) / 0.55) !important;
+}
+
+.account-actions__email {
+  font-family: var(--font-body--family) !important;
+  font-size: 0.72rem !important;
+  font-weight: normal !important;
+  color: rgb(var(--color-foreground-rgb) / 0.4) !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* ── Sign-in section (logged-out) ── */
+.account-actions__sign-ins {
+  padding: 0 28px 20px !important;
+}
+
+/* Primary login button — Daphne Blue (matches checkout CTA) */
+.account-actions__link.button {
+  --button-background-color: var(--db-color-daphne-blue) !important;
+  --button-color: #fff !important;
+  border-radius: var(--db-radius-sm) !important;
+  font-family: var(--db-type-press-family) !important;
+  font-size: var(--db-type-press-size) !important;
+  letter-spacing: var(--db-type-press-letter-spacing) !important;
+  text-transform: var(--db-type-press-case) !important;
+  font-weight: var(--font-body--weight) !important;
+  box-shadow: 0 4px 14px rgb(111 169 184 / 0.25) !important;
+  transition: background-color 520ms var(--db-motion-ease-out),
+    box-shadow 520ms var(--db-motion-ease-out),
+    transform 520ms var(--db-motion-ease-out) !important;
+}
+
+.account-actions__link.button:hover {
+  --button-background-color: #5f9baa !important;
+  box-shadow: 0 6px 18px rgb(111 169 184 / 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+.account-actions__link.button:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 8px rgb(111 169 184 / 0.2) !important;
+}
+
+.account-actions__link.button:focus-visible {
+  outline: 2px solid var(--db-focus-ring-color) !important;
+  outline-offset: 2px !important;
+}
+
+/* ── Nav section ── */
+.account-actions__nav {
+  padding: 0 28px 28px !important;
+}
+
+/* Nav cards — soft card style */
+.account-actions__link.button-secondary {
+  --button-secondary-background-color: transparent !important;
+  --button-secondary-color: rgb(var(--color-foreground-rgb) / 0.45) !important;
+  color: rgb(var(--color-foreground-rgb) / 0.45) !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: var(--db-radius-sm) !important;
+  background-color: rgb(var(--color-foreground-rgb) / 0.015) !important;
+  font-family: var(--db-type-press-family) !important;
+  font-size: 0.68rem !important;
+  letter-spacing: var(--db-type-press-letter-spacing) !important;
+  text-transform: var(--db-type-press-case) !important;
+  font-weight: var(--font-body--weight) !important;
+  gap: 8px !important;
+  padding: 14px 16px !important;
+  transition: background-color 520ms var(--db-motion-ease-out),
+    color 520ms var(--db-motion-ease-out) !important;
+}
+
+.account-actions__link.button-secondary:hover {
+  background-color: rgb(var(--color-foreground-rgb) / 0.04) !important;
+  color: rgb(var(--color-foreground-rgb) / 0.6) !important;
+}
+
+.account-actions__link.button-secondary:focus-visible {
+  outline: 2px solid var(--db-focus-ring-color) !important;
+  outline-offset: 2px !important;
+}
+
+/* Nav icons — muted, hover to Daphne Blue */
+.account-actions__icon {
+  color: rgb(var(--color-foreground-rgb) / 0.35) !important;
+  transition: color 520ms var(--db-motion-ease-out) !important;
+}
+
+.account-actions__icon svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.account-actions__link.button-secondary:hover .account-actions__icon {
+  color: var(--db-color-daphne-blue) !important;
+}
+
+/* ── Mobile overrides ── */
+@media screen and (max-width: 749px) {
+  .account-actions__header {
+    padding: 24px 20px 16px !important;
+  }
+
+  .account-actions__sign-ins {
+    padding: 0 20px 16px !important;
+  }
+
+  .account-actions__nav {
+    padding: 0 20px 24px !important;
+  }
+
+  .account-actions__link.button-secondary {
+    padding: 12px 14px !important;
+    font-size: 0.65rem !important;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .account-popover__panel {
+    transition: none !important;
+  }
+
+  .account-drawer .account-drawer__close-button {
+    transition: none !important;
+  }
+
+  .account-actions__link.button {
+    transition: none !important;
+  }
+
+  .account-actions__link.button:hover {
+    transform: none !important;
+  }
+
+  .account-actions__link.button-secondary {
+    transition: none !important;
+  }
+
+  .account-actions__icon {
+    transition: none !important;
+  }
+}
