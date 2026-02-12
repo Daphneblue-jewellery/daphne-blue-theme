@@ -1,0 +1,327 @@
+{
+  "sections": {
+    "main": {
+      "type": "db-faq",
+      "settings": {
+        "eyebrow": "Support",
+        "heading": "Frequently asked questions",
+        "intro": "<p>Everything you need to know about ordering, shipping, returns, and caring for your jewellery.</p>",
+        "closing_text": "<p>Still have a question? We\u2019d love to help.</p>",
+        "contact_label": "Get in touch \u2192",
+        "contact_url": "/pages/contact",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      },
+      "blocks": {
+        "cat_shipping": {
+          "type": "category",
+          "settings": {
+            "title": "Shipping & Delivery"
+          }
+        },
+        "q_free_shipping": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer free shipping?",
+            "answer": "<p>Yes \u2014 we offer free standard shipping on all UK orders over \u00a350. Orders under \u00a350 ship for a flat rate of [CONFIRM: \u00a33.50].</p>"
+          }
+        },
+        "q_delivery_time": {
+          "type": "question",
+          "settings": {
+            "question": "How long will my order take to arrive?",
+            "answer": "<p>UK standard delivery takes 3\u20135 working days. Orders placed before [CONFIRM: 2pm] on a working day are dispatched the same day.</p><p>We\u2019ll send you a tracking link by email as soon as your order is on its way.</p>"
+          }
+        },
+        "q_international": {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>[CONFIRM: Yes, we ship to Europe and select international destinations. European delivery typically takes 5\u20137 working days, and international orders 7\u201314 working days. Shipping costs are calculated at checkout.]</p><p>[CONFIRM: Please note that international orders may be subject to local customs duties or import taxes, which are the responsibility of the recipient.]</p>"
+          }
+        },
+        "q_tracking": {
+          "type": "question",
+          "settings": {
+            "question": "Will I receive tracking information?",
+            "answer": "<p>Yes. Once your order has been dispatched, you\u2019ll receive an email with a tracking link so you can follow your parcel\u2019s journey.</p>"
+          }
+        },
+        "q_delayed": {
+          "type": "question",
+          "settings": {
+            "question": "What happens if my order is delayed?",
+            "answer": "<p>Occasionally, deliveries can take a little longer than expected \u2014 particularly during busy periods. If your order hasn\u2019t arrived within the estimated timeframe, please get in touch at <a href=\"mailto:hello@daphneblue.co.uk\">hello@daphneblue.co.uk</a> and we\u2019ll look into it straight away.</p>"
+          }
+        },
+
+        "cat_returns": {
+          "type": "category",
+          "settings": {
+            "title": "Returns & Exchanges"
+          }
+        },
+        "q_return_policy": {
+          "type": "question",
+          "settings": {
+            "question": "What is your returns policy?",
+            "answer": "<p>We want you to be completely happy with your purchase. If something isn\u2019t quite right, you can return it within 14 days of delivery for a full refund. Items must be unworn, undamaged, and in their original packaging.</p>"
+          }
+        },
+        "q_how_return": {
+          "type": "question",
+          "settings": {
+            "question": "How do I return an item?",
+            "answer": "<p>To start a return, email us at <a href=\"mailto:hello@daphneblue.co.uk\">hello@daphneblue.co.uk</a> with your order number and the item you\u2019d like to return. We\u2019ll send you instructions and a return address.</p><p>[CONFIRM: Please post your return using a tracked service \u2014 we can\u2019t be held responsible for items lost in transit.]</p>"
+          }
+        },
+        "q_return_shipping": {
+          "type": "question",
+          "settings": {
+            "question": "Who pays for return shipping?",
+            "answer": "<p>[CONFIRM: Return shipping costs are covered by the customer, unless the item arrived damaged or faulty \u2014 in which case we\u2019ll cover the return postage in full.]</p>"
+          }
+        },
+        "q_exchange": {
+          "type": "question",
+          "settings": {
+            "question": "Can I exchange an item for a different size or style?",
+            "answer": "<p>[CONFIRM: We don\u2019t currently offer direct exchanges. If you\u2019d like a different size or style, simply return your original item for a refund and place a new order. This ensures you get exactly what you\u2019re looking for without any delay.]</p>"
+          }
+        },
+        "q_refund_time": {
+          "type": "question",
+          "settings": {
+            "question": "How long will my refund take?",
+            "answer": "<p>Once we\u2019ve received your return and confirmed everything is in order, we\u2019ll process your refund within [CONFIRM: 3\u20135] working days. It may take a little longer for the funds to appear in your account depending on your bank.</p>"
+          }
+        },
+        "q_damaged": {
+          "type": "question",
+          "settings": {
+            "question": "What if my item arrives damaged?",
+            "answer": "<p>We\u2019re sorry if anything arrives less than perfect. Please email us at <a href=\"mailto:hello@daphneblue.co.uk\">hello@daphneblue.co.uk</a> with a photo of the damage and your order number, and we\u2019ll arrange a replacement or full refund as quickly as possible.</p>"
+          }
+        },
+
+        "cat_sizing": {
+          "type": "category",
+          "settings": {
+            "title": "Sizing & Fit"
+          }
+        },
+        "q_ring_size": {
+          "type": "question",
+          "settings": {
+            "question": "How do I find my ring size?",
+            "answer": "<p>The easiest way is to measure a ring you already wear. Place it on a ruler and measure the internal diameter in millimetres, then compare it to a standard ring size chart.</p><p>[CONFIRM: If you\u2019re unsure, we\u2019re happy to help \u2014 just drop us a message and we can guide you through it. We also offer a printable ring sizer that you can request by emailing hello@daphneblue.co.uk.]</p>"
+          }
+        },
+        "q_necklace_length": {
+          "type": "question",
+          "settings": {
+            "question": "What necklace length should I choose?",
+            "answer": "<p>Our necklaces come in a range of lengths. As a general guide:</p><p>40cm (16\u2033) sits close to the collarbone. 45cm (18\u2033) falls just below it \u2014 our most popular length. 50cm (20\u2033) sits a little lower, perfect for layering.</p><p>Most of our chains include a 5cm extension so you can adjust the fit to suit you.</p>"
+          }
+        },
+        "q_bracelet_adjustable": {
+          "type": "question",
+          "settings": {
+            "question": "Are bracelets adjustable?",
+            "answer": "<p>[CONFIRM: Many of our bracelets include an extension chain for a flexible fit. Check the individual product page for specific measurements and details.]</p>"
+          }
+        },
+
+        "cat_materials": {
+          "type": "category",
+          "settings": {
+            "title": "Materials & Quality"
+          }
+        },
+        "q_materials": {
+          "type": "question",
+          "settings": {
+            "question": "What materials do you use?",
+            "answer": "<p>Our pieces are crafted from [CONFIRM: sterling silver (925) and 18k gold vermeil \u2014 a thick layer of 18-karat gold over a sterling silver base]. We choose materials that feel beautiful on skin and are made to be worn every day.</p>"
+          }
+        },
+        "q_vermeil": {
+          "type": "question",
+          "settings": {
+            "question": "What is gold vermeil?",
+            "answer": "<p>Vermeil (pronounced \u2018ver-may\u2019) is a thick layer of gold \u2014 at least 2.5 microns \u2014 bonded to a sterling silver base. It\u2019s far more durable than standard gold plating and gives you the warmth of gold with the strength of silver underneath.</p>"
+          }
+        },
+        "q_tarnish": {
+          "type": "question",
+          "settings": {
+            "question": "Will my jewellery tarnish?",
+            "answer": "<p>All fine metals can develop a natural patina over time, particularly sterling silver. With a little care, your pieces will stay looking their best for years. We recommend storing them in a dry place and giving them a gentle polish with a soft cloth from time to time.</p>"
+          }
+        },
+        "q_hypoallergenic": {
+          "type": "question",
+          "settings": {
+            "question": "Is your jewellery hypoallergenic?",
+            "answer": "<p>[CONFIRM: Our sterling silver and gold vermeil pieces are nickel-free and suitable for most sensitive skin. If you have specific allergies, please get in touch and we\u2019ll be happy to advise.]</p>"
+          }
+        },
+
+        "cat_care": {
+          "type": "category",
+          "settings": {
+            "title": "Care & Longevity"
+          }
+        },
+        "q_care": {
+          "type": "question",
+          "settings": {
+            "question": "How should I care for my jewellery?",
+            "answer": "<p>A few small habits make a real difference. Store your pieces in a dry place away from direct sunlight. Put your jewellery on last \u2014 after perfume, moisturiser, and hairspray. Clean gently with a soft, lint-free cloth.</p><p>For sterling silver, a silver polishing cloth will bring back its original brightness. For gold vermeil, avoid abrasive cleaners \u2014 a soft cloth and warm water is all you need.</p>"
+          }
+        },
+        "q_shower": {
+          "type": "question",
+          "settings": {
+            "question": "Can I shower or swim wearing my jewellery?",
+            "answer": "<p>We\u2019d recommend removing your jewellery before showering, swimming, or exercising. Prolonged contact with water, chlorine, and sweat can accelerate wear on any fine metal \u2014 especially gold vermeil. Treating your pieces gently will help them last beautifully.</p>"
+          }
+        },
+        "q_repairs": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer repairs or replating?",
+            "answer": "<p>[CONFIRM: We don\u2019t currently offer a repair or replating service, but we\u2019re always happy to help if something isn\u2019t right. Get in touch and we\u2019ll see what we can do.]</p>"
+          }
+        },
+
+        "cat_gifting": {
+          "type": "category",
+          "settings": {
+            "title": "Gifting"
+          }
+        },
+        "q_packaging": {
+          "type": "question",
+          "settings": {
+            "question": "What packaging do orders arrive in?",
+            "answer": "<p>[CONFIRM: Every order arrives in our signature Daphne Blue packaging \u2014 a soft pouch nestled inside a branded box, ready to give or to keep. We believe the experience of receiving jewellery should feel special, even when it\u2019s a gift to yourself.]</p>"
+          }
+        },
+        "q_gift_wrap": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer gift wrapping?",
+            "answer": "<p>[CONFIRM: Our standard packaging is designed to feel gift-ready, so no additional wrapping is needed. If you\u2019d like us to include a handwritten note, just add a message at checkout and we\u2019ll tuck it in.]</p>"
+          }
+        },
+        "q_gift_message": {
+          "type": "question",
+          "settings": {
+            "question": "Can I include a gift message?",
+            "answer": "<p>[CONFIRM: Yes \u2014 you can add a personal message during checkout and we\u2019ll include it with your order on a hand-finished card. No prices or invoices are included with gift orders.]</p>"
+          }
+        },
+
+        "cat_orders": {
+          "type": "category",
+          "settings": {
+            "title": "Orders & Payment"
+          }
+        },
+        "q_payment_methods": {
+          "type": "question",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "<p>[CONFIRM: We accept Visa, Mastercard, American Express, Apple Pay, Google Pay, and Shop Pay. All payments are processed securely through Shopify\u2019s encrypted checkout.]</p>"
+          }
+        },
+        "q_cancel_order": {
+          "type": "question",
+          "settings": {
+            "question": "Can I cancel or amend my order after placing it?",
+            "answer": "<p>We aim to dispatch orders quickly, so please get in touch as soon as possible if you need to make a change. Email us at <a href=\"mailto:hello@daphneblue.co.uk\">hello@daphneblue.co.uk</a> and we\u2019ll do our best to help \u2014 but once an order has been dispatched, we won\u2019t be able to amend it.</p>"
+          }
+        },
+        "q_klarna": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer Klarna or Clearpay?",
+            "answer": "<p>[CONFIRM: Not at the moment, but it\u2019s something we\u2019re considering for the future. For now, we accept all major cards and digital wallets at checkout.]</p>"
+          }
+        },
+
+        "cat_about": {
+          "type": "category",
+          "settings": {
+            "title": "About Daphne Blue"
+          }
+        },
+        "q_who": {
+          "type": "question",
+          "settings": {
+            "question": "Who is behind Daphne Blue?",
+            "answer": "<p>[CONFIRM: Daphne Blue was founded by [NAME] with a simple idea: jewellery should feel as natural as getting dressed. Every piece is chosen \u2014 or designed \u2014 to be lived in, not saved for special occasions. We\u2019re a small, independent brand based in the UK.]</p>"
+          }
+        },
+        "q_where_made": {
+          "type": "question",
+          "settings": {
+            "question": "Where are your pieces made?",
+            "answer": "<p>[CONFIRM: Our pieces are handcrafted by skilled artisans in small batches. We work with trusted workshops that share our commitment to quality and care. Every piece is finished by hand and checked before it reaches you.]</p>"
+          }
+        },
+        "q_chosen_with_care": {
+          "type": "question",
+          "settings": {
+            "question": "What does \u201cchosen with care\u201d mean?",
+            "answer": "<p>It\u2019s at the heart of everything we do. Every piece in our collection is thoughtfully selected \u2014 for how it feels on skin, how it catches the light, how it fits into your day. We don\u2019t chase trends or fill our shop for the sake of it. If it doesn\u2019t feel right, it doesn\u2019t make the cut.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "cat_shipping",
+        "q_free_shipping",
+        "q_delivery_time",
+        "q_international",
+        "q_tracking",
+        "q_delayed",
+        "cat_returns",
+        "q_return_policy",
+        "q_how_return",
+        "q_return_shipping",
+        "q_exchange",
+        "q_refund_time",
+        "q_damaged",
+        "cat_sizing",
+        "q_ring_size",
+        "q_necklace_length",
+        "q_bracelet_adjustable",
+        "cat_materials",
+        "q_materials",
+        "q_vermeil",
+        "q_tarnish",
+        "q_hypoallergenic",
+        "cat_care",
+        "q_care",
+        "q_shower",
+        "q_repairs",
+        "cat_gifting",
+        "q_packaging",
+        "q_gift_wrap",
+        "q_gift_message",
+        "cat_orders",
+        "q_payment_methods",
+        "q_cancel_order",
+        "q_klarna",
+        "cat_about",
+        "q_who",
+        "q_where_made",
+        "q_chosen_with_care"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

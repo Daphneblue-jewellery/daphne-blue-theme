@@ -1,0 +1,193 @@
+{% comment %}
+  Daphne Blue — FAQ section
+  Renders grouped FAQ categories with accordion questions.
+  Uses the existing <accordion-custom> web component for expand/collapse.
+{% endcomment %}
+
+<section
+  class="db-faq spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width db-faq__inner">
+
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.intro != blank -%}
+      <header class="db-faq__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="db-faq__eyebrow db-type--press">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="db-faq__heading">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <div class="db-faq__intro">{{ section.settings.intro }}</div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    <div class="db-faq__body">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+
+          {%- when 'category' -%}
+            <div class="db-faq__category" {{ block.shopify_attributes }}>
+              <h2 class="db-faq__category-heading db-type--press">{{ block.settings.title }}</h2>
+            </div>
+
+          {%- when 'question' -%}
+            <accordion-custom {{ block.shopify_attributes }}>
+              <details class="details db-faq__item">
+                <summary class="details__header db-faq__question">
+                  {{ block.settings.question }}
+                  <span class="svg-wrapper icon-plus">
+                    {{- 'icon-plus.svg' | inline_asset_content -}}
+                  </span>
+                </summary>
+                <div class="details-content db-faq__answer">
+                  <div class="db-faq__answer-inner">
+                    {{ block.settings.answer }}
+                  </div>
+                </div>
+              </details>
+            </accordion-custom>
+
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.closing_text != blank -%}
+      <footer class="db-faq__footer">
+        <div class="db-faq__closing">{{ section.settings.closing_text }}</div>
+        {%- if section.settings.contact_label != blank and section.settings.contact_url != blank -%}
+          <a class="db-link db-faq__contact-link" href="{{ section.settings.contact_url }}">
+            {{ section.settings.contact_label }}
+          </a>
+        {%- endif -%}
+      </footer>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "class": "db-faq-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Support"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Frequently asked questions"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "<p>Everything you need to know about ordering, shipping, returns, and caring for your jewellery.</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "closing_text",
+      "label": "Closing text",
+      "default": "<p>Still have a question? We'd love to help.</p>"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Contact link label",
+      "default": "Get in touch →"
+    },
+    {
+      "type": "url",
+      "id": "contact_url",
+      "label": "Contact link URL"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category heading",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category title",
+          "default": "Category"
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 50,
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "title": "Shipping & Delivery"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer free shipping?",
+            "answer": "<p>Yes — we offer free standard shipping on all UK orders over £50.</p>"
+          }
+        },
+        {
+          "type": "question",
+          "settings": {
+            "question": "How long will my order take to arrive?",
+            "answer": "<p>UK orders are delivered within 3–5 working days. We'll send you a tracking link as soon as your order is on its way.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

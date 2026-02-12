@@ -1,0 +1,299 @@
+{% comment %}
+  Daphne Blue — Size Guide section
+  Header + interactive ring size slider + FAQ accordion.
+  Ring sizes are defined in the template JSON as blocks.
+{% endcomment %}
+
+{%- liquid
+  assign sizes = section.blocks | where: 'type', 'ring_size'
+  assign questions = section.blocks | where: 'type', 'question'
+-%}
+
+<section
+  class="db-size-guide spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width db-size-guide__inner">
+
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.intro != blank -%}
+      <header class="db-faq__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="db-faq__eyebrow db-type--press">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="db-faq__heading">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <div class="db-faq__intro">{{ section.settings.intro }}</div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    {%- if sizes.size > 0 -%}
+      <div class="db-sg__slider" data-size-slider>
+        <button class="db-sg__arrow db-sg__arrow--prev" data-sg-prev aria-label="Previous size">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M12 4L6 10L12 16" stroke="currentColor" stroke-width="1.2"/></svg>
+        </button>
+
+        <div class="db-sg__display">
+          <p class="db-sg__label db-type--press">Ring size</p>
+          <div class="db-sg__values" data-sg-values>
+            <p class="db-sg__size-number" data-sg-number>{{ sizes[0].settings.size_label }}</p>
+            <div class="db-sg__measurements">
+              <div class="db-sg__measurement">
+                <span class="db-sg__measure-value" data-sg-inches>{{ sizes[0].settings.circumference_inches }}</span>
+                <span class="db-sg__measure-unit db-type--press">inches</span>
+              </div>
+              <div class="db-sg__divider"></div>
+              <div class="db-sg__measurement">
+                <span class="db-sg__measure-value" data-sg-cm>{{ sizes[0].settings.circumference_cm }}</span>
+                <span class="db-sg__measure-unit db-type--press">cm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="db-sg__arrow db-sg__arrow--next" data-sg-next aria-label="Next size">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M8 4L14 10L8 16" stroke="currentColor" stroke-width="1.2"/></svg>
+        </button>
+
+        <div class="db-sg__dots" data-sg-dots>
+          {%- for size in sizes -%}
+            <button
+              class="db-sg__dot{% if forloop.first %} db-sg__dot--active{% endif %}"
+              data-sg-dot="{{ forloop.index0 }}"
+              aria-label="Size {{ size.settings.size_label }}"
+            ></button>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <script>
+        (function() {
+          const slider = document.querySelector('[data-size-slider]');
+          if (!slider) return;
+
+          const sizes = [
+            {%- for size in sizes -%}
+              {"label":{{ size.settings.size_label | json }},"inches":{{ size.settings.circumference_inches | json }},"cm":{{ size.settings.circumference_cm | json }}}{% unless forloop.last %},{% endunless %}
+            {%- endfor -%}
+          ];
+          let current = 0;
+
+          const values = slider.querySelector('[data-sg-values]');
+          const numberEl = slider.querySelector('[data-sg-number]');
+          const inchesEl = slider.querySelector('[data-sg-inches]');
+          const cmEl = slider.querySelector('[data-sg-cm]');
+          const dots = slider.querySelectorAll('[data-sg-dot]');
+          let transitioning = false;
+
+          function update(index) {
+            if (index === current || transitioning) return;
+            transitioning = true;
+
+            /* Update dots immediately */
+            dots.forEach((d, i) => {
+              d.classList.toggle('db-sg__dot--active', i === index);
+            });
+
+            /* Fade out values only (label stays constant) */
+            values.classList.add('db-sg__values--fading');
+
+            setTimeout(() => {
+              current = index;
+              const s = sizes[current];
+              numberEl.textContent = s.label;
+              inchesEl.textContent = s.inches;
+              cmEl.textContent = s.cm;
+
+              /* Fade in */
+              values.classList.remove('db-sg__values--fading');
+              setTimeout(() => { transitioning = false; }, 200);
+            }, 200);
+          }
+
+          slider.querySelector('[data-sg-prev]').addEventListener('click', () => {
+            update(current > 0 ? current - 1 : sizes.length - 1);
+          });
+
+          slider.querySelector('[data-sg-next]').addEventListener('click', () => {
+            update(current < sizes.length - 1 ? current + 1 : 0);
+          });
+
+          dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+              update(parseInt(dot.dataset.sgDot));
+            });
+          });
+
+          /* Keyboard support */
+          slider.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') { slider.querySelector('[data-sg-prev]').click(); }
+            if (e.key === 'ArrowRight') { slider.querySelector('[data-sg-next]').click(); }
+          });
+        })();
+      </script>
+    {%- endif -%}
+
+    {%- if questions.size > 0 -%}
+      <div class="db-faq__body db-sg__faq">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+
+            {%- when 'category' -%}
+              <div class="db-faq__category" {{ block.shopify_attributes }}>
+                <h2 class="db-faq__category-heading db-type--press">{{ block.settings.title }}</h2>
+              </div>
+
+            {%- when 'question' -%}
+              <accordion-custom {{ block.shopify_attributes }}>
+                <details class="details db-faq__item">
+                  <summary class="details__header db-faq__question">
+                    {{ block.settings.question }}
+                    <span class="svg-wrapper icon-plus">
+                      {{- 'icon-plus.svg' | inline_asset_content -}}
+                    </span>
+                  </summary>
+                  <div class="details-content db-faq__answer">
+                    <div class="db-faq__answer-inner">
+                      {{ block.settings.answer }}
+                    </div>
+                  </div>
+                </details>
+              </accordion-custom>
+
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.closing_text != blank -%}
+      <footer class="db-faq__footer">
+        <div class="db-faq__closing">{{ section.settings.closing_text }}</div>
+        {%- if section.settings.contact_label != blank and section.settings.contact_url != blank -%}
+          <a class="db-link db-faq__contact-link" href="{{ section.settings.contact_url }}">
+            {{ section.settings.contact_label }}
+          </a>
+        {%- endif -%}
+      </footer>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Size Guide",
+  "class": "db-size-guide-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Support"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Size Guide"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text"
+    },
+    {
+      "type": "richtext",
+      "id": "closing_text",
+      "label": "Closing text"
+    },
+    {
+      "type": "text",
+      "id": "contact_label",
+      "label": "Contact link label",
+      "default": "Get in touch →"
+    },
+    {
+      "type": "url",
+      "id": "contact_url",
+      "label": "Contact link URL"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "ring_size",
+      "name": "Ring size",
+      "settings": [
+        {
+          "type": "text",
+          "id": "size_label",
+          "label": "Size (e.g. 3, 4, 5)"
+        },
+        {
+          "type": "text",
+          "id": "circumference_inches",
+          "label": "Circumference (inches)",
+          "info": "e.g. 1.74\""
+        },
+        {
+          "type": "text",
+          "id": "circumference_cm",
+          "label": "Circumference (cm)",
+          "info": "e.g. 4.41 cm"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "name": "FAQ Category",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Category title"
+        }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 30
+}
+{% endschema %}

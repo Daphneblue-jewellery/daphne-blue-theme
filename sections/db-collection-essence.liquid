@@ -3,7 +3,7 @@
 {% endcomment %}
 
 <section
-  class="db-collection-essence spacing-style"
+  class="db-collection-essence{% if section.settings.color_variant == 'soft-sand' %} db-collection-essence--soft-sand{% endif %} spacing-style"
   style="{% render 'spacing-style', settings: section.settings %}"
 >
   <div class="page-width db-collection-essence__inner">
@@ -36,6 +36,16 @@
       "id": "body",
       "label": "Body",
       "default": "<p>Rooted in warm light and grounded forms, The Land collection speaks in quiet textures and lived-in shapes. Pieces that feel familiar on the skin and easy to return to, day after day.</p>"
+    },
+    {
+      "type": "select",
+      "id": "color_variant",
+      "label": "Background",
+      "options": [
+        { "value": "soft-white", "label": "Soft White" },
+        { "value": "soft-sand", "label": "Soft Sand" }
+      ],
+      "default": "soft-white"
     },
     {
       "type": "text",

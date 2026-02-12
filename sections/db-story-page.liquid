@@ -1,0 +1,357 @@
+{% comment %}
+  Daphne Blue -- Story page
+  Editorial magazine-style page composed from block "spreads."
+  Each block type has a distinct visual rhythm: opening, narrative,
+  pull-quote, full-bleed image, split (image + text), and breath.
+{% endcomment %}
+
+<section class="db-story">
+  {%- for block in section.blocks -%}
+    {%- case block.type -%}
+
+      {%- when 'opening' -%}
+        <div class="db-story__opening" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 2400 }}"
+              alt="{{ block.settings.image_alt | escape }}"
+              loading="eager"
+              fetchpriority="high"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              class="db-story__opening-img"
+            >
+          {%- else -%}
+            <div class="db-story__opening-placeholder" aria-hidden="true"></div>
+          {%- endif -%}
+          <div class="db-story__opening-overlay" aria-hidden="true"></div>
+          <div class="db-story__opening-content">
+            {%- if block.settings.eyebrow != blank -%}
+              <p class="db-story__eyebrow db-type--press">{{ block.settings.eyebrow }}</p>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h1 class="db-story__opening-heading">{{ block.settings.heading }}</h1>
+            {%- endif -%}
+            {%- if block.settings.subtitle != blank -%}
+              <p class="db-story__opening-subtitle">{{ block.settings.subtitle }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'narrative' -%}
+        <div
+          class="db-story__narrative db-story__narrative--{{ block.settings.alignment }}"
+          style="--story-narrative-padding-block: {{ block.settings.padding | default: 96 }}px"
+          {{ block.shopify_attributes }}
+        >
+          <div class="db-story__narrative-inner">
+            {%- if block.settings.eyebrow != blank -%}
+              <p class="db-story__eyebrow db-type--press">{{ block.settings.eyebrow }}</p>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="db-story__narrative-body">{{ block.settings.body }}</div>
+            {%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'pull_quote' -%}
+        <div
+          class="db-story__quote-wrap"
+          style="--story-quote-padding-block: {{ block.settings.padding | default: 80 }}px"
+          {{ block.shopify_attributes }}
+        >
+          <blockquote class="db-story__quote">
+            <p class="db-story__quote-text">{{ block.settings.quote }}</p>
+            {%- if block.settings.note != blank -%}
+              <footer class="db-story__quote-note db-type--press">{{ block.settings.note }}</footer>
+            {%- endif -%}
+          </blockquote>
+        </div>
+
+      {%- when 'full_image' -%}
+        <figure class="db-story__image-wrap" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 2400 }}"
+              alt="{{ block.settings.image_alt | escape }}"
+              loading="lazy"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              class="db-story__image-img"
+            >
+          {%- else -%}
+            <div class="db-story__image-placeholder" aria-hidden="true"></div>
+          {%- endif -%}
+          {%- if block.settings.caption != blank -%}
+            <figcaption class="db-story__image-caption db-type--press">
+              {{ block.settings.caption }}
+            </figcaption>
+          {%- endif -%}
+        </figure>
+
+      {%- when 'split' -%}
+        <div
+          class="db-story__split{% if block.settings.reverse %} db-story__split--reverse{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <div class="db-story__split-media">
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 1800 }}"
+                alt="{{ block.settings.image_alt | escape }}"
+                loading="lazy"
+                width="{{ block.settings.image.width }}"
+                height="{{ block.settings.image.height }}"
+                class="db-story__split-img"
+              >
+            {%- else -%}
+              <div class="db-story__split-placeholder" aria-hidden="true"></div>
+            {%- endif -%}
+          </div>
+          <div class="db-story__split-content">
+            {%- if block.settings.eyebrow != blank -%}
+              <p class="db-story__eyebrow db-type--press">{{ block.settings.eyebrow }}</p>
+            {%- endif -%}
+            {%- if block.settings.heading != blank -%}
+              <h2 class="db-story__split-heading">{{ block.settings.heading }}</h2>
+            {%- endif -%}
+            {%- if block.settings.body != blank -%}
+              <div class="db-story__split-body">{{ block.settings.body }}</div>
+            {%- endif -%}
+            {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+              <a class="db-link db-story__split-link" href="{{ block.settings.link_url }}">
+                {{ block.settings.link_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+      {%- when 'breath' -%}
+        <div
+          class="db-story__breath"
+          style="--story-breath-height: {{ block.settings.height | default: 76 }}px"
+          {{ block.shopify_attributes }}
+        >
+          {%- if block.settings.show_rule -%}
+            <hr class="db-story__breath-rule" aria-hidden="true">
+          {%- endif -%}
+        </div>
+
+    {%- endcase -%}
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "Story page",
+  "class": "db-story-section",
+  "settings": [],
+  "max_blocks": 20,
+  "blocks": [
+    {
+      "type": "opening",
+      "name": "Opening",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle"
+        }
+      ]
+    },
+    {
+      "type": "narrative",
+      "name": "Narrative",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body"
+        },
+        {
+          "type": "select",
+          "id": "alignment",
+          "label": "Text alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" },
+            { "value": "centre", "label": "Centre" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "range",
+          "id": "padding",
+          "label": "Vertical space",
+          "min": 40,
+          "max": 200,
+          "step": 8,
+          "default": 96
+        }
+      ]
+    },
+    {
+      "type": "pull_quote",
+      "name": "Pull quote",
+      "settings": [
+        {
+          "type": "text",
+          "id": "quote",
+          "label": "Quote"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Note (optional)"
+        },
+        {
+          "type": "range",
+          "id": "padding",
+          "label": "Vertical space",
+          "min": 40,
+          "max": 200,
+          "step": 8,
+          "default": 80
+        }
+      ]
+    },
+    {
+      "type": "full_image",
+      "name": "Full image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (optional)"
+        }
+      ]
+    },
+    {
+      "type": "split",
+      "name": "Split",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "reverse",
+          "label": "Image on right",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "breath",
+      "name": "Breath",
+      "settings": [
+        {
+          "type": "range",
+          "id": "height",
+          "label": "Height",
+          "min": 20,
+          "max": 196,
+          "step": 8,
+          "default": 76
+        },
+        {
+          "type": "checkbox",
+          "id": "show_rule",
+          "label": "Show divider line",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Story page",
+      "blocks": [
+        {
+          "type": "opening"
+        },
+        {
+          "type": "narrative"
+        },
+        {
+          "type": "pull_quote"
+        },
+        {
+          "type": "full_image"
+        },
+        {
+          "type": "breath"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,186 @@
+{
+  "sections": {
+    "main": {
+      "type": "db-faq",
+      "settings": {
+        "eyebrow": "Support",
+        "heading": "Returns & Exchanges",
+        "intro": "<p>We want you to feel confident every time you order from us. If something isn\u2019t quite right \u2014 whether it\u2019s not what you expected or simply not for you \u2014 we\u2019re here to make it easy. Here\u2019s everything you need to know about returns, exchanges, and refunds.</p>",
+        "closing_text": "<p>Have a question that isn\u2019t covered here? We\u2019re always happy to help.</p>",
+        "contact_label": "Get in touch \u2192",
+        "contact_url": "/pages/contact",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      },
+      "blocks": {
+        "cat_returns": {
+          "type": "category",
+          "settings": {
+            "title": "Returns"
+          }
+        },
+        "q_return_policy": {
+          "type": "question",
+          "settings": {
+            "question": "What is your returns policy?",
+            "answer": "<p>We offer a [CONFIRM: 14]-day returns window, starting from the day your order is delivered. If something isn\u2019t right, you\u2019re welcome to send it back for a full refund of the item price.</p><p>Items must be unworn, undamaged, and returned in their original Daphne Blue packaging. We ask that jewellery is tried on gently and not worn out before deciding \u2014 this helps us ensure every piece reaches the next person in perfect condition.</p>"
+          }
+        },
+        "q_how_to_return": {
+          "type": "question",
+          "settings": {
+            "question": "How do I start a return?",
+            "answer": "<p>Simply email us at <a href=\"mailto:hello@daphneblue.co.uk\">hello@daphneblue.co.uk</a> with your order number and the item(s) you\u2019d like to return. We\u2019ll confirm everything and send you a return address along with any instructions.</p><p>Please don\u2019t send items back without letting us know first \u2014 it helps us keep track of everything and process your refund as quickly as possible.</p>"
+          }
+        },
+        "q_return_timeframe": {
+          "type": "question",
+          "settings": {
+            "question": "How long do I have to return an item?",
+            "answer": "<p>You have [CONFIRM: 14] days from the date of delivery to let us know you\u2019d like to make a return. Once you\u2019ve been in touch, we ask that the item is posted back within [CONFIRM: 7] working days.</p><p>If your return falls just outside this window, please get in touch anyway \u2014 we\u2019ll always do our best to help.</p>"
+          }
+        },
+        "q_return_condition": {
+          "type": "question",
+          "settings": {
+            "question": "What condition must items be in?",
+            "answer": "<p>To be eligible for a return, items should be:</p><p>\u2022 Unworn and in their original condition<br>\u2022 Free from perfume, makeup, or any signs of wear<br>\u2022 Returned in the original Daphne Blue packaging (pouch and box)</p><p>We understand you may want to try a piece on to see how it looks \u2014 that\u2019s absolutely fine. We simply ask that it\u2019s handled with care, as you\u2019d expect from a brand-new piece of jewellery.</p>"
+          }
+        },
+        "q_return_shipping_cost": {
+          "type": "question",
+          "settings": {
+            "question": "Who pays for return shipping?",
+            "answer": "<p>[CONFIRM: Return postage is the responsibility of the customer. We recommend using a tracked and insured service, as we\u2019re unable to accept responsibility for items that are lost or damaged in transit on their way back to us.]</p><p>[CONFIRM: If your item arrived damaged or faulty, we\u2019ll cover the return postage in full \u2014 just get in touch and we\u2019ll arrange everything.]</p>"
+          }
+        },
+        "q_return_sale_items": {
+          "type": "question",
+          "settings": {
+            "question": "Can I return sale or discounted items?",
+            "answer": "<p>[CONFIRM: Yes \u2014 sale items can be returned within the same 14-day window and under the same conditions as full-price purchases. Your refund will reflect the price you paid at the time of purchase.]</p>"
+          }
+        },
+        "q_return_multiple": {
+          "type": "question",
+          "settings": {
+            "question": "Can I return more than one item from the same order?",
+            "answer": "<p>Of course. If you\u2019d like to return multiple items, just let us know all the pieces you\u2019d like to send back when you email us. You can include them in a single parcel \u2014 no need to post them separately.</p>"
+          }
+        },
+        "cat_exchanges": {
+          "type": "category",
+          "settings": {
+            "title": "Exchanges"
+          }
+        },
+        "q_exchange_process": {
+          "type": "question",
+          "settings": {
+            "question": "Can I exchange an item for a different size or style?",
+            "answer": "<p>[CONFIRM: We don\u2019t currently offer direct exchanges. If you\u2019d like a different size or style, the simplest route is to return your original item for a refund and place a new order for the piece you\u2019d prefer.]</p><p>This way, there\u2019s no delay \u2014 your new piece will be on its way to you as soon as you order, rather than waiting for us to receive and process the return first.</p>"
+          }
+        },
+        "q_exchange_out_of_stock": {
+          "type": "question",
+          "settings": {
+            "question": "What if the item I want is out of stock?",
+            "answer": "<p>If the piece you had in mind is temporarily unavailable, you\u2019re welcome to return your original item for a refund in the meantime. You can also email us at <a href=\"mailto:hello@daphneblue.co.uk\">hello@daphneblue.co.uk</a> to ask about restocks \u2014 we\u2019re happy to let you know if and when a piece is expected back.</p>"
+          }
+        },
+        "cat_refunds": {
+          "type": "category",
+          "settings": {
+            "title": "Refunds"
+          }
+        },
+        "q_refund_timeframe": {
+          "type": "question",
+          "settings": {
+            "question": "How long will my refund take?",
+            "answer": "<p>Once we\u2019ve received your return and confirmed that everything is in order, we\u2019ll process your refund within [CONFIRM: 3\u20135] working days. The refund will be issued to the original payment method used at checkout.</p><p>Please allow a few additional days for the funds to appear in your account \u2014 this varies depending on your bank or card provider.</p>"
+          }
+        },
+        "q_refund_method": {
+          "type": "question",
+          "settings": {
+            "question": "How will I receive my refund?",
+            "answer": "<p>Refunds are always returned to the original payment method. If you paid by card, the refund will go back to that card. If you used Apple Pay, Google Pay, or Shop Pay, it will be returned through the same route.</p><p>We\u2019ll send you a confirmation email as soon as your refund has been processed on our end.</p>"
+          }
+        },
+        "q_refund_shipping": {
+          "type": "question",
+          "settings": {
+            "question": "Will I be refunded for the original shipping cost?",
+            "answer": "<p>[CONFIRM: If you paid for shipping on your original order, that cost is non-refundable unless the item arrived damaged, faulty, or incorrect. In those cases, we\u2019ll refund the full order total including any delivery charges.]</p>"
+          }
+        },
+        "q_refund_partial": {
+          "type": "question",
+          "settings": {
+            "question": "Can I get a partial refund?",
+            "answer": "<p>If you\u2019re returning some items from a multi-item order, we\u2019ll refund the value of the returned pieces. The rest of your order remains unaffected.</p><p>[CONFIRM: Please note that if your original order qualified for free shipping based on a minimum spend, returning items that bring the total below that threshold will not affect your refund \u2014 the shipping discount still applies.]</p>"
+          }
+        },
+        "cat_damaged": {
+          "type": "category",
+          "settings": {
+            "title": "Damaged or Faulty Items"
+          }
+        },
+        "q_damaged_arrival": {
+          "type": "question",
+          "settings": {
+            "question": "What should I do if my item arrives damaged?",
+            "answer": "<p>We\u2019re truly sorry if anything arrives less than perfect. Please email us at <a href=\"mailto:hello@daphneblue.co.uk\">hello@daphneblue.co.uk</a> as soon as possible with:</p><p>\u2022 Your order number<br>\u2022 A brief description of the issue<br>\u2022 One or two photos showing the damage</p><p>We\u2019ll get back to you promptly and arrange a replacement or full refund \u2014 whichever you\u2019d prefer.</p>"
+          }
+        },
+        "q_faulty_item": {
+          "type": "question",
+          "settings": {
+            "question": "What counts as a faulty item?",
+            "answer": "<p>A faulty item is one that has a manufacturing defect or doesn\u2019t match the product description \u2014 for example, a broken clasp on arrival, a missing stone, or visible damage that wasn\u2019t described. Normal variations in handcrafted pieces (very slight differences in texture or tone) are part of what makes each piece unique and are not considered faults.</p><p>If you\u2019re unsure, send us a photo and we\u2019ll take a look \u2014 no obligation.</p>"
+          }
+        },
+        "q_wrong_item": {
+          "type": "question",
+          "settings": {
+            "question": "I received the wrong item \u2014 what should I do?",
+            "answer": "<p>We\u2019re sorry about that. Please email us at <a href=\"mailto:hello@daphneblue.co.uk\">hello@daphneblue.co.uk</a> with your order number and a photo of the item you received. We\u2019ll arrange for the correct piece to be sent out to you and cover the return postage for the incorrect item.</p>"
+          }
+        },
+        "q_damaged_shipping": {
+          "type": "question",
+          "settings": {
+            "question": "Do I need to pay return postage for a damaged or faulty item?",
+            "answer": "<p>No. If your item arrived damaged, faulty, or incorrect, we\u2019ll cover the return postage in full. We\u2019ll arrange everything once you\u2019ve been in touch \u2014 you won\u2019t be out of pocket.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "cat_returns",
+        "q_return_policy",
+        "q_how_to_return",
+        "q_return_timeframe",
+        "q_return_condition",
+        "q_return_shipping_cost",
+        "q_return_sale_items",
+        "q_return_multiple",
+        "cat_exchanges",
+        "q_exchange_process",
+        "q_exchange_out_of_stock",
+        "cat_refunds",
+        "q_refund_timeframe",
+        "q_refund_method",
+        "q_refund_shipping",
+        "q_refund_partial",
+        "cat_damaged",
+        "q_damaged_arrival",
+        "q_faulty_item",
+        "q_wrong_item",
+        "q_damaged_shipping"
+      ]
+    }
+  },
+  "order": ["main"]
+}

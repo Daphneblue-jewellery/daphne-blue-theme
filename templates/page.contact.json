@@ -1,1 +1,52 @@
-{"sections":{"main":{"type":"main-page","blocks":{"title":{"type":"text","name":"t:names.title","settings":{"text":"<h1>Contact Us<\/h1>","width":"100%","max_width":"normal","alignment":"center","type_preset":"h2","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"text_PLandt":{"type":"text","name":"t:names.text","settings":{"text":"<p>Please use the contact form below to get in touch. Alternatively, email us at hello@daphneblue.co.uk<\/p><p>(for enquiries about existing\/ongoing orders please only use the email address above)<\/p>","width":"100%","max_width":"none","alignment":"center","type_preset":"h4","font":"var(--font-body--family)","font_size":"1rem","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"var(--color-foreground)","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}},"content":{"type":"text","name":"t:names.content","settings":{"text":"{{ closest.page.content }}","width":"100%","max_width":"narrow","alignment":"center","type_preset":"rte","font":"var(--font-primary--family)","font_size":"","line_height":"normal","letter_spacing":"normal","case":"none","wrap":"pretty","color":"","background":false,"background_color":"#00000026","corner_radius":0,"padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{}}},"block_order":["title","text_PLandt","content"],"settings":{"content_direction":"column","gap":32,"color_scheme":"scheme-4ecefe5b-3041-462d-bee3-e03485c761fa","padding-block-start":25,"padding-block-end":0}},"form":{"type":"section","blocks":{"contact_form_UwiCkQ":{"type":"contact-form","settings":{"width":"custom","custom_width":50,"width_mobile":"custom","custom_width_mobile":100,"inherit_color_scheme":true,"color_scheme":"","padding-block-start":0,"padding-block-end":0,"padding-inline-start":0,"padding-inline-end":0},"blocks":{"submit-button":{"type":"contact-form-submit-button","static":true,"settings":{"label":"Submit","style_class":"button","width":"fit-content","custom_width":100,"width_mobile":"fit-content","custom_width_mobile":100},"blocks":{}}},"block_order":[]}},"block_order":["contact_form_UwiCkQ"],"name":"t:names.contact_form","settings":{"content_direction":"column","vertical_on_mobile":true,"horizontal_alignment":"flex-start","vertical_alignment":"center","align_baseline":false,"horizontal_alignment_flex_direction_column":"center","vertical_alignment_flex_direction_column":"center","gap":49,"section_width":"page-width","section_height":"","section_height_custom":50,"color_scheme":"scheme-4ecefe5b-3041-462d-bee3-e03485c761fa","background_media":"none","video_position":"cover","background_image_position":"cover","border":"none","border_width":1,"border_opacity":100,"border_radius":0,"toggle_overlay":false,"overlay_color":"#00000026","overlay_style":"solid","gradient_direction":"to top","padding-block-start":0,"padding-block-end":100}}},"order":["main","form"]}
+{
+  "sections": {
+    "main": {
+      "type": "db-contact",
+      "settings": {
+        "eyebrow": "Support",
+        "heading": "Get in Touch",
+        "intro": "<p>We\u2019d love to hear from you. Whether you have a question about sizing, an order, or just want to say hello \u2014 we\u2019re here to help.</p>",
+        "form_heading": "Send us a message",
+        "form_subtext": "We\u2019ll get back to you within 24 hours.",
+        "closing_text": "",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      },
+      "blocks": {
+        "method_email": {
+          "type": "method",
+          "settings": {
+            "title": "Email",
+            "body": "<p>hello@daphneblue.co.uk</p>",
+            "link_label": "Send an email \u2192",
+            "link_url": "mailto:hello@daphneblue.co.uk"
+          }
+        },
+        "method_response": {
+          "type": "method",
+          "settings": {
+            "title": "Response time",
+            "body": "<p>We aim to reply within 24 hours, Monday to Friday.</p>",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "method_social": {
+          "type": "method",
+          "settings": {
+            "title": "Follow along",
+            "body": "<p>For behind-the-scenes and new arrivals.</p>",
+            "link_label": "@daphneblue \u2192",
+            "link_url": "https://www.instagram.com/daphneblue"
+          }
+        }
+      },
+      "block_order": [
+        "method_email",
+        "method_response",
+        "method_social"
+      ]
+    }
+  },
+  "order": ["main"]
+}

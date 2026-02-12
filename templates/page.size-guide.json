@@ -1,0 +1,133 @@
+{
+  "sections": {
+    "main": {
+      "type": "db-size-guide",
+      "settings": {
+        "eyebrow": "Support",
+        "heading": "Size Guide",
+        "intro": "<p>Finding your perfect fit should feel effortless. Use the slider below to browse ring sizes \u2014 or scroll down for tips on measuring at home.</p>",
+        "closing_text": "<p>Still unsure? We\u2019re happy to help you find the right fit.</p>",
+        "contact_label": "Get in touch \u2192",
+        "contact_url": "/pages/contact",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      },
+      "blocks": {
+        "size_3": {
+          "type": "ring_size",
+          "settings": {
+            "size_label": "3",
+            "circumference_inches": "1.74\u2033",
+            "circumference_cm": "4.41 cm"
+          }
+        },
+        "size_4": {
+          "type": "ring_size",
+          "settings": {
+            "size_label": "4",
+            "circumference_inches": "1.84\u2033",
+            "circumference_cm": "4.7 cm"
+          }
+        },
+        "size_5": {
+          "type": "ring_size",
+          "settings": {
+            "size_label": "5",
+            "circumference_inches": "1.94\u2033",
+            "circumference_cm": "4.9 cm"
+          }
+        },
+        "size_6": {
+          "type": "ring_size",
+          "settings": {
+            "size_label": "6",
+            "circumference_inches": "2.04\u2033",
+            "circumference_cm": "5.18 cm"
+          }
+        },
+        "size_7": {
+          "type": "ring_size",
+          "settings": {
+            "size_label": "7",
+            "circumference_inches": "2.14\u2033",
+            "circumference_cm": "5.43 cm"
+          }
+        },
+        "size_8": {
+          "type": "ring_size",
+          "settings": {
+            "size_label": "8",
+            "circumference_inches": "2.24\u2033",
+            "circumference_cm": "5.68 cm"
+          }
+        },
+        "size_9": {
+          "type": "ring_size",
+          "settings": {
+            "size_label": "9",
+            "circumference_inches": "2.34\u2033",
+            "circumference_cm": "5.94 cm"
+          }
+        },
+        "size_10": {
+          "type": "ring_size",
+          "settings": {
+            "size_label": "10",
+            "circumference_inches": "2.44\u2033",
+            "circumference_cm": "6.19 cm"
+          }
+        },
+        "cat_sizing": {
+          "type": "category",
+          "settings": {
+            "title": "Sizing help"
+          }
+        },
+        "q_measure": {
+          "type": "question",
+          "settings": {
+            "question": "How do I find my ring size?",
+            "answer": "<p>The easiest way is to measure a ring you already wear. Place it on a flat surface and measure the inside diameter in millimetres, then compare it to the chart above.</p><p>Alternatively, wrap a thin strip of paper around your finger, mark where it overlaps, and measure the length \u2014 that\u2019s your circumference.</p>"
+          }
+        },
+        "q_between": {
+          "type": "question",
+          "settings": {
+            "question": "What if I\u2019m between sizes?",
+            "answer": "<p>If you\u2019re between two sizes, we\u2019d recommend going up to the larger size. Fingers can change slightly throughout the day \u2014 they tend to be a little larger in the evening and in warmer weather.</p>"
+          }
+        },
+        "q_necklace": {
+          "type": "question",
+          "settings": {
+            "question": "What necklace length should I choose?",
+            "answer": "<p>Our necklaces come in a range of lengths. As a general guide:</p><p>40cm (16\u2033) sits close to the collarbone. 45cm (18\u2033) falls just below it \u2014 our most popular length. 50cm (20\u2033) sits a little lower, perfect for layering.</p><p>Most of our chains include a 5cm extension so you can adjust the fit to suit you.</p>"
+          }
+        },
+        "q_bracelet": {
+          "type": "question",
+          "settings": {
+            "question": "Are bracelets adjustable?",
+            "answer": "<p>Many of our bracelets include an extension chain for a flexible fit. Check the individual product page for specific measurements and details.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "size_3",
+        "size_4",
+        "size_5",
+        "size_6",
+        "size_7",
+        "size_8",
+        "size_9",
+        "size_10",
+        "cat_sizing",
+        "q_measure",
+        "q_between",
+        "q_necklace",
+        "q_bracelet"
+      ]
+    }
+  },
+  "order": ["main"]
+}

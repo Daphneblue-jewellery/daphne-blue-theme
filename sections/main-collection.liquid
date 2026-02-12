@@ -14,9 +14,13 @@
 {% endfor %}
 
 {% assign is_land_collection = false %}
-{% if template.suffix == 'the-land' %}
-  {% assign is_land_collection = true %}
-{% endif %}
+{% assign land_suffixes = 'the-land,the-sea,the-sky,the-stars' | split: ',' %}
+{% for s in land_suffixes %}
+  {% if template.suffix == s %}
+    {% assign is_land_collection = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
 
 {% assign is_piece_category = false %}
 {% if template.suffix == 'piece-category' %}
@@ -35,22 +39,6 @@
 {% endunless %}
 
 {% assign placeholder_children = '' %}
-  {% if is_land_collection %}
-    {% assign land_placeholder_images = 'land-placeholder-1.jpg|land-placeholder-2.jpg|land-placeholder-3.jpg|land-placeholder-4.jpg|land-placeholder-5.jpg|land-placeholder-6.jpg|land-placeholder-7.jpg|land-placeholder-8.jpg' | split: '|' %}
-    {% capture placeholder_children %}
-      {% for i in (1..8) %}
-        {% assign placeholder_index = forloop.index0 | modulo: land_placeholder_images.size %}
-        {% assign placeholder_image = land_placeholder_images[placeholder_index] %}
-        <li
-          id="{{ section.id }}-placeholder-{{ forloop.index }}"
-          class="product-grid__item product-grid__item--{{ forloop.index0 }}"
-          data-product-id="placeholder-{{ forloop.index }}"
-        >
-        {% render 'db-product-card', placeholder: true, placeholder_id: forloop.index0, placeholder_image: placeholder_image %}
-      </li>
-    {% endfor %}
-  {% endcapture %}
-{% endif %}
 
 {% if use_sidebar_filters %}
   <script
@@ -171,7 +159,7 @@
 {% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <results-list
-  class="section product-grid-container color-{{ section.settings.color_scheme }}{% if use_sidebar_filters %} db-collection-facets{% endif %}{% if is_land_collection %} db-land-collection{% endif %}{% if is_piece_category %} db-piece-collection{% endif %}"
+  class="section product-grid-container color-{{ section.settings.color_scheme }}{% if use_sidebar_filters %} db-collection-facets{% endif %}{% if is_land_collection %} db-land-collection db-piece-collection{% endif %}{% if is_piece_category %} db-piece-collection{% endif %}"
   style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
   section-id="{{ section.id }}"
   infinite-scroll="{{ section.settings.enable_infinite_scroll }}"
@@ -221,13 +209,9 @@
                 data-product-id="{{ product.id }}"
                 ref="cards[]"
               >
-                {% if is_land_collection %}
-                  {% render 'db-product-card', product: product %}
-                {% else %}
-                  {% # theme-check-disable %}
-                  {% content_for 'block', type: '_product-card', id: 'product-card', closest.product: product %}
-                  {% # theme-check-enable %}
-                {% endif %}
+                {% # theme-check-disable %}
+                {% content_for 'block', type: '_product-card', id: 'product-card', closest.product: product %}
+                {% # theme-check-enable %}
               </li>
             {% endfor %}
           {% endcapture %}

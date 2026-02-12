@@ -1,0 +1,120 @@
+{% comment %}
+  Daphne Blue — Values strip
+  Horizontal row of brand value pillars with press-type labels.
+{% endcomment %}
+
+<section
+  class="db-values-strip spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width db-values-strip__inner">
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="db-values-strip__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="db-values-strip__grid">
+      {%- for block in section.blocks -%}
+        <div class="db-values-strip__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.label != blank -%}
+            <p class="db-values-strip__label db-type--press">{{ block.settings.label }}</p>
+          {%- endif -%}
+          {%- if block.settings.note != blank -%}
+            <p class="db-values-strip__note">{{ block.settings.note }}</p>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Values strip",
+  "class": "db-values-strip-section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "text",
+          "id": "note",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Values strip",
+      "blocks": [
+        {
+          "type": "value",
+          "settings": {
+            "label": "Chosen with care",
+            "note": "Every piece earns its place"
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "label": "Made to last",
+            "note": "Quality you can feel from day one"
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "label": "Made for giving",
+            "note": "Gift-ready, always"
+          }
+        },
+        {
+          "type": "value",
+          "settings": {
+            "label": "Easy, if it's not for you",
+            "note": "Simple returns, no questions"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -3,7 +3,7 @@
 {% endcomment %}
 
 <section
-  class="db-editorial-moment spacing-style"
+  class="db-editorial-moment{% if section.settings.color_variant == 'soft-sand' %} db-editorial-moment--soft-sand{% endif %} spacing-style"
   style="{% render 'spacing-style', settings: section.settings %}"
 >
   <div class="page-width db-editorial-moment__inner">
@@ -13,7 +13,7 @@
       </div>
     {% endif %}
 
-    <div class="db-editorial-moment__grid">
+    <div class="db-editorial-moment__grid{% if section.settings.reverse_layout %} db-editorial-moment__grid--reverse{% endif %}">
       <div class="db-editorial-moment__media">
         {% if section.settings.image != blank %}
           <img
@@ -101,6 +101,22 @@
       "type": "url",
       "id": "link_url",
       "label": "Link URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_layout",
+      "label": "Image on right",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "color_variant",
+      "label": "Background",
+      "options": [
+        { "value": "soft-white", "label": "Soft White" },
+        { "value": "soft-sand", "label": "Soft Sand" }
+      ],
+      "default": "soft-white"
     },
     {
       "type": "checkbox",

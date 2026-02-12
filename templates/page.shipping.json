@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "main": {
+      "type": "db-faq",
+      "settings": {
+        "eyebrow": "Support",
+        "heading": "Shipping & Delivery",
+        "intro": "<p>We want your order to reach you safely, quickly, and beautifully. From the moment you place an order, your jewellery is carefully packed and on its way \u2014 here\u2019s everything you need to know.</p>",
+        "closing_text": "<p>Still have a question? We\u2019d love to help.</p>",
+        "contact_label": "Get in touch \u2192",
+        "contact_url": "/pages/contact",
+        "padding-block-start": 72,
+        "padding-block-end": 72
+      },
+      "blocks": {
+        "cat_delivery": {
+          "type": "category",
+          "settings": {
+            "title": "Delivery"
+          }
+        },
+        "q_free_shipping": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer free shipping?",
+            "answer": "<p>Yes \u2014 we offer free standard shipping on all UK orders over \u00a350. Orders under \u00a350 ship for a flat rate of [CONFIRM: \u00a33.50].</p>"
+          }
+        },
+        "q_delivery_time": {
+          "type": "question",
+          "settings": {
+            "question": "How long will my order take to arrive?",
+            "answer": "<p>UK standard delivery takes 3\u20135 working days. Orders placed before [CONFIRM: 2pm] on a working day are dispatched the same day.</p><p>We\u2019ll send you a tracking link by email as soon as your order is on its way.</p>"
+          }
+        },
+        "q_international": {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship internationally?",
+            "answer": "<p>[CONFIRM: Yes, we ship to Europe and select international destinations. European delivery typically takes 5\u20137 working days, and international orders 7\u201314 working days. Shipping costs are calculated at checkout.]</p><p>[CONFIRM: Please note that international orders may be subject to local customs duties or import taxes, which are the responsibility of the recipient.]</p>"
+          }
+        },
+        "q_tracking": {
+          "type": "question",
+          "settings": {
+            "question": "Will I receive tracking information?",
+            "answer": "<p>Yes. Once your order has been dispatched, you\u2019ll receive an email with a tracking link so you can follow your parcel\u2019s journey.</p>"
+          }
+        },
+        "q_delayed": {
+          "type": "question",
+          "settings": {
+            "question": "What happens if my order is delayed?",
+            "answer": "<p>Occasionally, deliveries can take a little longer than expected \u2014 particularly during busy periods. If your order hasn\u2019t arrived within the estimated timeframe, please get in touch at <a href=\"mailto:hello@daphneblue.co.uk\">hello@daphneblue.co.uk</a> and we\u2019ll look into it straight away.</p>"
+          }
+        }
+      },
+      "block_order": ["cat_delivery", "q_free_shipping", "q_delivery_time", "q_international", "q_tracking", "q_delayed"]
+    }
+  },
+  "order": ["main"]
+}

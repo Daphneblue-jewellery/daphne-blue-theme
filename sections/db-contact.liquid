@@ -1,0 +1,234 @@
+{% comment %}
+  Daphne Blue — Contact section
+  Header + contact method cards + styled contact form.
+  Blocks define the contact methods shown above the form.
+{% endcomment %}
+
+{%- liquid
+  assign methods = section.blocks | where: 'type', 'method'
+-%}
+
+<section
+  class="db-contact spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="page-width db-contact__inner">
+
+    {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.intro != blank -%}
+      <header class="db-faq__header">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="db-faq__eyebrow db-type--press">{{ section.settings.eyebrow }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h1 class="db-faq__heading">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+        {%- if section.settings.intro != blank -%}
+          <div class="db-faq__intro">{{ section.settings.intro }}</div>
+        {%- endif -%}
+      </header>
+    {%- endif -%}
+
+    {%- if methods.size > 0 -%}
+      <div class="db-contact__methods">
+        {%- for block in methods -%}
+          <div class="db-contact__method" {{ block.shopify_attributes }}>
+            <h3 class="db-contact__method-title db-type--press">{{ block.settings.title }}</h3>
+            <div class="db-contact__method-body">{{ block.settings.body }}</div>
+            {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+              <a class="db-link db-contact__method-link" href="{{ block.settings.link_url }}">
+                {{ block.settings.link_label }}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="db-contact__form-wrapper">
+      {%- if section.settings.form_heading != blank -%}
+        <h2 class="db-contact__form-heading">{{ section.settings.form_heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.form_subtext != blank -%}
+        <p class="db-contact__form-subtext">{{ section.settings.form_subtext }}</p>
+      {%- endif -%}
+
+      {%- assign form_id = section.id | prepend: 'DBContact-' -%}
+      {%- form 'contact', id: form_id, class: 'db-contact__form' -%}
+
+        {%- if form.posted_successfully? -%}
+          <div class="db-contact__success">
+            <p class="db-contact__success-text">Thank you for reaching out — we'll be in touch soon.</p>
+          </div>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div class="db-contact__error">
+            <p>{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+          </div>
+        {%- endif -%}
+
+        <div class="db-contact__form-row">
+          <div class="db-contact__field">
+            <label class="db-contact__label db-type--press" for="{{ form_id }}-name">Name</label>
+            <input
+              type="text"
+              id="{{ form_id }}-name"
+              class="db-contact__input"
+              autocomplete="name"
+              name="contact[name]"
+              value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+              placeholder="Your name"
+            >
+          </div>
+          <div class="db-contact__field">
+            <label class="db-contact__label db-type--press" for="{{ form_id }}-email">Email <span aria-hidden="true">*</span></label>
+            <input
+              type="email"
+              id="{{ form_id }}-email"
+              class="db-contact__input"
+              autocomplete="email"
+              name="contact[email]"
+              spellcheck="false"
+              autocapitalize="off"
+              value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+              aria-required="true"
+              {% if form.errors contains 'email' %}
+                aria-invalid="true"
+                aria-describedby="{{ form_id }}-email-error"
+              {% endif %}
+              placeholder="your@email.com"
+              required
+            >
+          </div>
+        </div>
+
+        <div class="db-contact__field">
+          <label class="db-contact__label db-type--press" for="{{ form_id }}-subject">Subject</label>
+          <input
+            type="text"
+            id="{{ form_id }}-subject"
+            class="db-contact__input"
+            name="contact[subject]"
+            placeholder="What can we help with?"
+          >
+        </div>
+
+        <div class="db-contact__field">
+          <label class="db-contact__label db-type--press" for="{{ form_id }}-body">Message</label>
+          <textarea
+            rows="6"
+            id="{{ form_id }}-body"
+            class="db-contact__input db-contact__input--textarea"
+            name="contact[body]"
+            placeholder="Tell us a little more…"
+          >{{ form.body }}</textarea>
+        </div>
+
+        <button type="submit" class="db-contact__submit">
+          Send message
+        </button>
+      {%- endform -%}
+    </div>
+
+    {%- if section.settings.closing_text != blank -%}
+      <footer class="db-faq__footer">
+        <div class="db-faq__closing">{{ section.settings.closing_text }}</div>
+      </footer>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Contact",
+  "class": "db-contact-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Support"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get in Touch"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "Form heading",
+      "default": "Send us a message"
+    },
+    {
+      "type": "text",
+      "id": "form_subtext",
+      "label": "Form subtext"
+    },
+    {
+      "type": "richtext",
+      "id": "closing_text",
+      "label": "Closing text"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "default": 72
+    }
+  ],
+  "blocks": [
+    {
+      "type": "method",
+      "name": "Contact method",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Email"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link label"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4
+}
+{% endschema %}

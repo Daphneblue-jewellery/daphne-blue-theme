@@ -3,20 +3,9 @@
 {% liquid
   assign product = closest.product
   assign placeholder_id = placeholder_id
-  assign is_editorial_collection = false
-
-  if template.suffix == 'the-land' or template.suffix == 'the-sea' or template.suffix == 'the-sky' or template.suffix == 'the-stars'
-    assign is_editorial_collection = true
-  elsif collection
-    if collection.handle == 'the-land' or collection.handle == 'the-sea' or collection.handle == 'the-sky' or collection.handle == 'the-stars'
-      assign is_editorial_collection = true
-    endif
-  endif
 -%}
 
-{% if is_editorial_collection %}
-  {% render 'db-product-card', product: product, placeholder_id: placeholder_id, block: block %}
-{% else %}
+{% comment %} All collections now use standard Horizon product cards {% endcomment %}
   {% capture children %}
     {% content_for 'blocks', closest.product: product %}
     {% if template contains 'product.db' or template contains 'product.db1' or template contains 'product.daphne' %}
@@ -33,7 +22,6 @@
   {% endcapture %}
 
   {% render 'product-card', children: children, product: product, placeholder_id: placeholder_id %}
-{% endif %}
 
 {% schema %}
 {
