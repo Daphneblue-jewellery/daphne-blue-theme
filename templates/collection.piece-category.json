@@ -1,5 +1,22 @@
 {
   "sections": {
+    "db_hero": {
+      "type": "db-collection-hero",
+      "settings": {
+        "show_image": true,
+        "subline": "",
+        "heading": "",
+        "poetic_line": "",
+        "height_vh": 45,
+        "center_content": true,
+        "cta_label": "",
+        "cta_link": "",
+        "secondary_label": "",
+        "secondary_link": "",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "main": {
       "type": "main-collection",
       "blocks": {
@@ -132,6 +149,7 @@
     }
   },
   "order": [
+    "db_hero",
     "main"
   ]
 }
