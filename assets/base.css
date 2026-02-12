@@ -7000,3 +7000,422 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
   color: rgb(var(--color-foreground-rgb) / 0.45);
   margin-left: 4px;
 }
+
+/* ================================================================
+   Cart Drawer — Daphne Blue
+   CSS-only overrides for the Horizon cart drawer.
+   ================================================================ */
+
+/* ── Drawer shell ── */
+.cart-drawer__dialog.dialog-drawer {
+  background-color: var(--db-color-soft-white) !important;
+  border-left: 1px solid rgb(var(--color-foreground-rgb) / 0.06) !important;
+  box-shadow: -8px 0 32px rgb(0 0 0 / 0.06) !important;
+}
+
+.cart-drawer__dialog::backdrop {
+  background: rgb(46 46 46 / 0.18) !important;
+  backdrop-filter: blur(2px);
+}
+
+/* ── Header ── */
+.cart-drawer .cart-drawer__header {
+  background-color: var(--db-color-soft-white) !important;
+  border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.08) !important;
+  padding: 20px 24px !important;
+}
+
+@media screen and (min-width: 750px) {
+  .cart-drawer .cart-drawer__header {
+    padding: 24px 32px !important;
+  }
+}
+
+.cart-drawer__heading.h3 {
+  font-family: var(--db-type-press-family) !important;
+  font-size: var(--db-type-press-size) !important;
+  line-height: var(--db-type-press-line-height) !important;
+  letter-spacing: var(--db-type-press-letter-spacing) !important;
+  text-transform: var(--db-type-press-case) !important;
+  font-weight: var(--font-body--weight) !important;
+  color: rgb(var(--color-foreground-rgb) / 0.55) !important;
+}
+
+/* ── Cart bubble (heading) ── */
+.cart-drawer__heading .cart-bubble__background {
+  background-color: rgb(var(--color-foreground-rgb) / 0.06) !important;
+}
+
+.cart-drawer__heading .cart-bubble__text {
+  color: rgb(var(--color-foreground-rgb) / 0.5) !important;
+  font-family: var(--db-type-press-family) !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.04em !important;
+}
+
+/* ── Close button ── */
+.cart-drawer .cart-drawer__close-button {
+  color: rgb(var(--color-foreground-rgb) / 0.35) !important;
+  transition: color var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    background-color var(--db-motion-duration-fast) var(--db-motion-ease-out) !important;
+}
+
+.cart-drawer .cart-drawer__close-button:hover {
+  color: rgb(var(--color-foreground-rgb) / 0.6) !important;
+  background-color: rgb(var(--color-foreground-rgb) / 0.04) !important;
+}
+
+.cart-drawer .cart-drawer__close-button:focus-visible {
+  outline: 2px solid var(--db-focus-ring-color) !important;
+  outline-offset: 2px !important;
+}
+
+.cart-drawer .cart-drawer__close-button svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* ── Items scroll area ── */
+.cart-drawer .cart-drawer__items {
+  padding-inline: 24px !important;
+  padding-block-start: 20px !important;
+}
+
+@media screen and (min-width: 750px) {
+  .cart-drawer .cart-drawer__items {
+    padding-inline: 32px !important;
+  }
+}
+
+/* ── Cart item rows — soft cards ── */
+.cart-drawer .cart-items__table-row {
+  padding: 16px !important;
+  margin-bottom: 12px !important;
+  background-color: rgb(var(--color-foreground-rgb) / 0.015);
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.05) !important;
+  border-radius: var(--db-radius-sm) !important;
+  transition: background-color var(--db-motion-duration-fast) var(--db-motion-ease-out);
+}
+
+.cart-drawer .cart-items__table-row:last-child {
+  margin-bottom: 0 !important;
+  border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.05) !important;
+}
+
+.cart-drawer .cart-items__table-row:hover {
+  background-color: rgb(var(--color-foreground-rgb) / 0.025);
+}
+
+/* Remove divider borders */
+.cart-drawer .cart-items--dividers .cart-items__table-row {
+  border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.05) !important;
+}
+
+/* ── Product thumbnails ── */
+.cart-drawer .cart-items__media-container {
+  border-radius: var(--db-radius-sm) !important;
+  overflow: hidden !important;
+}
+
+.cart-drawer .cart-items__media-image {
+  border-radius: var(--db-radius-sm) !important;
+  border: none !important;
+}
+
+/* ── Product details typography ── */
+.cart-drawer .cart-items__title {
+  font-family: "Maragsa Display", serif !important;
+  font-size: 0.9rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  color: var(--db-color-charcoal-ink) !important;
+  line-height: 1.35 !important;
+  transition: color var(--db-motion-duration-fast) var(--db-motion-ease-out);
+}
+
+.cart-drawer .cart-items__title:hover {
+  color: var(--db-color-daphne-blue) !important;
+}
+
+.cart-drawer .cart-items__details {
+  color: rgb(var(--color-foreground-rgb) / 0.55) !important;
+}
+
+.cart-drawer .cart-items__details * {
+  font-size: 0.78rem !important;
+  line-height: 1.45 !important;
+}
+
+.cart-drawer .cart-items__variants,
+.cart-drawer .cart-items__variants * {
+  font-family: var(--db-type-press-family) !important;
+  font-size: var(--db-type-press-size) !important;
+  letter-spacing: var(--db-type-press-letter-spacing) !important;
+  text-transform: var(--db-type-press-case) !important;
+  color: rgb(var(--color-foreground-rgb) / 0.45) !important;
+}
+
+.cart-drawer .cart-items__details .compare-at-price {
+  color: rgb(var(--color-foreground-rgb) / 0.35) !important;
+}
+
+/* ── Line total price ── */
+.cart-drawer .cart-items__price {
+  font-family: var(--font-body--family) !important;
+  font-size: 0.85rem !important;
+  color: var(--db-color-charcoal-ink) !important;
+  font-weight: 500 !important;
+}
+
+/* ── Quantity selector ── */
+.cart-drawer .cart-items__quantity .quantity-selector {
+  --quantity-selector-width: 100px;
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.1) !important;
+  border-radius: var(--db-radius-sm) !important;
+  background-color: transparent !important;
+  height: 36px !important;
+  transition: border-color var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    background-color var(--db-motion-duration-fast) var(--db-motion-ease-out);
+}
+
+.cart-drawer .cart-items__quantity .quantity-selector:hover {
+  border-color: rgb(var(--color-foreground-rgb) / 0.18) !important;
+  background-color: rgb(var(--color-foreground-rgb) / 0.02) !important;
+}
+
+.cart-drawer .quantity-selector :is(.quantity-minus, .quantity-plus) {
+  color: rgb(var(--color-foreground-rgb) / 0.4) !important;
+  width: 32px !important;
+  height: 100% !important;
+  transition: color var(--db-motion-duration-fast) var(--db-motion-ease-out) !important;
+}
+
+.cart-drawer .quantity-selector :is(.quantity-minus, .quantity-plus):hover {
+  color: var(--db-color-daphne-blue) !important;
+}
+
+.cart-drawer .quantity-selector input[type='number'] {
+  font-size: 0.78rem !important;
+  color: var(--db-color-charcoal-ink) !important;
+  font-family: var(--font-body--family) !important;
+}
+
+/* ── Remove button ── */
+.cart-drawer .cart-items__remove {
+  color: rgb(var(--color-foreground-rgb) / 0.3) !important;
+  transition: color var(--db-motion-duration-fast) var(--db-motion-ease-out) !important;
+}
+
+.cart-drawer .cart-items__remove:hover {
+  color: rgb(var(--color-foreground-rgb) / 0.6) !important;
+}
+
+.cart-drawer .cart-items__remove svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+/* ── Summary section ── */
+.cart-drawer .cart-drawer__summary {
+  background-color: var(--db-color-soft-sand) !important;
+  padding: 24px !important;
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+  border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.06);
+}
+
+@media screen and (min-width: 750px) {
+  .cart-drawer .cart-drawer__summary {
+    padding: 32px !important;
+  }
+}
+
+.cart-drawer .cart__summary-totals {
+  border-block-start: none !important;
+  padding-block-start: 0 !important;
+}
+
+.cart-drawer .cart__total-label {
+  font-family: var(--db-type-press-family) !important;
+  font-size: var(--db-type-press-size) !important;
+  letter-spacing: var(--db-type-press-letter-spacing) !important;
+  text-transform: var(--db-type-press-case) !important;
+  color: rgb(var(--color-foreground-rgb) / 0.5) !important;
+  font-weight: var(--font-body--weight) !important;
+}
+
+.cart-drawer .cart__total-value {
+  font-family: "Maragsa Display", serif !important;
+  font-size: 1.35rem !important;
+  color: var(--db-color-charcoal-ink) !important;
+  letter-spacing: 0.01em !important;
+}
+
+.cart-drawer .cart__summary-item.tax-note {
+  font-size: 0.7rem !important;
+  color: rgb(var(--color-foreground-rgb) / 0.4) !important;
+}
+
+.cart-drawer .cart-actions {
+  border-color: rgb(var(--color-foreground-rgb) / 0.08) !important;
+}
+
+.cart-drawer .cart-note__label {
+  font-family: var(--db-type-press-family) !important;
+  font-size: var(--db-type-press-size) !important;
+  letter-spacing: var(--db-type-press-letter-spacing) !important;
+  text-transform: var(--db-type-press-case) !important;
+  font-weight: var(--font-body--weight) !important;
+}
+
+.cart-drawer .cart-note__instructions {
+  border-radius: var(--db-radius-sm) !important;
+  font-size: 0.8rem !important;
+  border-color: rgb(var(--color-foreground-rgb) / 0.1) !important;
+}
+
+.cart-drawer .cart__original-total-label,
+.cart-drawer .cart__discount-label {
+  font-family: var(--db-type-press-family) !important;
+  font-size: var(--db-type-press-size) !important;
+  letter-spacing: var(--db-type-press-letter-spacing) !important;
+  text-transform: var(--db-type-press-case) !important;
+}
+
+/* ── Checkout CTA — Daphne Blue ── */
+.cart-drawer .cart__checkout-button.button {
+  --button-background-color: var(--db-color-daphne-blue) !important;
+  --button-color: #fff !important;
+  --button-border-color: var(--db-color-daphne-blue) !important;
+  --button-border-width: 0px !important;
+  border-radius: var(--db-radius-sm) !important;
+  font-family: var(--db-type-press-family) !important;
+  font-size: var(--db-type-press-size) !important;
+  letter-spacing: var(--db-type-press-letter-spacing) !important;
+  text-transform: var(--db-type-press-case) !important;
+  font-weight: var(--font-body--weight) !important;
+  padding-block: 14px !important;
+  height: auto !important;
+  min-height: 48px;
+  box-shadow: 0 4px 14px rgb(111 169 184 / 0.25) !important;
+  transition: transform var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    box-shadow var(--db-motion-duration-fast) var(--db-motion-ease-out),
+    background-color var(--db-motion-duration-fast) var(--db-motion-ease-out) !important;
+}
+
+.cart-drawer .cart__checkout-button.button:hover {
+  --button-background-color: #5f9baa !important;
+  --button-color: #fff !important;
+  --button-border-color: #5f9baa !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgb(111 169 184 / 0.35) !important;
+}
+
+.cart-drawer .cart__checkout-button.button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgb(111 169 184 / 0.2) !important;
+}
+
+.cart-drawer .cart__checkout-button.button:focus-visible {
+  outline: 2px solid var(--db-color-daphne-blue) !important;
+  outline-offset: 3px !important;
+}
+
+.cart-drawer .cart__checkout-button.button:disabled {
+  --button-background-color: rgb(var(--color-foreground-rgb) / 0.08) !important;
+  --button-color: rgb(var(--color-foreground-rgb) / 0.3) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+/* ── Accelerated checkout ── */
+.cart-drawer .additional-checkout-buttons {
+  margin-top: 8px !important;
+}
+
+.cart-drawer shopify-accelerated-checkout-cart {
+  --shopify-accelerated-checkout-button-border-radius: var(--db-radius-sm) !important;
+}
+
+/* ── Empty cart state ── */
+.cart-drawer--empty .cart-drawer__header {
+  border-bottom: none !important;
+}
+
+.cart-drawer--empty .cart-drawer__heading--empty {
+  font-family: "Maragsa Display", serif !important;
+  font-size: 1.1rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.01em !important;
+  text-transform: none !important;
+  color: rgb(var(--color-foreground-rgb) / 0.65) !important;
+}
+
+.cart-drawer--empty .cart-items__empty-button {
+  font-family: var(--db-type-press-family) !important;
+  font-size: var(--db-type-press-size) !important;
+  letter-spacing: var(--db-type-press-letter-spacing) !important;
+  text-transform: var(--db-type-press-case) !important;
+  color: rgb(var(--color-foreground-rgb) / 0.5) !important;
+}
+
+.cart-drawer--empty .cart-items__empty-button:hover {
+  color: var(--db-color-daphne-blue) !important;
+}
+
+/* ── Mobile refinements ── */
+@media screen and (max-width: 749px) {
+  .cart-drawer .cart-drawer__header {
+    padding: 16px 20px !important;
+  }
+
+  .cart-drawer .cart-drawer__items {
+    padding-inline: 20px !important;
+  }
+
+  .cart-drawer .cart-items__table-row {
+    padding: 12px !important;
+  }
+
+  .cart-drawer .cart-drawer__summary {
+    padding: 20px !important;
+  }
+
+  .cart-drawer .cart__total-value {
+    font-size: 1.2rem !important;
+  }
+
+  .cart-drawer .cart__checkout-button.button {
+    min-height: 52px;
+    padding-block: 14px !important;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .cart-drawer .cart__checkout-button.button {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  .cart-drawer .cart-items__table-row {
+    transition: none !important;
+  }
+
+  .cart-drawer .cart-drawer__close-button {
+    transition: none !important;
+  }
+
+  .cart-drawer .cart-items__title {
+    transition: none !important;
+  }
+
+  .cart-drawer .quantity-selector :is(.quantity-minus, .quantity-plus) {
+    transition: none !important;
+  }
+
+  .cart-drawer .cart-items__remove {
+    transition: none !important;
+  }
+}
