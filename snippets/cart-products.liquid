@@ -60,7 +60,7 @@
             role="caption"
           >
             {{ 'content.cart_total' | t }}
-            <span>{{ cart.total_price | money_with_currency }}</span>
+            <span>{%- capture db_cart_total -%}{%- render 'db-price-format', price_in_cents: cart.total_price -%}{%- endcapture -%}{{ db_cart_total | strip }}</span>
           </caption>
 
           <thead
@@ -230,13 +230,13 @@
                   <div>
                     {% if item.original_price != item.final_price %}
                       <span class="visually-hidden">{{ 'content.price_sale' | t }}</span>
-                      <span>{{ item.final_price | money }}</span>
+                      <span>{%- capture db_final_price -%}{%- render 'db-price-format', price_in_cents: item.final_price -%}{%- endcapture -%}{{ db_final_price | strip }}</span>
                       <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
                       <s class="compare-at-price">
                         {% if item.variant.compare_at_price > item.original_price %}
-                          {{ item.variant.compare_at_price | money }}
+                          {%- capture db_compare -%}{%- render 'db-price-format', price_in_cents: item.variant.compare_at_price -%}{%- endcapture -%}{{ db_compare | strip }}
                         {% else %}
-                          {{ item.original_price | money }}
+                          {%- capture db_orig -%}{%- render 'db-price-format', price_in_cents: item.original_price -%}{%- endcapture -%}{{ db_orig | strip }}
                         {% endif %}
                       </s>
                     {% else %}
@@ -246,11 +246,11 @@
                         <span class="visually-hidden">{{ 'content.price' | t }}</span>
                       {% endif %}
 
-                      <span>{{ item.original_price | money }}</span>
+                      <span>{%- capture db_orig2 -%}{%- render 'db-price-format', price_in_cents: item.original_price -%}{%- endcapture -%}{{ db_orig2 | strip }}</span>
 
                       {% if item.variant.compare_at_price > item.original_price %}
                         <span class="visually-hidden">{{ 'content.price_regular' | t }}</span>
-                        <s class="compare-at-price">{{ item.variant.compare_at_price | money }}</s>
+                        <s class="compare-at-price">{%- capture db_compare2 -%}{%- render 'db-price-format', price_in_cents: item.variant.compare_at_price -%}{%- endcapture -%}{{ db_compare2 | strip }}</s>
                       {% endif %}
                     {% endif %}
                   </div>
@@ -311,15 +311,10 @@
                   role="cell"
                   headers="productTotal"
                 >
-                  {%- liquid
-                    if settings.currency_code_enabled_cart_items
-                      assign price = item.final_line_price | money_with_currency
-                      assign unit_price = item.unit_price | money_with_currency
-                    else
-                      assign price = item.final_line_price | money
-                      assign unit_price = item.unit_price | money
-                    endif
-                  -%}
+                  {%- capture price -%}{%- render 'db-price-format', price_in_cents: item.final_line_price -%}{%- endcapture -%}
+                  {%- assign price = price | strip -%}
+                  {%- capture unit_price -%}{%- render 'db-price-format', price_in_cents: item.unit_price -%}{%- endcapture -%}
+                  {%- assign unit_price = unit_price | strip -%}
                   <text-component value="{{ price | strip_html }}">{{ price }}</text-component>
                   {%- if item.unit_price_measurement -%}
                     <div class="cart-items__price-unit cart-secondary-typography">

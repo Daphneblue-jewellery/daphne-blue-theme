@@ -32,7 +32,7 @@
                 <p class="db-collection-card__descriptor">{{ poetic_line }}</p>
               {% endif %}
               {% if section.settings.show_price %}
-                <p class="db-collection-card__price">{{ product.price | money }}</p>
+                <p class="db-collection-card__price">{% render 'db-price-format', price_in_cents: product.price %}</p>
               {% endif %}
             </div>
           </a>

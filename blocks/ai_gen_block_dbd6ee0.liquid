@@ -464,10 +464,10 @@
                   {% assign descriptor_line = descriptor_lines[forloop.index0] | default: 'Quietly luminous' %}
                   <p class="ai-bestsellers-carousel__descriptor-{{ ai_gen_id }}">{{ descriptor_line }}</p>
                   <div class="ai-bestsellers-carousel__price-{{ ai_gen_id }}">
-                    {{ product.price | money }}
+                    {% render 'db-price-format', price_in_cents: product.price %}
                     {% if product.compare_at_price > product.price %}
                       <span class="ai-bestsellers-carousel__price-compare-{{ ai_gen_id }}">
-                        {{ product.compare_at_price | money }}
+                        {% render 'db-price-format', price_in_cents: product.compare_at_price %}
                       </span>
                     {% endif %}
                   </div>

@@ -1,0 +1,6 @@
+{%- comment -%}
+  Formats a price in cents as "GBP 95" — no symbol, no decimals.
+  @param {number} price_in_cents - Price in cents (e.g. 9500)
+{%- endcomment -%}
+{%- assign db_price_whole = price_in_cents | divided_by: 100 -%}
+GBP {{ db_price_whole -}}

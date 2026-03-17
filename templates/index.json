@@ -1,1 +1,341 @@
-{"sections": {"hero_TCphkR": {"type": "hero", "blocks": {"text_VcGTaF": {"type": "text", "settings": {"text": "<h1>naturally, you</h1>", "width": "fit-content", "max_width": "none", "alignment": "center", "type_preset": "custom", "font": "var(--font-heading--family)", "font_size": "7.5rem", "line_height": "normal", "letter_spacing": "normal", "case": "none", "wrap": "nowrap", "color": "#FAFAF8", "background": false, "background_color": "#00000026", "corner_radius": 0, "padding-block-start": 0, "padding-block-end": 0, "padding-inline-start": 0, "padding-inline-end": 0}, "blocks": {}}, "button_deNyaL": {"type": "button", "name": "t:names.button", "settings": {"label": "Explore the collection <span class=\"db-hero-cta__arrow db-hero-cta__arrow--down\">↓</span>", "link": "#shopify-section-collection_list_cQYk97", "open_in_new_tab": false, "style_class": "button", "width": "fit-content", "custom_width": 100, "width_mobile": "fit-content", "custom_width_mobile": 100}, "blocks": {}}}, "block_order": ["text_VcGTaF", "button_deNyaL"], "name": "t:names.hero", "settings": {"media_type_1": "image", "image_1": "shopify://shop_images/jewelry-natural-5.jpg", "media_type_2": "video", "stack_media_on_mobile": false, "custom_mobile_media": false, "media_type_1_mobile": "image", "media_type_2_mobile": "image", "link": "", "open_in_new_tab": false, "content_direction": "column", "vertical_on_mobile": true, "horizontal_alignment": "flex-start", "vertical_alignment": "center", "align_baseline": false, "horizontal_alignment_flex_direction_column": "center", "vertical_alignment_flex_direction_column": "center", "gap": 18, "section_width": "page-width", "section_height": "large", "section_height_custom": 50, "color_scheme": "scheme-4ecefe5b-3041-462d-bee3-e03485c761fa", "toggle_overlay": true, "overlay_color": "#00000026", "overlay_style": "gradient", "gradient_direction": "to top", "blurred_reflection": false, "reflection_opacity": 75, "padding-block-start": 40, "padding-block-end": 40}}, "db_favourites": {"type": "db-favourites", "settings": {"heading": "Favourites", "subline": "The pieces we reach for, again and again", "products": [], "link_label": "View all \u2192", "link_url": "/collections/all", "padding-block-start": 72, "padding-block-end": 72}}, "collection_list_cQYk97": {"type": "collection-list", "blocks": {"ai_gen_block_b181b80_zgeLYQ": {"type": "ai_gen_block_b181b80", "settings": {"title": "Begin", "subtitle": "", "section_padding": 60, "background_color": "#FAFAF8", "text_color": "#2E2E2E", "card_background": "#F2EDE6", "button_color": "#2E2E2E", "button_text_color": "#FAFAF8", "button_hover_color": "#6FA9B8", "title_size": 60, "subtitle_size": 22, "card_border_radius": 8, "button_border_radius": 18, "button_text": "Explore", "theme_1_enabled": true, "theme_1_name": "The Land", "theme_1_description": "Earthy tones & natural textures", "theme_1_image": "shopify://shop_images/nature-photographer.jpg", "theme_1_collection": "the-land", "theme_2_enabled": true, "theme_2_name": "The Sea", "theme_2_description": "Calm, ocean-inspired designs", "theme_2_image": "shopify://shop_images/hiker-stands-on-tall-rock-by-ocean.jpg", "theme_2_collection": "the-sea", "theme_3_enabled": true, "theme_3_name": "The Sky", "theme_3_description": "Light, airy, minimalist pieces", "theme_3_image": "shopify://shop_images/aerial-photo-of-fluffy-white-clouds-over-horizon.jpg", "theme_3_collection": "the-sky", "theme_4_enabled": true, "theme_4_name": "The Stars", "theme_4_description": "Soft shimmer & celestial charm", "theme_4_image": "shopify://shop_images/pink-clouds-and-stars.jpg", "theme_4_collection": "the-stars"}, "blocks": {}}, "static-collection-card": {"type": "_collection-card", "name": "t:names.collection_card", "disabled": true, "static": true, "settings": {"placement": "below_image", "horizontal_alignment": "flex-start", "vertical_alignment": "center", "collection_card_gap": 8, "inherit_color_scheme": true, "color_scheme": "", "border": "none", "border_width": 1, "border_opacity": 100, "border_radius": 0}, "blocks": {"collection_title_6kk49D": {"type": "collection-title", "name": "Collection Title", "settings": {"width": "fit-content", "max_width": "normal", "alignment": "left", "type_preset": "rte", "font": "var(--font-body--family)", "font_size": "1rem", "line_height": "normal", "letter_spacing": "normal", "case": "none", "wrap": "pretty", "color": "var(--color-foreground)", "background": false, "background_color": "#00000026", "corner_radius": 0, "padding-block-start": 0, "padding-block-end": 0, "padding-inline-start": 0, "padding-inline-end": 0}, "blocks": {}}, "collection-card-image": {"type": "_collection-card-image", "name": "t:names.collection_card_image", "static": true, "settings": {"image_ratio": "adapt", "toggle_overlay": false, "overlay_color": "#00000026", "overlay_style": "solid", "gradient_direction": "to top", "border": "none", "border_width": 1, "border_opacity": 100, "border_radius": 0}, "blocks": {}}}, "block_order": ["collection_title_6kk49D"]}}, "block_order": ["ai_gen_block_b181b80_zgeLYQ"], "name": "t:names.collections_carousel", "settings": {"collection_list": [], "layout_type": "carousel", "carousel_on_mobile": false, "columns": 3, "mobile_columns": "2", "mobile_card_size": "60cqw", "columns_gap": 59, "bento_gap": 8, "rows_gap": 8, "max_collections": 4, "icons_style": "arrow", "icons_shape": "circle", "section_width": "full-width", "gap": 0, "color_scheme": "scheme-4ecefe5b-3041-462d-bee3-e03485c761fa", "padding-block-start": 64, "padding-block-end": 64}}, "custom_liquid_press": {"type": "custom-liquid", "settings": {"custom_liquid": "<div class=\"db-press-strip db-type--press\">\n  <span>Jewellery designed to be lived in &mdash; from morning to moonlight</span>\n</div>", "color_scheme": "scheme-1", "section_width": "page-width", "padding-block-start": 32, "padding-block-end": 32}}, "db_editorial_moment": {"type": "db-editorial-moment", "settings": {"image": "shopify://shop_images/jewelry-natural-5.jpg", "image_alt": "Daphne Blue jewellery held in warm light", "heading": "A quiet kind of radiance", "subline": "A note from Daphne Blue", "body": "<p>Jewellery should feel like a soft second skin. We finish every piece in small batches so each curve rests lightly, keeps its warmth, and moves with you from slow mornings to late trains. Pieces that invite you to pause, not perform.</p>", "link_label": "Our story →", "link_url": "/pages/our-story", "show_divider": false, "padding-block-start": 96, "padding-block-end": 96}}, "db_curated_discovery": {"type": "db-curated-discovery", "settings": {"heading": "From daphneblue", "subline": "Three quiet ways to explore", "cta_label": "→", "tile_a_collection": "shopify://collections/necklaces", "tile_a_image": "shopify://shop_images/jewelry-natural-5.jpg", "tile_a_image_alt": "Layered jewellery in soft light", "tile_a_title": "Necklaces", "tile_a_link": "shopify://collections/necklaces", "tile_a_descriptor": "Soft forms for everyday ritual", "tile_b_collection": "shopify://collections/rings", "tile_b_image": "shopify://shop_images/jewelry-natural-3.jpg", "tile_b_image_alt": "Gold jewellery on skin", "tile_b_title": "Rings", "tile_b_link": "shopify://collections/rings", "tile_c_collection": "shopify://collections/earrings", "tile_c_image": "shopify://shop_images/jewelry-natural-2.jpg", "tile_c_image_alt": "Earrings in warm light", "tile_c_title": "Earrings", "tile_c_link": "shopify://collections/earrings", "padding-block-start": 72, "padding-block-end": 72}}, "custom_liquid_trust": {"type": "custom-liquid", "settings": {"custom_liquid": "<div class=\"db-trust-strip\">\n  <div class=\"db-trust-strip__item\">\n    <span class=\"db-trust-strip__icon\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 22c4-4 8-7.5 8-12a8 8 0 1 0-16 0c0 4.5 4 8 8 12z\"/><circle cx=\"12\" cy=\"10\" r=\"3\"/></svg></span>\n    <span class=\"db-trust-strip__text\">Chosen with care</span>\n  </div>\n  <div class=\"db-trust-strip__item\">\n    <span class=\"db-trust-strip__icon\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2L2 7l10 5 10-5-10-5z\"/><path d=\"M2 17l10 5 10-5\"/><path d=\"M2 12l10 5 10-5\"/></svg></span>\n    <span class=\"db-trust-strip__text\">Made to last</span>\n  </div>\n  <div class=\"db-trust-strip__item\">\n    <span class=\"db-trust-strip__icon\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 12v10H4V12\"/><path d=\"M2 7h20v5H2z\"/><path d=\"M12 22V7\"/><path d=\"M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z\"/><path d=\"M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z\"/></svg></span>\n    <span class=\"db-trust-strip__text\">Made for giving</span>\n  </div>\n  <div class=\"db-trust-strip__item\">\n    <span class=\"db-trust-strip__icon\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"1 4 1 10 7 10\"/><path d=\"M3.51 15a9 9 0 1 0 2.13-9.36L1 10\"/></svg></span>\n    <span class=\"db-trust-strip__text\">Easy, if it's not for you</span>\n  </div>\n</div>", "color_scheme": "scheme-1", "section_width": "page-width", "padding-block-start": 48, "padding-block-end": 48}}}, "order": ["hero_TCphkR", "custom_liquid_press", "collection_list_cQYk97", "db_curated_discovery", "db_favourites", "db_editorial_moment", "custom_liquid_trust"]}
+{
+  "sections": {
+    "hero_TCphkR": {
+      "type": "hero",
+      "blocks": {
+        "text_VcGTaF": {
+          "type": "text",
+          "settings": {
+            "text": "<h1>naturally, you</h1>",
+            "width": "fit-content",
+            "max_width": "none",
+            "alignment": "center",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "7.5rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "nowrap",
+            "color": "#FAFAF8",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_deNyaL": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Explore the collection <span class=\"db-hero-cta__arrow db-hero-cta__arrow--down\">↓</span>",
+            "link": "#shopify-section-collection_list_cQYk97",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "text_VcGTaF",
+        "button_deNyaL"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/jewelry-natural-5.jpg",
+        "media_type_2": "video",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 18,
+        "section_width": "page-width",
+        "section_height": "large",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-4ecefe5b-3041-462d-bee3-e03485c761fa",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
+    },
+    "db_favourites": {
+      "type": "db-favourites",
+      "settings": {
+        "heading": "Favourites",
+        "subline": "",
+        "products": [],
+        "link_label": "Explore all →",
+        "link_url": "/collections/all",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
+    "collection_list_cQYk97": {
+      "type": "collection-list",
+      "blocks": {
+        "ai_gen_block_b181b80_zgeLYQ": {
+          "type": "ai_gen_block_b181b80",
+          "settings": {
+            "title": "Begin",
+            "subtitle": "",
+            "section_padding": 60,
+            "background_color": "#FAFAF8",
+            "text_color": "#2E2E2E",
+            "card_background": "#F2EDE6",
+            "button_color": "#2E2E2E",
+            "button_text_color": "#FAFAF8",
+            "button_hover_color": "#6FA9B8",
+            "title_size": 60,
+            "subtitle_size": 22,
+            "card_border_radius": 8,
+            "button_border_radius": 18,
+            "button_text": "Explore",
+            "theme_1_enabled": true,
+            "theme_1_name": "The Land",
+            "theme_1_description": "Warmth, texture, and grounding",
+            "theme_1_image": "shopify://shop_images/nature-photographer.jpg",
+            "theme_1_asset_image": "begin-land.png",
+            "theme_1_collection": "the-land",
+            "theme_2_enabled": true,
+            "theme_2_name": "The Sea",
+            "theme_2_description": "Cool tones shaped by the coast",
+            "theme_2_image": "shopify://shop_images/hiker-stands-on-tall-rock-by-ocean.jpg",
+            "theme_2_asset_image": "begin-sea.png",
+            "theme_2_collection": "the-sea",
+            "theme_3_enabled": true,
+            "theme_3_name": "The Sky",
+            "theme_3_description": "Light, open, and unhurried",
+            "theme_3_image": "shopify://shop_images/aerial-photo-of-fluffy-white-clouds-over-horizon.jpg",
+            "theme_3_asset_image": "begin-sky.png",
+            "theme_3_collection": "the-sky",
+            "theme_4_enabled": true,
+            "theme_4_name": "The Stars",
+            "theme_4_description": "A quiet glow for evening",
+            "theme_4_image": "shopify://shop_images/pink-clouds-and-stars.jpg",
+            "theme_4_asset_image": "begin-stars.png",
+            "theme_4_collection": "the-stars"
+          },
+          "blocks": {}
+        },
+        "static-collection-card": {
+          "type": "_collection-card",
+          "name": "t:names.collection_card",
+          "disabled": true,
+          "static": true,
+          "settings": {
+            "placement": "below_image",
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "collection_card_gap": 8,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0
+          },
+          "blocks": {
+            "collection_title_6kk49D": {
+              "type": "collection-title",
+              "name": "Collection Title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "name": "t:names.collection_card_image",
+              "static": true,
+              "settings": {
+                "image_ratio": "adapt",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_radius": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_title_6kk49D"
+          ]
+        }
+      },
+      "block_order": [
+        "ai_gen_block_b181b80_zgeLYQ"
+      ],
+      "name": "t:names.collections_carousel",
+      "settings": {
+        "collection_list": [],
+        "layout_type": "carousel",
+        "carousel_on_mobile": false,
+        "columns": 3,
+        "mobile_columns": "2",
+        "mobile_card_size": "60cqw",
+        "columns_gap": 59,
+        "bento_gap": 8,
+        "rows_gap": 8,
+        "max_collections": 4,
+        "icons_style": "arrow",
+        "icons_shape": "circle",
+        "section_width": "full-width",
+        "gap": 0,
+        "color_scheme": "scheme-4ecefe5b-3041-462d-bee3-e03485c761fa",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
+    "custom_liquid_press": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "<div class=\"db-press-strip db-type--press\">\n  <span>Jewellery designed to be lived in &mdash; from morning to moonlight</span>\n</div>",
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 48,
+        "padding-block-end": 48
+      }
+    },
+    "db_editorial_moment": {
+      "type": "db-editorial-moment",
+      "settings": {
+        "image": "shopify://shop_images/jewelry-natural-5.jpg",
+        "image_alt": "Daphne Blue jewellery held in warm light",
+        "heading": "A quiet kind of radiance",
+        "subline": "A note from Daphne Blue",
+        "body": "<p>Jewellery should feel like a soft second skin. We finish every piece in small batches so each curve rests lightly, keeps its warmth, and moves with you from slow mornings to late trains. Pieces that invite you to pause, not perform.</p>",
+        "link_label": "Our story →",
+        "link_url": "/pages/our-story",
+        "show_divider": false,
+        "color_variant": "soft-sand",
+        "padding-block-start": 96,
+        "padding-block-end": 96
+      }
+    },
+    "db_curated_discovery": {
+      "type": "db-curated-discovery",
+      "settings": {
+        "heading": "Discover",
+        "subline": "",
+        "cta_label": "→",
+        "tile_a_collection": "shopify://collections/necklaces",
+        "tile_a_image": "shopify://shop_images/jewelry-natural-5.jpg",
+        "tile_a_asset_image": "mia-necklace-discovery.png",
+        "tile_a_image_alt": "Mia wearing a delicate gold botanical pendant necklace",
+        "tile_a_title": "Necklaces",
+        "tile_a_link": "shopify://collections/necklaces",
+        "tile_a_descriptor": "",
+        "tile_b_collection": "shopify://collections/rings",
+        "tile_b_image": "shopify://shop_images/jewelry-natural-3.jpg",
+        "tile_b_asset_image": "mia-ring-discovery.png",
+        "tile_b_image_alt": "Hand wearing a gold crosshatch band ring on linen",
+        "tile_b_title": "Rings",
+        "tile_b_link": "shopify://collections/rings",
+        "tile_c_collection": "shopify://collections/earrings",
+        "tile_c_image": "shopify://shop_images/jewelry-natural-2.jpg",
+        "tile_c_asset_image": "mia-earring-discovery.png",
+        "tile_c_image_alt": "Gold leaf charm earring in warm golden light",
+        "tile_c_title": "Earrings",
+        "tile_c_link": "shopify://collections/earrings",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
+    "db_values_strip": {
+      "type": "db-values-strip",
+      "blocks": {
+        "val_1": {
+          "type": "value",
+          "settings": {
+            "label": "Small batches",
+            "note": "Every piece earns its place"
+          }
+        },
+        "val_2": {
+          "type": "value",
+          "settings": {
+            "label": "Lived in, not saved",
+            "note": "Made for your actual days"
+          }
+        },
+        "val_3": {
+          "type": "value",
+          "settings": {
+            "label": "Always gift-ready",
+            "note": "Wrapped with care as standard"
+          }
+        },
+        "val_4": {
+          "type": "value",
+          "settings": {
+            "label": "Simple returns",
+            "note": "No questions asked"
+          }
+        }
+      },
+      "block_order": [
+        "val_1",
+        "val_2",
+        "val_3",
+        "val_4"
+      ],
+      "settings": {
+        "padding-block-start": 64,
+        "padding-block-end": 80
+      }
+    }
+  },
+  "order": [
+    "hero_TCphkR",
+    "custom_liquid_press",
+    "collection_list_cQYk97",
+    "db_favourites",
+    "db_curated_discovery",
+    "db_editorial_moment",
+    "db_values_strip"
+  ]
+}

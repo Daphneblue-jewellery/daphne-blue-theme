@@ -11,7 +11,8 @@
       <span class="cart__summary-item cart__original-total">
         <span class="cart__original-total-label">{{ 'content.cart_subtotal' | t }}</span>
         <span class="cart__original-total-value cart-secondary-typography">
-          {{- cart.original_total_price | money -}}
+          {%- capture db_original_total -%}{%- render 'db-price-format', price_in_cents: cart.original_total_price -%}{%- endcapture -%}
+          {{- db_original_total | strip -}}
         </span>
       </span>
       <div class="cart__summary-discounts">
@@ -27,7 +28,7 @@
                 {{ discount.title | escape }}
               </span>
               <span class="cart__discount-value cart-secondary-typography"
-                >-{{ discount.total_allocated_amount | money -}}
+                >{%- capture db_discount_amount -%}{%- render 'db-price-format', price_in_cents: discount.total_allocated_amount -%}{%- endcapture -%}-{{ db_discount_amount | strip -}}
               </span>
             </li>
           {%- endfor -%}
@@ -50,13 +51,8 @@
     </div>
   {% endif %}
 
-  {%- liquid
-    if settings.currency_code_enabled_cart_total
-      assign total_price = cart.total_price | money_with_currency
-    else
-      assign total_price = cart.total_price | money
-    endif
-  -%}
+  {%- capture total_price -%}{%- render 'db-price-format', price_in_cents: cart.total_price -%}{%- endcapture -%}
+  {%- assign total_price = total_price | strip -%}
 
   <div class="cart__total-container">
     <span

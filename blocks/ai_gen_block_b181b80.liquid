@@ -22,7 +22,7 @@
 
   .ai-jewellery-carousel__header-{{ ai_gen_id }} {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: var(--db-space-xl);
   }
 
   .ai-jewellery-carousel__title-{{ ai_gen_id }} {
@@ -47,7 +47,7 @@
 
   .ai-jewellery-carousel__themes-{{ ai_gen_id }} {
     display: flex;
-    gap: 20px;
+    gap: var(--db-space-lg);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
@@ -85,7 +85,7 @@
     width: 100%;
     padding-bottom: 125%;
     overflow: hidden;
-    background-color: #f4f4f4;
+    background-color: var(--db-color-soft-sand);
     border-radius: {{ block.settings.card_border_radius }}px;
   }
 
@@ -160,14 +160,14 @@
   .ai-jewellery-carousel__nav-{{ ai_gen_id }} {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    margin-top: 30px;
+    gap: var(--db-space-sm);
+    margin-top: var(--db-space-xl);
   }
 
   .ai-jewellery-carousel__nav-button-{{ ai_gen_id }} {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: var(--db-radius-pill);
     border: 1px solid {{ block.settings.text_color }};
     background-color: transparent;
     color: {{ block.settings.text_color }};
@@ -175,7 +175,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: all var(--db-motion-duration-fast) var(--db-motion-ease-out);
   }
 
   .ai-jewellery-carousel__nav-button-{{ ai_gen_id }}:hover {
@@ -278,12 +278,14 @@
           assign theme_name_key = 'theme_' | append: i | append: '_name'
           assign theme_description_key = 'theme_' | append: i | append: '_description'
           assign theme_image_key = 'theme_' | append: i | append: '_image'
+          assign theme_asset_key = 'theme_' | append: i | append: '_asset_image'
           assign theme_collection_key = 'theme_' | append: i | append: '_collection'
 
           assign theme_enabled = block.settings[theme_enabled_key]
           assign theme_name = block.settings[theme_name_key]
           assign theme_description = block.settings[theme_description_key]
           assign theme_image = block.settings[theme_image_key]
+          assign theme_asset = block.settings[theme_asset_key]
           assign theme_collection = block.settings[theme_collection_key]
         %}
 
@@ -294,7 +296,16 @@
               class="ai-jewellery-carousel__card-link-{{ ai_gen_id }}"
             >
               <div class="ai-jewellery-carousel__image-wrapper-{{ ai_gen_id }}">
-                {% if theme_image %}
+                {% if theme_asset != blank %}
+                  <img
+                    src="{{ theme_asset | asset_url }}"
+                    alt="{{ theme_name | escape }}"
+                    loading="lazy"
+                    width="600"
+                    height="750"
+                    class="ai-jewellery-carousel__image-{{ ai_gen_id }}"
+                  >
+                {% elsif theme_image %}
                   <img
                     src="{{ theme_image | image_url: width: 600 }}"
                     alt="{{ theme_name | escape }}"
@@ -530,6 +541,11 @@
       "label": "Image"
     },
     {
+      "type": "text",
+      "id": "theme_1_asset_image",
+      "label": "Asset image filename (overrides picker)"
+    },
+    {
       "type": "collection",
       "id": "theme_1_collection",
       "label": "Collection"
@@ -560,6 +576,11 @@
       "type": "image_picker",
       "id": "theme_2_image",
       "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "theme_2_asset_image",
+      "label": "Asset image filename (overrides picker)"
     },
     {
       "type": "collection",
@@ -594,6 +615,11 @@
       "label": "Image"
     },
     {
+      "type": "text",
+      "id": "theme_3_asset_image",
+      "label": "Asset image filename (overrides picker)"
+    },
+    {
       "type": "collection",
       "id": "theme_3_collection",
       "label": "Collection"
@@ -624,6 +650,11 @@
       "type": "image_picker",
       "id": "theme_4_image",
       "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "theme_4_asset_image",
+      "label": "Asset image filename (overrides picker)"
     },
     {
       "type": "collection",

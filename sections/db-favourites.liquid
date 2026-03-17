@@ -88,7 +88,7 @@
               </div>
               <div class="db-favourites__details">
                 <h3 class="db-favourites__title">{{ product.title }}</h3>
-                <span class="db-favourites__price">{{ product.price | money }}</span>
+                <span class="db-favourites__price">{% render 'db-price-format', price_in_cents: product.price %}</span>
               </div>
             </a>
           </div>

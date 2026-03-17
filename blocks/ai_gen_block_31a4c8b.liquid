@@ -219,10 +219,10 @@
               <div class="ai-similar-products__price-{{ ai_gen_id }}">
                 {% if product.compare_at_price > product.price %}
                   <span class="ai-similar-products__price-compare-{{ ai_gen_id }}">
-                    {{ product.compare_at_price | money }}
+                    {% render 'db-price-format', price_in_cents: product.compare_at_price %}
                   </span>
                 {% endif %}
-                <span>{{ product.price | money }}</span>
+                <span>{% render 'db-price-format', price_in_cents: product.price %}</span>
               </div>
             </div>
           </div>

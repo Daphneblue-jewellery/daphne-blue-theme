@@ -121,7 +121,7 @@
       <p class="db-editorial-card__descriptor">{{ descriptor }}</p>
     {% endif %}
     <div class="db-editorial-card__meta">
-      <span class="db-editorial-card__price">{% if price %}{{ price | money }}{% else %}&nbsp;{% endif %}</span>
+      <span class="db-editorial-card__price">{% if price %}{% render 'db-price-format', price_in_cents: price %}{% else %}&nbsp;{% endif %}</span>
       {% if product_has_swatches %}
         <div class="db-editorial-card__swatches" aria-hidden="true">
           <ul class="db-editorial-card__swatch-list" role="list">

@@ -2931,7 +2931,7 @@ fly-to-cart {
 
 .db-piece-header__eyebrow {
   font-family: var(--font-body--family);
-  font-size: 0.7rem;
+  font-size: var(--db-type-press-size);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgb(var(--color-foreground-rgb) / 0.5);
@@ -2959,7 +2959,7 @@ fly-to-cart {
 
 .db-piece-header__count {
   font-family: var(--font-body--family);
-  font-size: 0.7rem;
+  font-size: var(--db-type-press-size);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgb(var(--color-foreground-rgb) / 0.38);
@@ -2974,7 +2974,7 @@ fly-to-cart {
 
 .db-piece-collection .facets--horizontal .facets__summary {
   color: rgb(var(--color-foreground-rgb) / 0.6);
-  font-size: 0.88rem;
+  font-size: var(--db-type-small);
   letter-spacing: 0.01em;
   border: none;
   background: transparent;
@@ -3004,6 +3004,323 @@ fly-to-cart {
   background: rgb(var(--color-background-rgb));
   padding: var(--padding-sm);
   margin-top: 6px;
+}
+
+/* ---- Price filter — DB editorial inputs ---- */
+.db-piece-collection .price-facet__field .field__input {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
+  border-radius: 0;
+  font-family: var(--font-body--family);
+  font-size: var(--db-type-small);
+  color: rgb(var(--color-foreground-rgb) / 0.7);
+  padding: var(--db-space-xs) var(--db-space-xs) var(--db-space-xs) var(--db-space-xl);
+  transition: border-color var(--db-motion-duration) var(--db-motion-ease-out),
+              color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+.db-piece-collection .price-facet__field .field__input:focus {
+  box-shadow: none;
+  border-bottom-color: var(--db-color-daphne-blue);
+  color: rgb(var(--color-foreground-rgb) / 0.9);
+  outline: none;
+  background: transparent;
+}
+
+.db-piece-collection .price-facet__field .field__input:hover {
+  border-bottom-color: rgb(var(--color-foreground-rgb) / 0.3);
+  background: transparent;
+  box-shadow: none;
+}
+
+.db-piece-collection .price-facet__field .field__input::placeholder {
+  color: rgb(var(--color-foreground-rgb) / 0.3);
+  font-size: var(--db-type-small);
+}
+
+/* GBP label — press typography */
+.db-piece-collection .field__label.price-facet__label {
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.4);
+  padding: var(--db-space-xs);
+}
+
+/* "to" separator — press style */
+.db-piece-collection .price-facet__separator {
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.35);
+}
+
+/* Highest price label — soft, editorial */
+.db-piece-collection .price-facet__highest-price {
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.35);
+  padding: var(--db-space-sm) 0 var(--db-space-xs);
+}
+
+/* Clear button — editorial link */
+.db-piece-collection .price-facet .clear-filter {
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.45);
+  transition: color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+.db-piece-collection .price-facet .clear-filter:hover {
+  color: var(--db-color-daphne-blue);
+}
+
+/* Facet status — press style */
+.db-piece-collection .facets__status {
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.45);
+}
+
+/* ---- List filter — checkbox labels ---- */
+.db-piece-collection .facets .checkbox__label-text {
+  font-family: var(--font-body--family);
+  font-size: var(--db-type-small);
+  color: rgb(var(--color-foreground-rgb) / 0.6);
+  transition: color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+.db-piece-collection .facets .checkbox:not(:has(.checkbox__input:disabled)):hover .checkbox__label-text {
+  color: rgb(var(--color-foreground-rgb) / 0.85);
+}
+
+.db-piece-collection .facets .checkbox__input:checked + .checkbox__label .checkbox__label-text {
+  color: rgb(var(--color-foreground-rgb) / 0.9);
+  font-weight: 500;
+}
+
+/* Checkbox tick — Daphne Blue fill */
+.db-piece-collection .facets .checkbox .icon-checkmark {
+  border-color: rgb(var(--color-foreground-rgb) / 0.15);
+  border-radius: var(--db-radius-sm);
+  transition: border-color var(--db-motion-duration) var(--db-motion-ease-out),
+              background-color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+.db-piece-collection .facets .checkbox:not(:has(.checkbox__input:disabled)):hover .icon-checkmark {
+  border-color: rgb(var(--color-foreground-rgb) / 0.3);
+  background-color: transparent;
+}
+
+.db-piece-collection .facets .checkbox__input:checked + .checkbox__label .icon-checkmark {
+  background-color: var(--db-color-daphne-blue);
+  border-color: var(--db-color-daphne-blue);
+}
+
+/* ---- List filter — pill buttons ---- */
+.db-piece-collection .facets__pill-label {
+  font-family: var(--font-body--family);
+  font-size: var(--db-type-small);
+  color: rgb(var(--color-foreground-rgb) / 0.6);
+  background: transparent;
+  border-radius: var(--db-radius-pill);
+  box-shadow: inset 0 0 0 1px rgb(var(--color-foreground-rgb) / 0.12);
+  height: auto;
+  padding: var(--db-space-xs) var(--db-space-lg);
+  transition: color var(--db-motion-duration) var(--db-motion-ease-out),
+              box-shadow var(--db-motion-duration) var(--db-motion-ease-out),
+              background-color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+.db-piece-collection .facets__pill-label:hover {
+  color: rgb(var(--color-foreground-rgb) / 0.85);
+  box-shadow: inset 0 0 0 1px rgb(var(--color-foreground-rgb) / 0.25);
+}
+
+.db-piece-collection .facets__pill-input:checked + .facets__pill-label {
+  background-color: var(--db-color-daphne-blue);
+  color: #fff;
+  box-shadow: none;
+  font-weight: 500;
+}
+
+/* ---- List filter — swatch circles: refined editorial style ---- */
+/* !important needed: Horizon compiles {% stylesheet %} blocks into compiled_assets/styles.css
+   which loads AFTER base.css — source order defeats our selectors without it. */
+
+/* Swatch circle — larger, perfectly round, soft border */
+.db-piece-collection .swatch.swatch--filter {
+  --max-filter-size: 36px !important;
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 50% !important;
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.1) !important;
+  background-size: 36px 36px !important;
+  transition: transform var(--db-motion-duration) var(--db-motion-ease-out),
+              box-shadow var(--db-motion-duration) var(--db-motion-ease-out),
+              border-color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+@media screen and (min-width: 750px) {
+  .db-piece-collection .swatch.swatch--filter {
+    --max-filter-size: 32px !important;
+    width: 32px !important;
+    height: 32px !important;
+    background-size: 32px 32px !important;
+  }
+}
+
+/* Swatch wrapper — round to match, gentle spacing */
+.db-piece-collection .variant-option__swatch-wrapper {
+  border-radius: 50% !important;
+  transition: outline-color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+/* Label wrapper — round to match swatch */
+.db-piece-collection .variant-option--buttons label:has(.swatch) {
+  border-radius: 50% !important;
+}
+
+/* Hover — gentle lift + warm border */
+.db-piece-collection .variant-option__button-label:hover .swatch.swatch--filter {
+  border-color: rgb(var(--color-foreground-rgb) / 0.25) !important;
+  transform: scale(1.08);
+  box-shadow: 0 2px 8px rgb(var(--color-foreground-rgb) / 0.06);
+}
+
+/* Selected ring — replace Horizon's dark outline with delicate Daphne Blue */
+.db-piece-collection .variant-option__button-label:has(input:checked) {
+  outline: 1.5px solid var(--db-color-daphne-blue) !important;
+  outline-offset: 3px !important;
+  border-radius: 50% !important;
+}
+
+/* Disabled/unavailable — ghosted, softer strikethrough */
+.db-piece-collection .variant-option--swatches-disabled .swatch.swatch--filter {
+  opacity: 0.3;
+}
+
+.db-piece-collection .variant-option--swatches-disabled .variant-option__swatch-wrapper svg {
+  opacity: 0.2;
+}
+
+/* ---- List filter — swatch label text ---- */
+.db-piece-collection .facets__swatch-label {
+  font-family: var(--font-body--family);
+  font-size: var(--db-type-small);
+  color: rgb(var(--color-foreground-rgb) / 0.55);
+  transition: color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+.db-piece-collection .variant-option__button-label:hover .facets__swatch-label {
+  color: rgb(var(--color-foreground-rgb) / 0.75);
+}
+
+.db-piece-collection .facets__inputs-list--swatches .variant-option__button-label:has(:checked) .facets__swatch-label {
+  color: rgb(var(--color-foreground-rgb) / 0.9);
+  font-weight: 500;
+}
+
+/* Swatch grid — tighter gap for intimacy */
+.db-piece-collection .facets__inputs-list--swatches {
+  gap: var(--db-space-sm);
+}
+
+/* ---- List filter — clear button ---- */
+.db-piece-collection .facets .clear-filter {
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.45);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: var(--db-space-xs) 0;
+  transition: color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+.db-piece-collection .facets .clear-filter:hover {
+  color: var(--db-color-daphne-blue);
+  background: transparent;
+  box-shadow: none;
+}
+
+/* ---- List filter — show more/less button ---- */
+.db-piece-collection .show-more__button {
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.4);
+  transition: color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+.db-piece-collection .show-more__button:hover {
+  color: var(--db-color-daphne-blue);
+}
+
+/* ---- Sort dropdown — editorial ---- */
+.db-piece-collection .sorting-filter__options .facets__inputs-list {
+  gap: 0;
+}
+
+.db-piece-collection .sorting-filter__options .checkbox__label-text {
+  font-size: var(--db-type-small);
+  color: rgb(var(--color-foreground-rgb) / 0.6);
+}
+
+/* ---- Active filter pills (toolbar) ---- */
+.db-piece-collection .facets-remove--toolbar .pills__pill {
+  font-family: var(--font-body--family);
+  font-size: var(--db-type-micro);
+  letter-spacing: 0.04em;
+  color: rgb(var(--color-foreground-rgb) / 0.7);
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+  background: transparent;
+  border-radius: var(--db-radius-pill);
+  padding: 4px 10px;
+  transition: color var(--db-motion-duration) var(--db-motion-ease-out),
+              border-color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+.db-piece-collection .facets-remove--toolbar .pills__pill:hover {
+  color: var(--db-color-daphne-blue);
+  border-color: var(--db-color-daphne-blue);
+}
+
+/* ---- "Clear all" link ---- */
+.db-piece-collection .facets__clear-all-link {
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.45);
+  text-decoration: none;
+  transition: color var(--db-motion-duration) var(--db-motion-ease-out);
+}
+
+.db-piece-collection .facets__clear-all-link:hover {
+  color: var(--db-color-daphne-blue);
+}
+
+/* ---- Product count ---- */
+.db-piece-collection .products-count-wrapper {
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.4);
 }
 
 /* Hide fallback wrappers (piece-category always uses horizontal) */
@@ -3041,8 +3358,8 @@ fly-to-cart {
 
 .db-piece-collection .product-grid__item:hover .card-gallery img,
 .db-piece-collection .product-grid__item:focus-within .card-gallery img {
-  transform: scale(1.025);
-  filter: brightness(1.04);
+  transform: scale(1.01);
+  filter: brightness(1.02);
 }
 
 /* Reset Horizon's global .text-block absolute positioning (hero overlay leak) */
@@ -3100,7 +3417,7 @@ fly-to-cart {
 /* Price — match PDP recommendation card styling */
 .db-piece-collection .product-grid__item .price {
   font-family: var(--font-body--family) !important;
-  font-size: 0.72rem;
+  font-size: var(--db-type-micro);
   letter-spacing: 0.14em;
   color: rgb(var(--color-foreground-rgb) / 0.62);
 }
@@ -3145,7 +3462,7 @@ fly-to-cart {
   }
 
   .db-piece-header__description {
-    font-size: 0.88rem;
+    font-size: var(--db-type-small);
   }
 
   .db-piece-collection .main-collection-grid {
@@ -4757,9 +5074,15 @@ text-component {
   --db-radius-lg: 18px;
   --db-radius-pill: 999px;
 
+  /* ── Typography: named sizes ── */
+  --db-type-micro: 0.75rem;    /* 12px — UI labels, badges, fine print */
+  --db-type-small: 0.88rem;    /* ~14px — secondary text, prices, meta */
+  --db-type-body: 1rem;        /* 16px — paragraphs, descriptions */
+  --db-type-large: 1.1rem;     /* ~17.6px — lead text, featured body */
+
   /* ── Typography: press ── */
   --db-type-press-family: var(--font-body--family);
-  --db-type-press-size: 0.7rem;
+  --db-type-press-size: 0.8rem;
   --db-type-press-line-height: 1.6;
   --db-type-press-letter-spacing: 0.18em;
   --db-type-press-case: uppercase;
@@ -4784,9 +5107,9 @@ text-component {
   --db-button-text-case: var(--button-text-case-primary);
   --db-button-padding-inline: calc(var(--button-padding-inline) + 6px);
   --db-button-padding-block: calc(var(--button-padding-block) + 2px);
-  --db-button-shadow: inset 0 1px 0 rgb(255 255 255 / 0.08), 0 8px 18px rgb(12 32 63 / 0.12);
-  --db-button-shadow-hover: inset 0 1px 0 rgb(255 255 255 / 0.08), 0 12px 24px rgb(12 32 63 / 0.18);
-  --db-button-shadow-active: inset 0 1px 0 rgb(255 255 255 / 0.08), 0 6px 14px rgb(12 32 63 / 0.12);
+  --db-button-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 2px 6px rgb(12 32 63 / 0.06);
+  --db-button-shadow-hover: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 4px 10px rgb(12 32 63 / 0.08);
+  --db-button-shadow-active: inset 0 1px 0 rgb(255 255 255 / 0.06), 0 1px 4px rgb(12 32 63 / 0.06);
 }
 
 /* ── Header icons: soften for DB brand ──────────────── */
@@ -4830,8 +5153,9 @@ text-component {
   justify-content: center;
   gap: var(--db-space-lg);
   padding: 18px 0;
-  border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
-  border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+  border-top: 1px solid var(--db-color-warm-stone);
+  border-bottom: 1px solid var(--db-color-warm-stone);
+  border-image: linear-gradient(to right, transparent, var(--db-color-warm-stone) 20%, var(--db-color-warm-stone) 80%, transparent) 1;
   color: rgb(var(--color-foreground-rgb) / 0.65);
   font-family: var(--db-type-press-family);
   font-size: var(--db-type-press-size);
@@ -4873,7 +5197,8 @@ text-component {
   justify-content: center;
   gap: var(--db-section-gap-sm);
   padding: var(--db-space-lg) 0;
-  border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+  border-top: 1px solid var(--db-color-warm-stone);
+  border-image: linear-gradient(to right, transparent, var(--db-color-warm-stone) 20%, var(--db-color-warm-stone) 80%, transparent) 1;
   padding-top: var(--db-space-2xl);
 }
 
@@ -5001,7 +5326,7 @@ text-component {
 .footer-content .menu__heading,
 .footer-content .email-signup__heading {
   font-family: var(--db-type-press-family);
-  font-size: 0.72rem;
+  font-size: var(--db-type-micro);
   line-height: 1.4;
   letter-spacing: var(--db-type-press-letter-spacing);
   text-transform: var(--db-type-press-case);
@@ -5090,14 +5415,14 @@ text-component {
   border-color: rgb(var(--color-foreground-rgb) / 0.15);
   background-color: transparent;
   color: rgb(var(--color-foreground-rgb) / 0.75);
-  font-size: 0.7rem !important;
+  font-size: var(--db-type-press-size) !important;
   letter-spacing: 0.18em !important;
   text-transform: uppercase !important;
 }
 
 .footer-content .email-signup__input::placeholder {
   color: rgb(var(--color-foreground-rgb) / 0.35);
-  font-size: 0.7rem;
+  font-size: var(--db-type-press-size);
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
@@ -5156,7 +5481,7 @@ text-component {
 .footer-utilities .footer-utilities__group-copyright,
 .footer-utilities .footer-policy-links {
   font-family: var(--db-type-press-family);
-  font-size: 0.75rem;
+  font-size: var(--db-type-micro);
   letter-spacing: var(--db-type-press-letter-spacing);
   text-transform: var(--db-type-press-case);
 }
@@ -5264,7 +5589,7 @@ text-component {
   border: 1px solid rgb(var(--color-foreground-rgb) / 0.2);
   background-color: rgb(var(--db-color-soft-white-rgb) / 0.65);
   font-family: var(--db-type-press-family);
-  font-size: 0.6rem;
+  font-size: var(--db-type-press-size);
   letter-spacing: var(--db-type-press-letter-spacing);
   text-transform: var(--db-type-press-case);
   color: rgb(var(--color-foreground-rgb) / 0.6);
@@ -5415,8 +5740,8 @@ text-component {
   line-height: var(--db-type-press-line-height);
   letter-spacing: var(--db-type-press-letter-spacing);
   text-transform: var(--db-type-press-case);
-  color: var(--db-color-charcoal-ink);
-  opacity: 0.8;
+  color: var(--db-color-soft-gold);
+  opacity: 0.85;
   margin: 0 0 var(--db-space-lg);
 }
 
@@ -5532,8 +5857,8 @@ text-component {
 
 .db-favourites__link:hover .db-favourites__image,
 .db-favourites__link:focus-visible .db-favourites__image {
-  transform: scale(1.025);
-  filter: brightness(1.04);
+  transform: scale(1.01);
+  filter: brightness(1.02);
 }
 
 .db-favourites__placeholder {
@@ -5762,15 +6087,7 @@ text-component {
   font-size: clamp(1.4rem, 1.8vw, 2rem);
   font-weight: 400;
   margin: 0;
-  text-decoration: underline transparent;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-  transition: text-decoration-color 520ms cubic-bezier(0.18, 0.88, 0.24, 1);
-}
-
-.db-curated-discovery__tile:hover .db-curated-discovery__title,
-.db-curated-discovery__tile:focus-visible .db-curated-discovery__title {
-  text-decoration-color: rgb(var(--db-color-soft-white-rgb) / 0.35);
+  text-decoration: none;
 }
 
 .db-curated-discovery__descriptor {
@@ -5785,7 +6102,7 @@ text-component {
   display: inline-flex;
   align-items: center;
   font-family: var(--db-type-press-family);
-  font-size: 0.7rem;
+  font-size: var(--db-type-press-size);
   letter-spacing: var(--db-type-press-letter-spacing);
   text-transform: var(--db-type-press-case);
   color: rgb(var(--db-color-soft-white-rgb) / 0.8);
@@ -5920,7 +6237,7 @@ text-component {
   border-radius: 0 !important;
   box-shadow: none !important;
   font-family: var(--db-type-press-family);
-  font-size: 0.7rem;
+  font-size: var(--db-type-press-size);
   line-height: 1.4;
   letter-spacing: var(--db-type-press-letter-spacing);
   text-transform: var(--db-type-press-case);
@@ -6090,7 +6407,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
   position: relative;
   background-color: var(--db-color-soft-white);
   --db-collection-hero-height: calc(var(--section-height-large) * 0.5);
-  --db-collection-hero-radius: var(--db-radius-md);
+  --db-collection-hero-radius: 0;
   --db-collection-hero-content-pad: max(40px, calc(var(--spacing-scale, 1) * 80px));
 }
 
@@ -6139,6 +6456,22 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 .db-collection-hero--no-media .db-collection-hero__content {
   position: relative;
   align-items: flex-start;
+}
+
+.db-collection-hero--centered .db-collection-hero__content {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.db-collection-hero--centered .db-collection-hero__heading {
+  max-width: none;
+  text-align: center;
+}
+
+.db-collection-hero--centered .db-collection-hero__subline,
+.db-collection-hero--centered .db-collection-hero__poetic {
+  text-align: center;
 }
 
 .db-collection-hero__content-inner {
@@ -6360,8 +6693,8 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 
 .db-collection-card:hover .db-collection-card__media img,
 .db-collection-card:focus-visible .db-collection-card__media img {
-  transform: scale(1.025);
-  filter: brightness(1.04);
+  transform: scale(1.01);
+  filter: brightness(1.02);
 }
 
 .db-collection-card__placeholder {
@@ -6447,8 +6780,8 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 
 .product-card:hover .product-media-container img,
 .product-card:focus-within .product-media-container img {
-  transform: scale(1.025);
-  filter: brightness(1.04);
+  transform: scale(1.01);
+  filter: brightness(1.02);
 }
 
 @media screen and (max-width: 749px) {
@@ -6606,7 +6939,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 .db-collection-shortcuts__subtitle {
   margin: 0;
   font-family: var(--font-body--family);
-  font-size: 0.75rem;
+  font-size: var(--db-type-micro);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgb(var(--color-foreground-rgb) / 0.6);
@@ -6781,7 +7114,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 
 .db-collection-facets .db-facets-controls .facets--filters-title {
   font-family: var(--font-body--family);
-  font-size: 0.75rem;
+  font-size: var(--db-type-micro);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgb(var(--color-foreground-rgb) / 0.65);
@@ -6791,7 +7124,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 .db-collection-facets .db-facets-controls .products-count-wrapper,
 .db-collection-facets .db-facets-controls .sorting-filter .facets__label {
   font-family: var(--font-body--family);
-  font-size: 0.75rem;
+  font-size: var(--db-type-micro);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgb(var(--color-foreground-rgb) / 0.65);
@@ -6821,7 +7154,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 }
 
 .db-collection-facets .facets__clear-all-link {
-  font-size: 0.75rem;
+  font-size: var(--db-type-micro);
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgb(var(--color-foreground-rgb) / 0.7);
@@ -6894,7 +7227,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 }
 
 .db-collection-facets .facets-toggle__button {
-  font-size: 0.75rem;
+  font-size: var(--db-type-micro);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgb(var(--color-foreground-rgb) / 0.7);
@@ -6948,8 +7281,8 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 .db-collection-facets .product-card:focus-within .product-media img,
 .db-collection-facets .product-card:hover .card-gallery img,
 .db-collection-facets .product-card:focus-within .card-gallery img {
-  transform: scale(1.025);
-  filter: brightness(1.04);
+  transform: scale(1.01);
+  filter: brightness(1.02);
 }
 
 .db-collection-facets .product-card .text-block a,
@@ -7007,15 +7340,195 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 
 .db-collection-facets .facets__summary {
   padding-block: 14px;
-  font-size: 0.88rem;
+  font-size: var(--db-type-small);
   letter-spacing: 0.01em;
 }
 
 /* Active filter count badge */
 .db-collection-facets .facets__count {
-  font-size: 0.7rem;
+  font-size: var(--db-type-press-size);
   color: rgb(var(--color-foreground-rgb) / 0.45);
   margin-left: 4px;
+}
+
+/* ================================================================
+   Track 3C: Daphne Blue — Filter Active States + Drawer
+   Accent colour on selected filters, DB motion tokens,
+   mobile drawer matching cart / account drawer aesthetic.
+   ================================================================ */
+
+/* ── Checked checkbox: Daphne Blue fill ── */
+.db-collection-facets .facets .checkbox__input:checked + .checkbox__label .icon-checkmark,
+.db-piece-collection .facets .checkbox__input:checked + .checkbox__label .icon-checkmark {
+  background-color: var(--db-color-daphne-blue);
+  border-color: var(--db-color-daphne-blue);
+}
+
+/* ── Checked pill: Daphne Blue background ── */
+.db-collection-facets .facets__pill-input:checked + .facets__pill-label,
+.db-piece-collection .facets__pill-input:checked + .facets__pill-label {
+  background-color: var(--db-color-daphne-blue);
+  color: #fff;
+  font-weight: 500;
+}
+
+/* ── Active filter remove pills: subtle DB accent ── */
+.db-collection-facets .facets-remove__pill,
+.db-piece-collection .facets-remove__pill {
+  border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+  background: rgb(var(--color-foreground-rgb) / 0.03);
+  color: rgb(var(--color-foreground-rgb) / 0.72);
+  border-radius: var(--db-radius-pill);
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  transition: color var(--db-motion-duration) var(--db-motion-ease),
+    border-color var(--db-motion-duration) var(--db-motion-ease),
+    background-color var(--db-motion-duration) var(--db-motion-ease);
+}
+
+.db-collection-facets .facets-remove__pill:hover,
+.db-piece-collection .facets-remove__pill:hover {
+  color: rgb(var(--color-foreground-rgb) / 0.9);
+  border-color: rgb(var(--color-foreground-rgb) / 0.22);
+  background: rgb(var(--color-foreground-rgb) / 0.05);
+}
+
+/* ── Clear all link: press uppercase ── */
+.db-collection-facets .facets__clear-all-link,
+.db-piece-collection .facets__clear-all-link {
+  font-family: var(--db-type-press-family);
+  font-size: var(--db-type-press-size);
+  letter-spacing: var(--db-type-press-letter-spacing);
+  text-transform: var(--db-type-press-case);
+  color: rgb(var(--color-foreground-rgb) / 0.55);
+  transition: color var(--db-motion-duration) var(--db-motion-ease);
+}
+
+.db-collection-facets .facets__clear-all-link:hover,
+.db-piece-collection .facets__clear-all-link:hover {
+  color: var(--db-color-daphne-blue);
+}
+
+/* ── Swatch checked ring: Daphne Blue ── */
+.db-collection-facets .variant-option__button-label:has(input:checked) {
+  outline: 1.5px solid var(--db-color-daphne-blue) !important;
+  outline-offset: 3px !important;
+  border-radius: 50% !important;
+}
+
+/* ── Mobile filter drawer — match DB cart/account drawer aesthetic ── */
+@media screen and (max-width: 749px) {
+  .db-collection-facets .facets--drawer,
+  .db-piece-collection .facets--drawer {
+    background-color: var(--db-color-soft-white) !important;
+    border-right: 1px solid rgb(var(--color-foreground-rgb) / 0.06) !important;
+    box-shadow: 8px 0 32px rgb(0 0 0 / 0.06) !important;
+  }
+
+  .db-collection-facets .facets--drawer::backdrop,
+  .db-piece-collection .facets--drawer::backdrop {
+    background: rgb(46 46 46 / 0.18) !important;
+    backdrop-filter: blur(2px);
+  }
+
+  /* Drawer title */
+  .db-collection-facets .facets-mobile__title-wrapper .h3,
+  .db-piece-collection .facets-mobile__title-wrapper .h3 {
+    font-family: var(--db-type-press-family) !important;
+    font-size: var(--db-type-press-size) !important;
+    letter-spacing: var(--db-type-press-letter-spacing) !important;
+    text-transform: var(--db-type-press-case) !important;
+    font-weight: var(--font-body--weight) !important;
+    color: rgb(var(--color-foreground-rgb) / 0.55) !important;
+  }
+
+  /* Drawer filter count bubble */
+  .db-collection-facets .filter-count-bubble__background,
+  .db-piece-collection .filter-count-bubble__background {
+    background-color: var(--db-color-daphne-blue);
+    opacity: 0.15;
+  }
+
+  .db-collection-facets .filter-count-bubble__text,
+  .db-piece-collection .filter-count-bubble__text {
+    color: var(--db-color-daphne-blue);
+    font-weight: 500;
+  }
+
+  /* Drawer summary: editorial style */
+  .db-collection-facets .facets--drawer .facets__summary,
+  .db-piece-collection .facets--drawer .facets__summary {
+    font-size: var(--db-type-small);
+    letter-spacing: 0.01em;
+    color: rgb(var(--color-foreground-rgb) / 0.65);
+    padding-block: 14px;
+    border-bottom: 1px solid rgb(var(--color-foreground-rgb) / 0.06);
+  }
+
+  /* Drawer checkbox label */
+  .db-collection-facets .facets--drawer .checkbox__label-text,
+  .db-piece-collection .facets--drawer .checkbox__label-text {
+    font-size: 0.9rem;
+    color: rgb(var(--color-foreground-rgb) / 0.72);
+    transition: color var(--db-motion-duration) var(--db-motion-ease);
+  }
+
+  .db-collection-facets .facets--drawer .checkbox__input:checked + .checkbox__label .checkbox__label-text,
+  .db-piece-collection .facets--drawer .checkbox__input:checked + .checkbox__label .checkbox__label-text {
+    color: rgb(var(--color-foreground-rgb) / 0.95);
+  }
+
+  /* Drawer action buttons */
+  .db-collection-facets .facets--drawer .clear-filter,
+  .db-piece-collection .facets--drawer .clear-filter {
+    font-family: var(--db-type-press-family);
+    font-size: var(--db-type-press-size);
+    letter-spacing: var(--db-type-press-letter-spacing);
+    text-transform: var(--db-type-press-case);
+    border-radius: var(--db-radius-pill);
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+    background: transparent;
+    color: rgb(var(--color-foreground-rgb) / 0.7);
+    transition: color var(--db-motion-duration) var(--db-motion-ease),
+      border-color var(--db-motion-duration) var(--db-motion-ease);
+  }
+
+  .db-collection-facets .facets--drawer .clear-filter:hover,
+  .db-piece-collection .facets--drawer .clear-filter:hover {
+    color: var(--db-color-daphne-blue);
+    border-color: var(--db-color-daphne-blue);
+  }
+
+  /* Mobile filter toggle button */
+  .db-collection-facets .facets-toggle__button,
+  .db-piece-collection .facets-toggle__button {
+    font-family: var(--db-type-press-family);
+    font-size: var(--db-type-press-size);
+    letter-spacing: var(--db-type-press-letter-spacing);
+    text-transform: var(--db-type-press-case);
+    color: rgb(var(--color-foreground-rgb) / 0.7);
+    transition: color var(--db-motion-duration) var(--db-motion-ease);
+  }
+
+  .db-collection-facets .facets-toggle__button:hover,
+  .db-piece-collection .facets-toggle__button:hover {
+    color: var(--db-color-daphne-blue);
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .db-collection-facets .facets-remove__pill,
+  .db-collection-facets .facets__clear-all-link,
+  .db-collection-facets .facets--drawer .checkbox__label-text,
+  .db-collection-facets .facets--drawer .clear-filter,
+  .db-piece-collection .facets-remove__pill,
+  .db-piece-collection .facets__clear-all-link,
+  .db-piece-collection .facets--drawer .checkbox__label-text,
+  .db-piece-collection .facets--drawer .clear-filter {
+    transition: none;
+  }
 }
 
 /* ================================================================
@@ -7066,7 +7579,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 .cart-drawer__heading .cart-bubble__text {
   color: rgb(var(--color-foreground-rgb) / 0.5) !important;
   font-family: var(--db-type-press-family) !important;
-  font-size: 0.65rem !important;
+  font-size: 0.75rem !important;
   letter-spacing: 0.04em !important;
 }
 
@@ -7270,7 +7783,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 }
 
 .cart-drawer .cart__summary-item.tax-note {
-  font-size: 0.7rem !important;
+  font-size: var(--db-type-press-size) !important;
   color: rgb(var(--color-foreground-rgb) / 0.4) !important;
 }
 
@@ -7502,7 +8015,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 
 .account-actions__email {
   font-family: var(--font-body--family) !important;
-  font-size: 0.72rem !important;
+  font-size: var(--db-type-micro) !important;
   font-weight: normal !important;
   color: rgb(var(--color-foreground-rgb) / 0.4) !important;
   letter-spacing: 0.01em !important;
@@ -7611,7 +8124,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 
   .account-actions__link.button-secondary {
     padding: 12px 14px !important;
-    font-size: 0.65rem !important;
+    font-size: 0.75rem !important;
   }
 }
 
@@ -7704,7 +8217,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 /* ── Question rows ── */
 
 .db-faq__item {
-  border-bottom: 1px solid rgb(var(--db-color-charcoal-ink-rgb) / 0.08);
+  border-bottom: 1px solid var(--db-color-warm-stone);
 }
 
 .db-faq__question {
@@ -7750,7 +8263,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 .db-faq__answer-inner,
 .db-faq__answer-inner * {
   font-family: var(--font-body--family) !important;
-  font-size: 0.88rem !important;
+  font-size: var(--db-type-small) !important;
   line-height: 1.65 !important;
 }
 
@@ -8043,7 +8556,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 
 .db-contact__label {
   color: rgb(var(--color-foreground-rgb) / 0.5);
-  font-size: 0.65rem;
+  font-size: var(--db-type-micro);
 }
 
 .db-contact__label span {
@@ -8085,7 +8598,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
   display: inline-block;
   align-self: center;
   font-family: var(--font-body--family);
-  font-size: 0.7rem;
+  font-size: var(--db-type-press-size);
   font-weight: 400;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -8222,7 +8735,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 .db-collection-essence__note {
   font-family: var(--font-body--family);
   font-style: italic;
-  font-size: 0.88rem;
+  font-size: var(--db-type-small);
   line-height: 1.6;
   color: rgb(var(--color-foreground-rgb) / 0.5);
   margin-block-start: var(--db-space-xl);
@@ -8282,7 +8795,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 
 .db-values-strip__note {
   font-family: var(--font-body--family);
-  font-size: 0.88rem;
+  font-size: var(--db-type-small);
   line-height: 1.6;
   color: rgb(var(--color-foreground-rgb) / 0.55);
   margin: 0;

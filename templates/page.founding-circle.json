@@ -1,0 +1,85 @@
+{
+  "sections": {
+    "story": {
+      "type": "db-story-page",
+      "blocks": {
+        "fc01_opening": {
+          "type": "opening",
+          "settings": {
+            "eyebrow": "The Founding Circle",
+            "heading": "You\u2019re here from the very beginning",
+            "subtitle": ""
+          }
+        },
+        "fc02_breath": {
+          "type": "breath",
+          "settings": {
+            "height": 44,
+            "show_rule": false
+          }
+        },
+        "fc03_welcome": {
+          "type": "narrative",
+          "settings": {
+            "eyebrow": "Welcome",
+            "body": "<p>A small community of women invited into the brand from the very beginning \u2014 to explore early collections, share honest feedback, and help shape what Daphne Blue becomes.</p><p>Designed to be lived in, from morning light to quiet evenings, each piece is created with calm intention and thoughtful detail.</p>",
+            "alignment": "centre",
+            "padding": 96
+          }
+        },
+        "fc04_quote": {
+          "type": "pull_quote",
+          "settings": {
+            "quote": "Calm intention, thoughtful detail",
+            "padding": 80
+          }
+        },
+        "fc05_receive": {
+          "type": "narrative",
+          "settings": {
+            "eyebrow": "What you\u2019ll receive",
+            "body": "<p>Private access to new releases before anyone else. A personal note with your first order. Occasional previews of what\u2019s coming next. And the quiet recognition of being one of the very first to believe in what we\u2019re building.</p>",
+            "alignment": "centre",
+            "padding": 96
+          }
+        },
+        "fc06_rule": {
+          "type": "breath",
+          "settings": {
+            "height": 52,
+            "show_rule": true
+          }
+        },
+        "fc07_closing": {
+          "type": "narrative",
+          "settings": {
+            "body": "<p>We\u2019re so glad you\u2019re here.</p>",
+            "alignment": "centre",
+            "padding": 80,
+            "link_label": "Explore the collection \u2192",
+            "link_url": "/collections/all"
+          }
+        },
+        "fc08_end": {
+          "type": "breath",
+          "settings": {
+            "height": 76,
+            "show_rule": false
+          }
+        }
+      },
+      "block_order": [
+        "fc01_opening",
+        "fc02_breath",
+        "fc03_welcome",
+        "fc04_quote",
+        "fc05_receive",
+        "fc06_rule",
+        "fc07_closing",
+        "fc08_end"
+      ],
+      "settings": {}
+    }
+  },
+  "order": ["story"]
+}

@@ -171,11 +171,6 @@
 
 {% if is_piece_category %}
   <div class="db-piece-header page-width">
-    <span class="db-piece-header__eyebrow db-type--press">{{ collection.title | upcase }}</span>
-    <h1 class="db-piece-header__title">{{ collection.title }}</h1>
-    {% if collection.description != blank %}
-      <p class="db-piece-header__description">{{ collection.description }}</p>
-    {% endif %}
     <span class="db-piece-header__count db-type--press">{{ collection.products_count }} pieces</span>
   </div>
 {% endif %}

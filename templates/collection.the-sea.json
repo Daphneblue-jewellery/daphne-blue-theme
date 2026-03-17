@@ -94,7 +94,7 @@
     "custom_liquid_press": {
       "type": "custom-liquid",
       "settings": {
-        "custom_liquid": "<div class=\"db-press-strip db-type--press\">\n  <span>For the woman who stays soft, even when the world feels heavy</span>\n</div>",
+        "custom_liquid": "<div class=\"db-press-strip db-type--press\">\n  <span>Fluid, unhurried, always returning.</span>\n</div>",
         "color_scheme": "scheme-1",
         "section_width": "page-width",
         "padding-block-start": 32,

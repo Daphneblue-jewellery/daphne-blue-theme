@@ -220,7 +220,7 @@
 
       {% if block.settings.product and block.settings.show_price %}
         <div class="ai-editorial-card__price-{{ ai_gen_id }}">
-          {{ block.settings.product.price | money }}
+          {% render 'db-price-format', price_in_cents: block.settings.product.price %}
         </div>
       {% endif %}
 
@@ -469,7 +469,7 @@
       "type": "text",
       "id": "button_text",
       "label": "Text",
-      "default": "Shop now"
+      "default": "Explore"
     },
     {
       "type": "range",

@@ -32,7 +32,7 @@
     <summary class="facets__summary">
       <span class="facets__label">{{ filter.label }}</span>
       <facet-status-component class="facets__status">
-        <template ref="moneyFormat">{{ shop.money_format }}</template>
+        <template ref="moneyFormat">GBP {{amount_no_decimals}}</template>
 
         <span
           class="hide-when-empty"
@@ -42,16 +42,16 @@
         >
           {%- if filter.min_value.value != null or filter.max_value.value != null %}
             {%- if filter.min_value.value != null and filter.max_value.value != null %}
-              {{- filter.min_value.value | money | strip_html -}}
-              –
-              {{- filter.max_value.value | money | strip_html -}}
+              {%- capture db_fmin -%}{%- render 'db-price-format', price_in_cents: filter.min_value.value -%}{%- endcapture -%}
+              {%- capture db_fmax -%}{%- render 'db-price-format', price_in_cents: filter.max_value.value -%}{%- endcapture -%}
+              {{- db_fmin | strip -}}–{{- db_fmax | strip -}}
             {%- elsif filter.min_value.value != null -%}
-              {{ filter.min_value.value | money | strip_html }}–{{ filter.range_max | money | strip_html }}
-
+              {%- capture db_fmin2 -%}{%- render 'db-price-format', price_in_cents: filter.min_value.value -%}{%- endcapture -%}
+              {%- capture db_frmax -%}{%- render 'db-price-format', price_in_cents: filter.range_max -%}{%- endcapture -%}
+              {{ db_fmin2 | strip }}–{{ db_frmax | strip }}
             {%- elsif filter.max_value.value != null -%}
-              {{- 0 | money | strip_html -}}
-              –
-              {{- filter.max_value.value | money | strip_html -}}
+              {%- capture db_fmax2 -%}{%- render 'db-price-format', price_in_cents: filter.max_value.value -%}{%- endcapture -%}
+              GBP 0–{{- db_fmax2 | strip -}}
             {%- endif -%}
           {%- endif -%}
         </span>
@@ -98,7 +98,7 @@
               class="field__label price-facet__label"
               for="{{ filter.label | escape }}-GTE"
             >
-              {{ cart.currency.symbol }}
+              GBP
             </label>
           </div>
 
@@ -127,13 +127,14 @@
               class="field__label price-facet__label"
               for="{{ filter.label | escape }}-LTE"
             >
-              {{ cart.currency.symbol }}
+              GBP
             </label>
           </div>
         </div>
 
         <div class="price-facet__highest-price">
-          {%- assign formatted_highest_price = filter.range_max | money -%}
+          {%- capture formatted_highest_price -%}{%- render 'db-price-format', price_in_cents: filter.range_max -%}{%- endcapture -%}
+          {%- assign formatted_highest_price = formatted_highest_price | strip -%}
           {{ 'content.price_filter_html' | t: price: formatted_highest_price }}
         </div>
 

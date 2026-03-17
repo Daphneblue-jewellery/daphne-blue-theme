@@ -7,6 +7,10 @@
   assign tile_b_collection = section.settings.tile_b_collection
   assign tile_c_collection = section.settings.tile_c_collection
 
+  assign tile_a_asset = section.settings.tile_a_asset_image
+  assign tile_b_asset = section.settings.tile_b_asset_image
+  assign tile_c_asset = section.settings.tile_c_asset_image
+
   assign tile_a_image = section.settings.tile_a_image
   if tile_a_image == blank and tile_a_collection != blank
     assign tile_a_image = tile_a_collection.featured_image
@@ -70,7 +74,14 @@
     <div class="db-curated-discovery__grid">
       <a class="db-curated-discovery__tile db-curated-discovery__tile--large" href="{{ tile_a_link | default: '#' }}">
         <div class="db-curated-discovery__media">
-          {% if tile_a_image != blank %}
+          {% if tile_a_asset != blank %}
+            <img
+              src="{{ tile_a_asset | asset_url }}"
+              alt="{{ section.settings.tile_a_image_alt | default: tile_a_title | escape }}"
+              loading="lazy"
+              class="db-curated-discovery__image"
+            >
+          {% elsif tile_a_image != blank %}
             <img
               src="{{ tile_a_image | image_url: width: 1600 }}"
               alt="{{ section.settings.tile_a_image_alt | default: tile_a_title | escape }}"
@@ -100,7 +111,14 @@
       <div class="db-curated-discovery__stack">
         <a class="db-curated-discovery__tile db-curated-discovery__tile--small" href="{{ tile_b_link | default: '#' }}">
           <div class="db-curated-discovery__media">
-            {% if tile_b_image != blank %}
+            {% if tile_b_asset != blank %}
+              <img
+                src="{{ tile_b_asset | asset_url }}"
+                alt="{{ section.settings.tile_b_image_alt | default: tile_b_title | escape }}"
+                loading="lazy"
+                class="db-curated-discovery__image"
+              >
+            {% elsif tile_b_image != blank %}
               <img
                 src="{{ tile_b_image | image_url: width: 1200 }}"
                 alt="{{ section.settings.tile_b_image_alt | default: tile_b_title | escape }}"
@@ -126,7 +144,14 @@
 
         <a class="db-curated-discovery__tile db-curated-discovery__tile--small" href="{{ tile_c_link | default: '#' }}">
           <div class="db-curated-discovery__media">
-            {% if tile_c_image != blank %}
+            {% if tile_c_asset != blank %}
+              <img
+                src="{{ tile_c_asset | asset_url }}"
+                alt="{{ section.settings.tile_c_image_alt | default: tile_c_title | escape }}"
+                loading="lazy"
+                class="db-curated-discovery__image"
+              >
+            {% elsif tile_c_image != blank %}
               <img
                 src="{{ tile_c_image | image_url: width: 1200 }}"
                 alt="{{ section.settings.tile_c_image_alt | default: tile_c_title | escape }}"
@@ -192,6 +217,12 @@
     },
     {
       "type": "text",
+      "id": "tile_a_asset_image",
+      "label": "Asset image (dev override)",
+      "info": "Filename in assets/ folder. Overrides image picker when set."
+    },
+    {
+      "type": "text",
       "id": "tile_a_image_alt",
       "label": "Image alt text"
     },
@@ -227,6 +258,12 @@
     },
     {
       "type": "text",
+      "id": "tile_b_asset_image",
+      "label": "Asset image (dev override)",
+      "info": "Filename in assets/ folder. Overrides image picker when set."
+    },
+    {
+      "type": "text",
       "id": "tile_b_image_alt",
       "label": "Image alt text"
     },
@@ -253,6 +290,12 @@
       "type": "image_picker",
       "id": "tile_c_image",
       "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "tile_c_asset_image",
+      "label": "Asset image (dev override)",
+      "info": "Filename in assets/ folder. Overrides image picker when set."
     },
     {
       "type": "text",

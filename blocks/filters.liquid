@@ -209,9 +209,7 @@
               </p>
             {% endif %}
           </div>
-          <p class="facets__status facets__status--fallback-note">
-            Filters are using product tags. For full facets (price, options), enable filters in Shopify Search & Discovery.
-          </p>
+          {%- comment -%} Track 3B: Dev-only message suppressed — S&D facets are now the primary filter source {%- endcomment -%}
         </div>
       {% else %}
         <facets-form-component
@@ -240,6 +238,10 @@
 
                 {% capture rendered_filters %}
                   {%- for filter in filters -%}
+                    {%- comment -%} Track 3A: Hide Product Type on piece-category pages (redundant — all one type) {%- endcomment -%}
+                    {%- if template.suffix == 'piece-category' and filter.label == 'Product type' -%}
+                      {%- continue -%}
+                    {%- endif -%}
                     {% case filter.type %}
                       {% when 'price_range' %}
                         {%- liquid
@@ -814,6 +816,10 @@
               {% assign is_active = false %}
 
               {%- for filter in filters -%}
+                {%- comment -%} Track 3A: Hide Product Type on piece-category pages (drawer) {%- endcomment -%}
+                {%- if template.suffix == 'piece-category' and filter.label == 'Product type' -%}
+                  {%- continue -%}
+                {%- endif -%}
                 {%- liquid
                   assign should_autofocus = false
                   if forloop.first and total_active_values == 0
