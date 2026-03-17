@@ -7,6 +7,8 @@
   --db-product-radius: var(--db-radius-md);
   --db-product-shadow: none;
   --db-product-surface: transparent;
+  --db-product-separator: rgb(var(--db-color-warm-stone-rgb) / 0.45);
+  --db-product-cta-underline: var(--db-color-warm-stone);
 }
 
 .db-product-background {
@@ -241,9 +243,15 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 40px;
+  width: 56px;
   height: 1px;
-  background: rgb(var(--db-color-charcoal-ink-rgb) / 0.06);
+  background: var(--db-product-separator);
+}
+
+/* Override inline !important from product-information.liquid */
+.db-product .product-details .db-product__desc::before {
+  width: 56px !important;
+  background: var(--db-product-separator) !important;
 }
 
 /* ── Ritual ──────────────────────────────────────────── */
@@ -303,8 +311,17 @@
 
 .db-product .db-product__variants .variant-option__button-label:has(:checked) .variant-option__button-label__text {
   text-decoration: underline;
+  text-decoration-color: var(--db-product-cta-underline);
   text-decoration-thickness: 1px;
   text-underline-offset: 4px;
+}
+
+.db-product .db-product__variants .variant-option__button-label:hover .variant-option__button-label__text {
+  text-decoration: underline;
+  text-decoration-color: var(--db-color-daphne-blue);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--db-motion-duration-fast) var(--db-motion-ease-out);
 }
 
 .db-product .db-product__variants .variant-option__button-label:has([data-option-available='false']) {
@@ -347,7 +364,7 @@
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 6px;
-  text-decoration-color: transparent;
+  text-decoration-color: transparent !important;
   transition: color var(--db-motion-duration-fast) var(--db-motion-ease-out),
     text-decoration-color var(--db-motion-duration-fast) var(--db-motion-ease-out),
     opacity var(--db-motion-duration-fast) var(--db-motion-ease-out);
@@ -378,8 +395,9 @@
 .db-product .product-form-buttons .button--secondary:is(:hover, :focus-visible),
 .db-product .product-form-buttons .button--solid:is(:hover, :focus-visible),
 .db-product .product-form-buttons .button--outline:is(:hover, :focus-visible) {
-  color: var(--db-color-daphne-blue);
-  text-decoration-color: currentColor;
+  color: var(--db-color-daphne-blue) !important;
+  text-decoration-color: var(--db-color-daphne-blue) !important;
+  transform: none !important;
 }
 
 .db-product .product-form-buttons .add-to-cart-button:focus-visible,
@@ -391,6 +409,14 @@
   outline: 2px solid var(--db-focus-ring-color);
   outline-offset: 4px;
   border-radius: var(--db-radius-sm);
+}
+
+/* CTA resting color: slightly more present than --db-product-muted (0.72 vs 0.62) */
+.db-product .db-product__cta .product-form-buttons .add-to-cart-button,
+.db-product .db-product__cta .product-form-buttons .button,
+.db-product .db-product__cta .product-form-buttons .button--primary,
+.db-product .db-product__cta .product-form-buttons .button--secondary {
+  color: rgb(var(--db-color-charcoal-ink-rgb) / 0.72) !important;
 }
 
 /* ── Badges & availability ───────────────────────────── */
@@ -430,7 +456,7 @@
 
 /* Divider lines: subtle, matching description separator */
 .db-product .accordion--dividers accordion-custom .details {
-  border-color: rgb(var(--db-color-charcoal-ink-rgb) / 0.08) !important;
+  border-color: var(--db-product-separator) !important;
 }
 
 /* Plus/minus icon: small, muted */
@@ -474,7 +500,7 @@ body.db-product-page product-recommendations .section-resource-list::before {
   transform: translateX(-50%);
   width: min(100% - 160px, 1200px);
   height: 1px;
-  background: rgb(var(--db-color-charcoal-ink-rgb) / 0.06);
+  background: var(--db-product-separator);
 }
 
 body.db-product-page product-recommendations .resource-list {

@@ -208,7 +208,18 @@ class CartItemsComponent extends Component {
     if (!(cartItemError instanceof HTMLElement)) throw new Error('Cart item error not found');
     if (!(cartItemErrorContainer instanceof HTMLElement)) throw new Error('Cart item error container not found');
 
-    cartItemError.textContent = parsedResponseText.errors;
+    // Soften Shopify's generic error text
+    const rawError = parsedResponseText.errors;
+    const softenedError = rawError
+      .replace(
+        /^Only (\d+) item(?:s)? (?:was|were) added to your cart due to availability\.?$/i,
+        'We only have $1 of this piece available right now.'
+      )
+      .replace(
+        /^You can only add (\d+) of this item to your cart\.?$/i,
+        'This piece is limited to $1 per order.'
+      );
+    cartItemError.textContent = softenedError;
     cartItemErrorContainer.classList.remove('hidden');
   };
 
