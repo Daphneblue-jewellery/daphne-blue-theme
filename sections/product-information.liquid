@@ -511,7 +511,7 @@
         class="product-information__media{% if is_db_template %} db-product__media{% endif %}"
         data-testid="product-information-media"
       >
-        <div class="db-product-media">
+        <div class="db-product-media" style="--ratio: {{ placeholder_ratio }};">
           {% if product_has_media %}
             {%- content_for 'block',
               type: '_product-media-gallery',

@@ -95,6 +95,24 @@
   display: block;
 }
 
+/* ── Slideshow (real images) — match placeholder dimensions ── */
+
+.db-product .db-product__media slideshow-container {
+  aspect-ratio: var(--ratio, 1);
+  border-radius: var(--db-product-radius);
+  overflow: hidden;
+}
+
+.db-product .db-product__media .product-media-container {
+  aspect-ratio: var(--ratio, 1) !important;
+}
+
+.db-product .db-product__media .product-media-container .product-media__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* ── Thumbnails (keep card styling for differentiation) ── */
 
 .db-product .db-product__media .slideshow-controls__thumbnails {

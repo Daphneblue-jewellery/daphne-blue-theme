@@ -115,3 +115,19 @@ width: 100%;
 **Context:** Horizon's `.spacing-style` uses `padding-block` shorthand derived from `--padding-block-start` inline vars.
 
 **Rule:** Override with `padding-block-start` / `padding-block-end` longhands to avoid cascade conflicts with the shorthand.
+
+---
+
+## 14. Product card image container must match gallery aspect ratio and radius
+
+**What happened:** On The Land collection page, the Meadow Stud Earrings card (with a real image) was shorter and had rounder corners than the placeholder cards beside it. The `.card-gallery` wrapper used `aspect-ratio: 4 / 5` and `border-radius: 8px`, but the inner `.product-media-container` had `aspect-ratio: 1 / 1.15` (→ 442px instead of 480px) and `border-radius: var(--db-radius-lg)` (18px).
+
+**Rule:** When styling Horizon's `.product-card .product-media-container`, ensure its `aspect-ratio` and `border-radius` match the parent `.card-gallery` values. The gallery controls the placeholder sizing; the media container controls the image sizing. If they disagree, cards with images will be a different size/shape from cards without.
+
+---
+
+## 15. PDP `--ratio` must be set on the shared parent, not just the placeholder
+
+**What happened:** On the Meadow Stud Earrings product page, the hero image (733×656) was taller than placeholders on other product pages (733×587). The `--ratio: 5 / 4` inline style was only set on the `.db-product-media__placeholder` div, so the Horizon `slideshow-container` (used for real images) never inherited it and fell back to the image's natural aspect ratio.
+
+**Rule:** Set `--ratio` on the parent `.db-product-media` div so both rendering paths — the placeholder div and the Horizon slideshow — inherit the same aspect ratio. Then target `slideshow-container` and `.product-media-container` in CSS with `aspect-ratio: var(--ratio, 1)` to enforce it. The placeholder and real-image paths must always produce identical dimensions.
