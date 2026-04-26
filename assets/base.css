@@ -2974,8 +2974,9 @@ fly-to-cart {
 
 .db-piece-collection .facets--horizontal .facets__summary {
   color: rgb(var(--color-foreground-rgb) / 0.6);
-  font-size: var(--db-type-small);
-  letter-spacing: 0.01em;
+  font-size: var(--db-type-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   border: none;
   background: transparent;
   padding: 6px 2px;
@@ -2993,7 +2994,9 @@ fly-to-cart {
 .db-piece-collection .facets--horizontal .facets__status,
 .db-piece-collection .facets--horizontal .products-count-wrapper {
   color: rgb(var(--color-foreground-rgb) / 0.55);
-  font-size: 0.85rem;
+  font-size: var(--db-type-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
 }
 
 .db-piece-collection .facets--horizontal .facets__panel-content,
@@ -6351,35 +6354,73 @@ text-component {
   }
 }
 
-/* The Land collection hero: force copy to the true center of the full-bleed media */
+/* Collection hero centring — flexbox on the content wrapper for bulletproof
+   centring of the title. Replaces the previous absolute-positioning + transform
+   approach which was vulnerable to inherited margins and scrollbar offsets. */
 main[data-template*='the-land'] .hero .hero__content-wrapper,
 main[data-template*='the-sea'] .hero .hero__content-wrapper,
 main[data-template*='the-sky'] .hero .hero__content-wrapper,
 main[data-template*='the-stars'] .hero .hero__content-wrapper,
 main[data-template*='category'] .hero .hero__content-wrapper {
-  position: absolute;
-  inset: 0;
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
   grid-column: 1 / -1 !important;
   width: 100% !important;
+  height: 100% !important;
   left: 0 !important;
   right: 0 !important;
   transform: none !important;
   padding-inline: 0 !important;
+  gap: clamp(1rem, 3vw, 2rem) !important;
 }
 
+/* Title text-block: relative (in flex flow), self-centred, no transform games */
 main[data-template*='the-land'] .hero .hero__content-wrapper .text-block,
 main[data-template*='the-sea'] .hero .hero__content-wrapper .text-block,
 main[data-template*='the-sky'] .hero .hero__content-wrapper .text-block,
 main[data-template*='the-stars'] .hero .hero__content-wrapper .text-block,
 main[data-template*='category'] .hero .hero__content-wrapper .text-block {
-  position: absolute !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) translateX(-35px) !important;
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: none !important;
   width: max-content !important;
   max-width: 100% !important;
   margin: 0 !important;
   text-align: center !important;
+}
+
+/* UNIVERSAL hero H1 sizing fix — applies to every hero on every page.
+   Forces the H1 to size to its actual rendered text width via max-content +
+   inline-block. The default `width: fit-content` was being miscalculated
+   (likely because the layout was measured before Maragsa Display fully
+   loaded), leaving the box ~80px narrower than the visible text and causing
+   the title to appear off-centre because the text overflowed its bounding
+   box on the right. */
+.hero .hero__content-wrapper .text-block h1 {
+  display: inline-block !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+/* Collection hero title — bump opacity from the default 70% so it doesn't
+   get lost against busy photography. Soft white at 92% reads cleanly on most
+   imagery while staying within the brand's quiet voice.
+   Scoped to collection templates so the homepage hero ("naturally, you")
+   keeps its own colour treatment. */
+main[data-template*='the-land'] .hero .hero__content-wrapper .text-block h1,
+main[data-template*='the-sea'] .hero .hero__content-wrapper .text-block h1,
+main[data-template*='the-sky'] .hero .hero__content-wrapper .text-block h1,
+main[data-template*='the-stars'] .hero .hero__content-wrapper .text-block h1,
+main[data-template*='category'] .hero .hero__content-wrapper .text-block h1 {
+  color: rgba(250, 250, 248, 0.92) !important;
 }
 
 main[data-template*='the-land'] .hero .hero__content-wrapper .text-block > *,
@@ -6390,16 +6431,93 @@ main[data-template*='category'] .hero .hero__content-wrapper .text-block > * {
   margin: 0 !important;
 }
 
+/* CTA button: also relative in flex flow (was absolute-positioned beneath title) */
 main[data-template*='the-land'] .hero .hero__content-wrapper .db-land-cta,
 main[data-template*='the-sea'] .hero .hero__content-wrapper .db-land-cta,
 main[data-template*='the-sky'] .hero .hero__content-wrapper .db-land-cta,
 main[data-template*='the-stars'] .hero .hero__content-wrapper .db-land-cta,
 main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
-  position: absolute !important;
-  left: 50% !important;
-  top: calc(50% + clamp(3.5rem, 7vw, 5.75rem)) !important;
-  transform: translateX(-50%) !important;
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
   margin: 0 !important;
+}
+
+/* ----------------------------------------------------------------------
+   Piece category collections (Necklaces / Rings / Earrings / Bracelets /
+   Anklets) — apply the same hero asset container pattern as Sea/Land/
+   Sky/Stars. These pages use the custom `db-collection-hero` section
+   rather than Horizon's stock `hero`, so the rules above (which target
+   `.hero .hero__container`) don't reach them. Mirror the same 21:9
+   viewport-aware sizing + bulletproof flex centring + Maragsa H1 fix.
+   ---------------------------------------------------------------------- */
+
+/* Container sizing — match the 21:9 / vh-cap formula used elsewhere so
+   the keyline matches Sea/Land/Sky/Stars exactly. Keeps the tagline
+   above the fold on common viewport heights. */
+main[data-template*='piece-category'] .db-collection-hero,
+main[data-template*='piece-category'] .db-collection-hero__media,
+main[data-template*='piece-category'] .db-collection-hero__placeholder {
+  width: 100% !important;
+  height: min(calc(100vw / 2.36), calc(100vh - 240px)) !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  aspect-ratio: auto !important;
+}
+
+main[data-template*='piece-category'] .db-collection-hero__image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Content overlay: bulletproof flex centring (mirrors the .hero rule). */
+main[data-template*='piece-category'] .db-collection-hero__content {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  gap: clamp(1rem, 3vw, 2rem) !important;
+  pointer-events: none !important;
+}
+
+main[data-template*='piece-category'] .db-collection-hero__content-inner {
+  padding: 0 !important;
+  max-width: none !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  pointer-events: auto !important;
+}
+
+/* H1 sizing fix — same root cause as the universal hero rule above:
+   the heading box was being miscalculated before Maragsa loaded, leaving
+   text overflowing its bounding box and visually off-centre.
+   Font-size 7.5rem matches the source value used by every other
+   collection hero (Sea/Land/Sky/Stars), and the 92% Soft White matches
+   the standardised hero text opacity. */
+main[data-template*='piece-category'] .db-collection-hero__heading {
+  display: inline-block !important;
+  width: max-content !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  font-family: "Maragsa Display", serif !important;
+  font-size: 7.5rem !important;
+  line-height: normal !important;
+  color: rgba(250, 250, 248, 0.92) !important;
+  text-align: center !important;
+}
+
+main[data-template*='piece-category'] .db-collection-hero__subline,
+main[data-template*='piece-category'] .db-collection-hero__poetic {
+  margin: 0 !important;
+  text-align: center !important;
 }
 
 /* Collection: editorial landing */
@@ -7165,7 +7283,9 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
   padding-right: 20px;
   padding-block: 12px;
   font-family: var(--font-body--family);
-  font-size: 0.95rem;
+  font-size: var(--db-type-micro);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: rgb(var(--color-foreground-rgb) / 0.65);
 }
 
@@ -7283,6 +7403,13 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 .db-collection-facets .product-card:focus-within .card-gallery img {
   transform: scale(1.01);
   filter: brightness(1.02);
+}
+
+/* Soften product card text — full charcoal is too harsh for DB */
+.product-card .text-block,
+.product-card product-title,
+.product-card .product-card-gallery__title-placeholder {
+  color: rgb(var(--color-foreground-rgb) / 0.55);
 }
 
 .db-collection-facets .product-card .text-block a,
@@ -8947,7 +9074,14 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 
 .db-story__opening {
   position: relative;
-  min-height: 65vh;
+  /* Match the hero asset container used on Sea/Land/Sky/Stars and the
+     piece collections — 21:9 keyline with a vh cap so the page entry
+     never pushes the next block fully off the fold. */
+  width: 100%;
+  height: min(calc(100vw / 2.36), calc(100vh - 240px));
+  min-height: 0;
+  max-height: none;
+  aspect-ratio: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8992,9 +9126,17 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
   font-size: clamp(2.8rem, 6vw, 5rem) !important;
   font-weight: 400;
   line-height: 1.05;
-  color: var(--db-color-soft-white);
+  /* Standardised hero text opacity — Soft White at 92%, matching every
+     collection hero (Sea/Land/Sky/Stars + piece collections). Was at
+     100% which read brighter than the rest of the system. */
+  color: rgba(250, 250, 248, 0.92);
+  /* Same H1 sizing fix used on the other heroes — `inline-block` +
+     `max-content` so the heading box matches the rendered text width
+     and doesn't visually drift off-centre under font-loading races. */
+  display: inline-block;
+  width: max-content;
+  max-width: 100%;
   margin: 0;
-  max-width: 14ch;
   text-wrap: balance;
 }
 
@@ -9011,6 +9153,13 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 .db-story__eyebrow {
   color: rgb(var(--color-foreground-rgb) / 0.5);
   margin: 0 0 var(--db-space-lg);
+}
+
+.db-story__narrative .db-story__eyebrow {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: rgb(var(--color-foreground-rgb) / 0.42);
+  margin-bottom: var(--db-space-xl);
 }
 
 .db-story__opening .db-story__eyebrow {
@@ -9044,15 +9193,41 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
   text-align: center;
 }
 
+/* Closing narrative: the last narrative in .db-story gets
+   signature treatment for the "Welcome to Daphne Blue." sign-off. */
+.db-story > .db-story__narrative:last-child .db-story__narrative-body {
+  font-size: 1.1rem;
+  color: rgb(var(--color-foreground-rgb) / 0.7);
+}
+
+.db-story > .db-story__narrative:last-child .db-story__narrative-body p:last-child {
+  font-family: "Maragsa Display", serif;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  line-height: 1.2;
+  font-weight: 400;
+  color: var(--db-color-charcoal-ink);
+  margin-top: var(--db-space-2xl);
+}
+
+/* "Daphne Blue" within the closing signature — picks up the logo colour
+   while inheriting the surrounding Maragsa Display treatment. The <strong>
+   tag is used as a richtext-safe semantic hook (the brand name being
+   emphasised in the signature line). Default bold weight is reset to 400
+   to keep the visual lightness consistent with the rest of the line. */
+.db-story > .db-story__narrative:last-child .db-story__narrative-body p:last-child strong {
+  color: var(--db-color-daphne-blue);
+  font-weight: 400;
+}
+
 .db-story__narrative-body {
   font-family: var(--font-body--family);
-  font-size: 1.02rem;
-  line-height: 1.7;
-  color: rgb(var(--color-foreground-rgb) / 0.78);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: rgb(var(--color-foreground-rgb) / 0.55);
 }
 
 .db-story__narrative-body p {
-  margin: 0 0 16px;
+  margin: 0 0 1.25em;
 }
 
 .db-story__narrative-body p:last-child {
@@ -9077,7 +9252,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
   font-size: var(--story-quote-size);
   font-weight: 400;
   line-height: 1.15;
-  color: var(--db-color-charcoal-ink);
+  color: rgb(var(--color-foreground-rgb) / 0.55);
   margin: 0;
   text-wrap: balance;
 }
@@ -9091,6 +9266,7 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 
 .db-story__image-wrap {
   margin: 0;
+  margin-block: var(--db-space-lg);
   padding: 0;
   line-height: 0;
   position: relative;
@@ -9214,10 +9390,10 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 }
 
 .db-story__breath-rule {
-  width: 60px;
+  width: 48px;
   height: 0;
   border: none;
-  border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.15);
+  border-top: 1px solid var(--db-color-daphne-blue);
   margin: 0;
 }
 
@@ -9225,7 +9401,10 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
 
 @media screen and (max-width: 749px) {
   .db-story__opening {
-    min-height: 50vh;
+    /* Mobile keeps the same 21:9 + vh-cap formula — the desktop rule
+       already adapts well here, but the previous min-height: 50vh
+       override would override the height; reset it explicitly. */
+    min-height: 0;
   }
 
   .db-story__narrative-inner {
@@ -9291,4 +9470,485 @@ main[data-template*='category'] .hero .hero__content-wrapper .db-land-cta {
     color: rgb(var(--color-foreground-rgb) / 0.4);
     text-align: right;
   }
+}
+
+/* =========================================================================
+   "Back soon" badge — sold-out variant only
+   Strips the Horizon pill (background, radius, padding) and applies the
+   Daphne Blue press-style typography. Sale badge is untouched and keeps
+   its theme-setting-driven appearance.
+   See DEV_LEARNINGS.md #16 for context.
+   ========================================================================= */
+/* "Back soon" pill — frosted-glass sold-out badge.
+   Semi-transparent Soft White + backdrop blur reads as a panel
+   embedded in the image rather than a sticker on top. No border —
+   the pill floats. Lighter font weight (400) feels more confident
+   at small sizes. Press-style typography ties it to the brand system. */
+.product-badges__badge.product-badges__badge--sold-out {
+  background: rgba(250, 250, 248, 0.78) !important;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 6px 10px !important;
+  color: #3F6B7A !important;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* =========================================================================
+   Suppress Horizon's default main-menu linklist in the mobile drawer.
+   The drawer's curated content (Shop by element / piece / intention) lives
+   above this nav in `snippets/header-drawer.liquid` (.db-drawer-search-suggestions);
+   the utility links (account, locale) live below it (.menu-drawer__utility-links).
+   We only want to remove the duplicate Horizon-default linklist between them.
+   See DEV_LEARNINGS.md #16 for the override-don't-fight-Horizon pattern.
+   ========================================================================= */
+.menu-drawer__navigation {
+  display: none !important;
+}
+
+/* =========================================================================
+   Product card hover polish — gentle scale on the image, daphne-blue
+   colour shift on the title. Tempo is deliberately closer to Aesop / Hermès
+   (700–750ms) than to Mejuri / NaP (300–400ms) — the brand voice is the
+   pause, not retail responsiveness.
+   The 60ms transition-delay on the title means the colour only arrives
+   when the hover is intentional; a casual mouse pass-through doesn't fire
+   it. Subtle but on-brand (Apple / Aesop pattern).
+   The image-swap to a second media is already wired up by Horizon
+   (settings.show_second_image_on_hover, default true) and only fires for
+   products with 2+ media uploaded.
+   :focus-within keeps the same affordance for keyboard navigation.
+   ========================================================================= */
+.product-card .product-media__image {
+  transition: transform 0.75s cubic-bezier(0.18, 0.88, 0.24, 1) !important;
+  transform-origin: center;
+}
+
+.product-card:hover .product-media__image,
+.product-card:focus-within .product-media__image {
+  transform: scale(1.02);
+}
+
+.product-card__title {
+  transition: color 0.7s cubic-bezier(0.18, 0.88, 0.24, 1) 0.06s;
+}
+
+.product-card:hover .product-card__title,
+.product-card:focus-within .product-card__title {
+  color: var(--db-color-daphne-blue);
+}
+
+/* =========================================================================
+   Discover tile CTA arrow — refined inline SVG replaces the unicode `→`.
+   The whole arrow group translates 8px right on tile hover (Apple / Mejuri
+   pattern). Same Aesop-pace timing as the product card hover for visual
+   rhythm consistency across the brand.
+   ========================================================================= */
+.db-curated-discovery__cta {
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.7s cubic-bezier(0.18, 0.88, 0.24, 1);
+}
+
+.db-curated-discovery__cta-arrow {
+  display: block;
+  width: 40px;
+  height: 8px;
+}
+
+.db-curated-discovery__tile:hover .db-curated-discovery__cta,
+.db-curated-discovery__tile:focus-visible .db-curated-discovery__cta {
+  transform: translateX(8px);
+}
+
+/* =========================================================================
+   The Hours — editorial page section
+   Four full-bleed cinematic moments stacked vertically. Each hour is
+   ~100vh on desktop, 78svh on mobile. Text overlay sits bottom-left
+   with a soft bottom-up gradient for legibility over photography.
+   ========================================================================= */
+.db-hours {
+  background-color: var(--db-color-charcoal-ink);
+  color: var(--db-color-soft-white);
+}
+
+/* Page header — quiet, centered, breathes above the first hour */
+.db-hours__header {
+  padding: clamp(4rem, 12vh, 8rem) var(--db-edge-gap);
+  text-align: center;
+  background-color: var(--db-color-soft-white);
+  color: var(--db-color-charcoal-ink);
+}
+
+.db-hours__eyebrow {
+  margin: 0 0 var(--db-space-md);
+  color: rgb(var(--color-foreground-rgb) / 0.5);
+}
+
+.db-hours__heading {
+  font-family: "Maragsa Display", serif !important;
+  font-size: clamp(2.8rem, 6vw, 5rem) !important;
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.db-hours__subline {
+  margin: var(--db-space-lg) auto 0;
+  max-width: 36ch;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgb(var(--color-foreground-rgb) / 0.6);
+}
+
+/* Hour panel */
+.db-hours__hour {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.db-hours__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  line-height: 0;
+}
+
+.db-hours__img,
+.db-hours__placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.db-hours__placeholder {
+  background: linear-gradient(180deg, var(--db-color-warm-stone), var(--db-color-charcoal-ink));
+}
+
+/* Bottom-up gradient overlay for text legibility */
+.db-hours__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 45%, transparent 75%);
+  pointer-events: none;
+}
+
+/* Content overlay — bottom-left, generous padding */
+.db-hours__content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: clamp(2rem, 8vh, 5rem) clamp(1.5rem, 6vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--db-space-md);
+  max-width: 60ch;
+}
+
+.db-hours__label {
+  margin: 0;
+  color: rgba(250, 250, 248, 0.75);
+}
+
+.db-hours__quote {
+  margin: 0;
+  padding: 0;
+}
+
+.db-hours__quote p {
+  font-family: "Maragsa Display", serif;
+  font-size: clamp(2rem, 4.5vw, 3.6rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--db-color-soft-white);
+  margin: 0;
+  text-wrap: balance;
+}
+
+.db-hours__product {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  margin-top: var(--db-space-md);
+  color: var(--db-color-soft-white);
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1;
+  transition: transform 0.7s cubic-bezier(0.18, 0.88, 0.24, 1);
+}
+
+.db-hours__product:hover,
+.db-hours__product:focus-visible {
+  transform: translateX(6px);
+  color: var(--db-color-soft-white);
+}
+
+.db-hours__cta-arrow {
+  display: block;
+  width: 40px;
+  height: 8px;
+}
+
+@media (max-width: 749px) {
+  .db-hours__hour {
+    min-height: 78svh;
+  }
+}
+
+/* =========================================================================
+   Filter drawer pattern (Option B)
+   Hide the inline chevron filter dropdowns. Show the always-rendered
+   "Filter" toggle button at every viewport (was mobile-only by Horizon
+   default). The off-canvas drawer is already in the DOM (#filters-drawer)
+   and opens via the toggle's existing on:click="#filters-drawer/showDialog".
+
+   What stays in the slim horizontal bar: item count + sort dropdown.
+   What gets hidden: the PRICE / TYPE / METAL / COLOUR / DESIGN chevrons
+   and the duplicate Clear-all/See-X-items actions.
+
+   See DEV_LEARNINGS.md for the inline-vs-drawer rationale.
+   ========================================================================= */
+
+/* Hide the inline filter chevrons + duplicate actions */
+.facets-block-wrapper--horizontal .facets__filters-wrapper,
+.facets-block-wrapper--horizontal .facets__actions {
+  display: none !important;
+}
+
+/* Show the Filter toggle button at all viewport widths
+   (Horizon hides it on desktop by default — assumes inline horizontal bar).
+   Explicit width:auto on the wrapper because Horizon's desktop CSS collapses
+   it to 0 when it expects only the inline bar. */
+.facets-toggle {
+  display: flex !important;
+  width: auto !important;
+}
+.facets-toggle__wrapper {
+  width: auto !important;
+  flex: 0 0 auto !important;
+}
+/* Higher specificity to win over Horizon's compiled CSS that hides this on desktop */
+body .facets-toggle .facets-toggle__wrapper .facets-toggle__button,
+.facets-toggle .facets-toggle__wrapper button.facets-toggle__button {
+  display: inline-flex !important;
+  align-items: center;
+  width: auto !important;
+  flex: 0 0 auto !important;
+  white-space: nowrap;
+}
+
+/* Style the toggle to match brand press-style typography */
+.facets-toggle__button {
+  font-family: var(--db-type-press-family, var(--font-body--family)) !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  font-weight: 400 !important;
+  color: rgb(var(--color-foreground-rgb) / 0.7) !important;
+  gap: 0.5em;
+  transition: color 0.4s cubic-bezier(0.18, 0.88, 0.24, 1);
+}
+
+.facets-toggle__button:hover,
+.facets-toggle__button:focus-visible {
+  color: var(--db-color-daphne-blue) !important;
+}
+
+.facets-toggle__button .svg-wrapper {
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+}
+
+/* Active-filter count bubble — daphne-blue pill */
+.facets-toggle .filter-count-bubble {
+  margin-inline-start: 0.5em;
+}
+.facets-toggle .filter-count-bubble__background {
+  background: var(--db-color-daphne-blue) !important;
+}
+
+/* Refine the slim residual bar (now just count + sort) */
+.facets-block-wrapper--horizontal .facets--horizontal {
+  border: none !important;
+  padding-block: 0 !important;
+}
+
+/* Drawer refinements — soften Horizon's defaults toward the brand */
+.facets--drawer {
+  background: var(--db-color-soft-white, #FAFAF8) !important;
+  /* Pin to the right edge — matches trigger button position and is the
+     premium pattern for filter drawers. */
+  margin-left: auto !important;
+  margin-right: 0 !important;
+  max-width: min(480px, 90vw) !important;
+}
+
+.facets--drawer .facets__heading,
+.facets--drawer h2 {
+  font-family: "Maragsa Display", serif !important;
+  font-weight: 400 !important;
+}
+
+/* Replace the stock radio circles in the drawer with a quieter selection style */
+.facets--drawer .checkbox__input + .checkbox__label .checkbox__indicator,
+.facets--drawer .radio__input + .radio__label .radio__indicator {
+  border-color: rgb(var(--color-foreground-rgb) / 0.25) !important;
+  border-width: 1px !important;
+}
+
+.facets--drawer .checkbox__input:checked + .checkbox__label .checkbox__indicator,
+.facets--drawer .radio__input:checked + .radio__label .radio__indicator {
+  background-color: var(--db-color-daphne-blue) !important;
+  border-color: var(--db-color-daphne-blue) !important;
+}
+
+/* Drawer close button — Horizon hides it on desktop (was mobile-only).
+   Higher specificity required to override compiled CSS. */
+.facets--drawer .facets-drawer__close,
+.facets--drawer button.facets-drawer__close {
+  display: inline-flex !important;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  background: transparent;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: rgb(var(--color-foreground-rgb) / 0.7);
+  transition: color 0.4s cubic-bezier(0.18, 0.88, 0.24, 1);
+}
+.facets--drawer .facets-drawer__close:hover,
+.facets--drawer .facets-drawer__close:focus-visible {
+  color: var(--db-color-daphne-blue);
+}
+.facets--drawer .facets-drawer__close .svg-wrapper {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+}
+
+/* Sticky drawer footer (Clear all + See X items) — always visible
+   at bottom regardless of scroll. Premium drawer pattern. */
+.facets--drawer .facets__actions {
+  position: sticky !important;
+  bottom: 0 !important;
+  background: var(--db-color-soft-white, #FAFAF8);
+  padding: 1rem 1.25rem !important;
+  margin-inline: -1.25rem;
+  border-top: 1px solid rgb(var(--color-foreground-rgb) / 0.08);
+  z-index: 2;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Style the "Clear all" link */
+.facets--drawer .facets__actions .facets__clear-all-link,
+.facets--drawer .facets__actions a[href*="clear"] {
+  font-family: var(--db-type-press-family, var(--font-body--family));
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground-rgb) / 0.55);
+  text-decoration: none;
+  transition: color 0.4s cubic-bezier(0.18, 0.88, 0.24, 1);
+}
+.facets--drawer .facets__actions a:hover,
+.facets--drawer .facets__actions a:focus-visible {
+  color: var(--db-color-daphne-blue);
+}
+
+/* Style the primary "See X items" submit button */
+.facets--drawer .facets__actions button[type="submit"],
+.facets--drawer .facets__actions [class*="see-results"] {
+  font-family: var(--db-type-press-family, var(--font-body--family));
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 400;
+  background: var(--db-color-charcoal-ink, #2E2E2E);
+  color: var(--db-color-soft-white, #FAFAF8);
+  padding: 0.85rem 1.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.4s cubic-bezier(0.18, 0.88, 0.24, 1);
+}
+.facets--drawer .facets__actions button[type="submit"]:hover,
+.facets--drawer .facets__actions [class*="see-results"]:hover {
+  background: var(--db-color-daphne-blue, #6FA9B8);
+}
+
+/* =========================================================================
+   TEMPORARY: Filter UI hidden site-wide while testing the Aesop-style
+   no-filter concept. The drawer infrastructure above is intact — this
+   block just hides it from view. Delete this block to re-enable.
+   Sort + item count remain visible (those aren't filters).
+   ========================================================================= */
+body .facets-toggle,
+body #filters-drawer {
+  display: none !important;
+}
+
+/* =========================================================================
+   Land collection hero — pin container to 21:9 cinematic aspect ratio.
+   Horizon's hero uses min-height (vh) which makes the container's aspect
+   ratio drift across viewport sizes, causing the 21:9 master image to
+   crop top/bottom on wide-and-short viewports. aspect-ratio fixes the
+   container width:height relationship so the image always fits exactly.
+   Suffix-match on the section id keeps this scoped to the Land hero only.
+   ========================================================================= */
+/* Collection hero pattern — applies to Land, Sea, Sky, Stars.
+   Width: always full viewport.
+   Height: smaller of (image-aspect-fit OR viewport minus header/tagline).
+   - On wide-tall viewports: aspect-fit wins, image fills container perfectly.
+   - On wide-short viewports: vh cap wins, image crops minor top/bottom
+     via object-fit: cover, but tagline stays above the fold.
+   NOT using aspect-ratio + max-height together — they conflict and shrink
+   container width unexpectedly. min() on height keeps width: 100%.
+   Section IDs are renamed to db_{name}_hero in their template JSON
+   so suffix-matching is unique to collection pages (homepage hero is
+   safely excluded — uses different section key). */
+[id$="__db_land_hero"] .hero,
+[id$="__db_land_hero"] .hero__container,
+[id$="__db_sea_hero"] .hero,
+[id$="__db_sea_hero"] .hero__container,
+[id$="__hero_sky"] .hero,
+[id$="__hero_sky"] .hero__container,
+[id$="__db_stars_hero"] .hero,
+[id$="__db_stars_hero"] .hero__container {
+  width: 100% !important;
+  height: min(calc(100vw / 2.36), calc(100vh - 240px)) !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  aspect-ratio: auto !important;
+}
+[id$="__db_land_hero"] .hero__media-wrapper,
+[id$="__db_land_hero"] .hero__image,
+[id$="__db_sea_hero"] .hero__media-wrapper,
+[id$="__db_sea_hero"] .hero__image,
+[id$="__hero_sky"] .hero__media-wrapper,
+[id$="__hero_sky"] .hero__image,
+[id$="__db_stars_hero"] .hero__media-wrapper,
+[id$="__db_stars_hero"] .hero__image {
+  height: 100% !important;
+  width: 100% !important;
 }

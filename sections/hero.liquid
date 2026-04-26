@@ -163,9 +163,11 @@
   endif
 
   assign sizes = '(min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
-  assign widths = '416, 600, 800, 960, 1280, 1920'
+  # Daphne Blue: extended widths so Retina/4K displays get a crisp source.
+  # Max bumped from 1920 → 3000 desktop, 1600 → 2400 mobile.
+  assign widths = '416, 600, 800, 960, 1280, 1920, 2400, 3000'
   assign sizes_mobile = media_width_mobile
-  assign mobile_widths = '416, 600, 800, 1200, 1600'
+  assign mobile_widths = '416, 600, 800, 1200, 1600, 2000, 2400'
 
   assign fetch_priority = 'auto'
 
@@ -178,7 +180,7 @@
   {%- if media_1 == 'image' -%}
     {{
       section.settings.image_1
-      | image_url: width: 1920
+      | image_url: width: 3000
       | image_tag:
         width: section.settings.image_1.width,
         widths: widths,
@@ -223,7 +225,7 @@
   {%- if media_2 == 'image' -%}
     {{
       section.settings.image_2
-      | image_url: width: 1920
+      | image_url: width: 3000
       | image_tag:
         width: section.settings.image_2.width,
         widths: widths,
@@ -261,7 +263,7 @@
     {% if media_1_mobile == 'image' %}
       {{
         section.settings.image_1_mobile
-        | image_url: width: 1600
+        | image_url: width: 2400
         | image_tag:
           width: section.settings.image_1_mobile.width,
           widths: mobile_widths,
@@ -306,7 +308,7 @@
     {% if media_2_mobile == 'image' %}
       {{
         section.settings.image_2_mobile
-        | image_url: width: 1600
+        | image_url: width: 2400
         | image_tag:
           width: section.settings.image_2_mobile.width,
           widths: mobile_widths,
@@ -354,7 +356,7 @@
   {% if media_1 == 'image' %}
     {{
       section.settings.image_1
-      | image_url: width: 1920
+      | image_url: width: 3000
       | image_tag:
         width: section.settings.image_1.width,
         widths: widths,
@@ -367,7 +369,7 @@
   {% if media_2 == 'image' %}
     {{
       section.settings.image_2
-      | image_url: width: 1920
+      | image_url: width: 3000
       | image_tag:
         width: section.settings.image_2.width,
         widths: widths,
@@ -392,7 +394,7 @@
     {% if section.settings.custom_mobile_media == true and fallback_to_desktop == false %}
       {% if media_1_mobile == 'image' %}
         {{ section.settings.image_1_mobile
-          | image_url: width: 1600
+          | image_url: width: 2400
           | image_tag: width: section.settings.image_1_mobile.width,
             widths: mobile_widths,
             height: section.settings.image_1_mobile.height,
@@ -403,7 +405,7 @@
       {% endif %}
       {% if media_2_mobile == 'image' %}
         {{ section.settings.image_2_mobile
-          | image_url: width: 1600
+          | image_url: width: 2400
           | image_tag: width: section.settings.image_2_mobile.width,
             widths: mobile_widths,
             height: section.settings.image_2_mobile.height,
@@ -419,7 +421,7 @@
     {% if section.settings.custom_mobile_media == true and fallback_to_desktop == false %}
       {% if media_2_mobile == 'image' %}
         {{ section.settings.image_2_mobile
-          | image_url: width: 1600
+          | image_url: width: 2400
           | image_tag: width: section.settings.image_2_mobile.width,
             widths: mobile_widths,
             height: section.settings.image_2_mobile.height,
@@ -429,7 +431,7 @@
         }}
       {% elsif media_1_mobile == 'image' %}
         {{ section.settings.image_1_mobile
-          | image_url: width: 1600
+          | image_url: width: 2400
           | image_tag: width: section.settings.image_1_mobile.width,
             widths: mobile_widths,
             height: section.settings.image_1_mobile.height,
@@ -442,7 +444,7 @@
       {% if media_count > 0 %}
         {% if media_2 == 'image' %}
           {{ section.settings.image_2
-            | image_url: width: 1600
+            | image_url: width: 2400
             | image_tag: width: section.settings.image_2.width,
               widths: widths,
               height: section.settings.image_2.height,
@@ -452,7 +454,7 @@
             }}
         {% elsif media_1 == 'image' %}
           {{ section.settings.image_1
-            | image_url: width: 1600
+            | image_url: width: 2400
             | image_tag: width: section.settings.image_1.width,
               widths: widths,
               height: section.settings.image_1.height,
@@ -558,7 +560,14 @@
   </div>
 </div>
 
-{%- comment -%} Homepage hero overrides — must be inline <style> so {{ section.id }} resolves ({% stylesheet %} compiles away Liquid) {%- endcomment -%}
+{%- comment -%}
+  Homepage hero overrides — must be inline <style> so {{ section.id }} resolves
+  ({% stylesheet %} compiles away Liquid). Wrapped in a template check so the
+  -10px optical nudge for "naturally, you" doesn't leak onto every other hero
+  on the site (Land/Sea/Sky/Stars collection heroes were rendering off-centre
+  because of this).
+{%- endcomment -%}
+{%- if template == 'index' -%}
 <style>
   #Hero-{{ section.id }} .text-block {
     max-width: 100% !important;
@@ -571,6 +580,7 @@
     display: none !important;
   }
 </style>
+{%- endif -%}
 
 {% stylesheet %}
   .hero-wrapper {

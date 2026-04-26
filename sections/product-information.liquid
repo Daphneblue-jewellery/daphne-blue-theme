@@ -190,6 +190,31 @@
       align-self: center !important;
     }
 
+    /* Stack to single column below 900px so tablet + large-phone PDPs
+       give the editorial image hero treatment instead of cramming the
+       3fr/2fr split into a narrow viewport. Mirrored in db-product.css
+       but MUST be inline to win the cascade against the desktop rule
+       defined a few lines above (per the inline-overrides comment). */
+    @media screen and (max-width: 899px) {
+      .db-product .product-information__grid {
+        grid-template-columns: 1fr !important;
+        column-gap: 0 !important;
+        row-gap: clamp(24px, 4vw, 48px);
+      }
+      .db-product .product-information__media {
+        grid-column: 1 / -1 !important;
+        grid-row: 1 !important;
+        align-self: stretch !important;
+      }
+      .db-product .product-details,
+      .db-product .product-details.sticky-content--desktop {
+        grid-column: 1 / -1 !important;
+        grid-row: 2 !important;
+        align-self: start !important;
+        width: 100% !important;
+      }
+    }
+
     /* Title: override Horizon's type_preset sizing.
        Use Maragsa Display directly — --font-heading--family resolves
        to Anonymous Pro (theme setting), not our custom heading font. */
@@ -487,6 +512,59 @@
     }
   </style>
   <script>document.body.classList.add('db-product-page');</script>
+  <script>
+    /* DB: Promote images with "hero" in alt text to the front of the PDP gallery.
+       Collection cards are unaffected — they use product.featured_image (image 1). */
+    (function promoteHeroMedia() {
+      function reorder() {
+        const slidesContainer = document.querySelector('media-gallery slideshow-slides');
+        if (!slidesContainer) return false;
+        const slides = Array.from(slidesContainer.querySelectorAll(':scope > slideshow-slide'));
+        const heroSlides = slides.filter(s => {
+          const img = s.querySelector('img');
+          return img && /hero/i.test(img.alt);
+        });
+        if (!heroSlides.length) return false;
+        /* Move hero slides to the front, preserving their relative order */
+        heroSlides.reverse().forEach(s => slidesContainer.prepend(s));
+        /* Update thumbnails to match if they exist */
+        const thumbSlides = document.querySelector('media-gallery [ref="thumbnails"] slideshow-slides');
+        if (thumbSlides) {
+          heroSlides.forEach(s => {
+            const mediaId = s.querySelector('[data-media-id]')?.dataset.mediaId;
+            if (!mediaId) return;
+            const thumb = thumbSlides.querySelector(`[data-media-id="${mediaId}"]`)?.closest('slideshow-slide');
+            if (thumb) thumbSlides.prepend(thumb);
+          });
+        }
+        return true;
+      }
+      function resetSlideshow() {
+        const slidesEl = document.querySelector('media-gallery slideshow-slides');
+        if (!slidesEl) return;
+        /* Temporarily disable smooth scroll so snap doesn't fight us */
+        slidesEl.style.scrollBehavior = 'auto';
+        slidesEl.style.scrollSnapType = 'none';
+        slidesEl.scrollLeft = 0;
+        /* Re-enable scroll-snap after the reset has painted */
+        requestAnimationFrame(() => {
+          slidesEl.style.scrollSnapType = '';
+          slidesEl.style.scrollBehavior = '';
+        });
+      }
+      function run() {
+        if (!reorder()) return;
+        resetSlideshow();
+        /* Safety net: repeat after layout in case initial reset was too early */
+        setTimeout(() => resetSlideshow(), 50);
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', run);
+      } else {
+        requestAnimationFrame(run);
+      }
+    })();
+  </script>
 {% endif %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}{% if is_db_template %} db-product-background{% endif %}"></div>

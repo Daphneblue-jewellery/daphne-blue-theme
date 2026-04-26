@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "story": {
@@ -6,125 +15,126 @@
         "s01_opening": {
           "type": "opening",
           "settings": {
-            "eyebrow": "Our story",
+            "image": "shopify://shop_images/Cinematic_sunrise_treatment.jpg",
+            "image_alt": "",
+            "eyebrow": "",
             "heading": "Our Story",
             "subtitle": ""
           }
         },
-        "s02_breath": {
-          "type": "breath",
-          "settings": {
-            "height": 52,
-            "show_rule": false
-          }
-        },
-        "s03_intro": {
+        "s02_beginning": {
           "type": "narrative",
           "settings": {
-            "body": "<p>We make jewellery for the life you already live.</p><p>Not for occasions. Not for display. For the quiet Tuesday morning, the late walk home, the moment you catch your reflection and feel like yourself.</p><p>Daphne Blue began with a feeling \u2014 that jewellery should be the last thing you take off and the first thing you reach for. That it should feel like yours from the very first wear.</p>",
-            "alignment": "left",
-            "padding": 96
+            "eyebrow": "The beginning",
+            "body": "<p>There's a road that climbs through the Hollywood Hills where the city starts to let go of you.</p><p>The noise softens. The buildings fall away. And somewhere between the last turn and the top, the world opens up in a way that makes you forget you were carrying anything at all.</p><p>What began as a sunset became a feeling. Los Angeles stretched out below, golden and endless, and for a moment nothing needed to be more than it already was.</p>",
+            "alignment": "centre",
+            "padding": 120
           }
         },
-        "s04_quote_1": {
+        "s03_quote_feeling": {
           "type": "pull_quote",
           "settings": {
-            "quote": "Not for occasions. Not for display.",
-            "padding": 80
+            "quote": "That feeling never really left.",
+            "note": "",
+            "padding": 144
           }
         },
-        "s05_image_1": {
+        "s04_image_1": {
           "type": "full_image",
           "settings": {
-            "image_alt": "Soft light on skin"
+            "image_alt": "",
+            "caption": ""
           }
         },
-        "s06_origin": {
+        "s05_idea": {
           "type": "narrative",
           "settings": {
-            "eyebrow": "How it started",
-            "body": "<p>[YOUR STORY \u2014 What moment made you think: I want to make this? What were you frustrated with when buying jewellery? What feeling were you chasing?]</p>",
-            "alignment": "right",
-            "padding": 96
+            "eyebrow": "The idea",
+            "body": "<p>Daphne Blue was born from a feeling. The feeling that beauty isn't something you chase. It's something you notice when you finally stand still.</p><p>A reminder that the world is full of extraordinary things if you let yourself see them. That the smallest details hold the most meaning. That slowing down isn't doing nothing, it's doing the thing that matters most.</p><p>We believe beauty lives in the in-between. In the imperfect. In the Tuesday morning light that catches something just right. In the parts of yourself you overlook because you're too busy performing for everyone else.</p>",
+            "alignment": "centre",
+            "padding": 120
           }
         },
-        "s07_rule": {
-          "type": "breath",
-          "settings": {
-            "height": 52,
-            "show_rule": true
-          }
-        },
-        "s08_design": {
-          "type": "split",
-          "settings": {
-            "eyebrow": "Design philosophy",
-            "heading": "Designed to be lived in",
-            "body": "<p>Each piece begins with a feeling \u2014 light on skin, familiar in hand, quiet in presence. We don\u2019t start with trends or seasons. We start with a question: will you want to wear this every day?</p><p>The answer has to be yes. If it doesn\u2019t feel instinctive, it doesn\u2019t leave the studio.</p>",
-            "link_label": "Explore the collection \u2192",
-            "link_url": "/collections/all",
-            "reverse": false,
-            "image_alt": "Hands wearing Daphne Blue jewellery"
-          }
-        },
-        "s09_quote_2": {
+        "s06_quote_beauty": {
           "type": "pull_quote",
           "settings": {
-            "quote": "If it doesn\u2019t feel instinctive, it doesn\u2019t leave.",
-            "padding": 80
+            "quote": "Beauty isn't something you chase. It's something you notice when you finally stand still.",
+            "note": "",
+            "padding": 144
           }
         },
-        "s10_process": {
+        "s07_philosophy_split": {
           "type": "split",
           "settings": {
-            "eyebrow": "Our process",
-            "heading": "Chosen with care",
-            "body": "<p>We don\u2019t chase trends or fill our shop for the sake of it. Every piece in the collection is here because it earned its place \u2014 for how it feels on skin, how it catches the light, how it fits into your day.</p><p>Small batches mean we can be deliberate. If it doesn\u2019t feel right, it doesn\u2019t make the cut.</p>",
-            "link_label": "Our materials \u2192",
-            "link_url": "/pages/faqs",
-            "reverse": true,
-            "image_alt": "Jewellery being carefully finished"
+            "image_alt": "",
+            "eyebrow": "The philosophy",
+            "heading": "",
+            "body": "<p>In a world full of noise, Daphne Blue is the pause.</p><p>We don't make jewellery for occasions. We make it for the life happening between them. The walk home. The deep breath. The moment you catch your reflection and actually like what you see.</p><p>Every piece is designed to be lived in. To age with you. To feel like yours from the first wear.</p>",
+            "link_label": "",
+            "link_url": "",
+            "reverse": false
           }
         },
-        "s11_image_2": {
+        "s08_quote_pause": {
+          "type": "pull_quote",
+          "settings": {
+            "quote": "In a world full of noise, Daphne Blue is the pause.",
+            "note": "",
+            "padding": 144
+          }
+        },
+        "s09_image_2": {
           "type": "full_image",
           "settings": {
-            "image_alt": "Calm, warmth, resolve"
+            "image_alt": "",
+            "caption": ""
+          }
+        },
+        "s10_name": {
+          "type": "narrative",
+          "settings": {
+            "eyebrow": "The name",
+            "body": "<p>Daphne Blue is a colour before it's a brand. It's the sky at that exact moment, after the sun dips but before the dark arrives.</p>",
+            "alignment": "centre",
+            "padding": 120
+          }
+        },
+        "s11_quote_blue": {
+          "type": "pull_quote",
+          "settings": {
+            "quote": "The blue that doesn't demand your attention but holds it completely.",
+            "note": "",
+            "padding": 160
           }
         },
         "s12_closing": {
           "type": "narrative",
           "settings": {
-            "body": "<p>Pieces you return to \u2014 not because they ask to be noticed, but because they feel like yours. This is jewellery for the way you actually live. Quiet, considered, and always there when you reach for it.</p>",
+            "eyebrow": "",
+            "body": "<p>We're here for the ones who felt it too. Who want to carry that feeling with them, and never quite let go.</p><p>Welcome to <strong>Daphne Blue</strong>.</p>",
             "alignment": "centre",
             "padding": 120
-          }
-        },
-        "s13_end": {
-          "type": "breath",
-          "settings": {
-            "height": 76,
-            "show_rule": false
           }
         }
       },
       "block_order": [
         "s01_opening",
-        "s02_breath",
-        "s03_intro",
-        "s04_quote_1",
-        "s05_image_1",
-        "s06_origin",
-        "s07_rule",
-        "s08_design",
-        "s09_quote_2",
-        "s10_process",
-        "s11_image_2",
-        "s12_closing",
-        "s13_end"
+        "s02_beginning",
+        "s03_quote_feeling",
+        "s04_image_1",
+        "s05_idea",
+        "s06_quote_beauty",
+        "s07_philosophy_split",
+        "s08_quote_pause",
+        "s09_image_2",
+        "s10_name",
+        "s11_quote_blue",
+        "s12_closing"
       ],
       "settings": {}
     }
   },
-  "order": ["story"]
+  "order": [
+    "story"
+  ]
 }

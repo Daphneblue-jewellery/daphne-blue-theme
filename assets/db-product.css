@@ -64,7 +64,7 @@
   width: 100%;
 }
 
-@media screen and (max-width: 749px) {
+@media screen and (max-width: 899px) {
   .db-product .product-information__grid {
     grid-template-columns: 1fr !important;
     column-gap: 0;
@@ -602,7 +602,7 @@ body.db-product-page product-recommendations .product-card .product-badge {
 
 /* ── Mobile ──────────────────────────────────────────── */
 
-@media screen and (max-width: 749px) {
+@media screen and (max-width: 899px) {
   .db-product .db-product__kicker {
     margin-top: var(--db-space-md);
   }

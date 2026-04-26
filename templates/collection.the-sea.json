@@ -9,7 +9,7 @@
  */
 {
   "sections": {
-    "hero_TCphkR": {
+    "db_sea_hero": {
       "type": "hero",
       "blocks": {
         "text_VcGTaF": {
@@ -59,13 +59,17 @@
       ],
       "name": "t:names.hero",
       "settings": {
-        "media_type_1": "video",
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/THE_SEA_HERO.jpg",
         "video_1_url": "sea-hero-ocean-calm.mp4",
         "media_type_2": "video",
+        "video_2_url": "",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",
+        "video_1_url_mobile": "",
         "media_type_2_mobile": "image",
+        "video_2_url_mobile": "",
         "link": "",
         "open_in_new_tab": false,
         "content_direction": "column",
@@ -85,7 +89,7 @@
         "overlay_style": "gradient",
         "gradient_direction": "to top",
         "blurred_reflection": false,
-        "apply_retro_filter": true,
+        "apply_retro_filter": false,
         "reflection_opacity": 75,
         "padding-block-start": 40,
         "padding-block-end": 40
@@ -201,6 +205,7 @@
                 "color": "var(--color-foreground)",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
+                "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
               "blocks": {}
@@ -210,11 +215,13 @@
               "settings": {
                 "product_swatches_alignment": "flex-start",
                 "product_swatches_alignment_mobile": "flex-start",
+                "hide_padding": false,
                 "product_swatches_padding_top": 4,
                 "product_swatches_padding_bottom": 0,
                 "product_swatches_padding_left": 0,
                 "product_swatches_padding_right": 0
-              }
+              },
+              "blocks": {}
             }
           },
           "block_order": [
@@ -244,7 +251,7 @@
     }
   },
   "order": [
-    "hero_TCphkR",
+    "db_sea_hero",
     "custom_liquid_press",
     "main_sea_collection"
   ]

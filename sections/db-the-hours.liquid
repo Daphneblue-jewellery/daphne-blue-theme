@@ -1,0 +1,183 @@
+{% comment %}
+  Daphne Blue — The Hours
+  Four full-bleed editorial moments — Morning, Midday, Evening, Moonlight.
+  One image, one line, one piece per hour. The brand tagline
+  "from morning to moonlight" made into a place.
+  Designed for use on /collections/everyday-essentials (and reusable elsewhere).
+{% endcomment %}
+
+{%- capture hour_arrow_svg -%}
+  <svg class="db-hours__cta-arrow" viewBox="0 0 40 8" width="40" height="8" fill="none" aria-hidden="true">
+    <line x1="0" y1="4" x2="32" y2="4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+    <path d="M28 0.5 L32 4 L28 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>
+{%- endcapture -%}
+
+<section class="db-hours">
+  {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.subline != blank -%}
+    <header class="db-hours__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="db-hours__eyebrow db-type--press">{{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="db-hours__heading">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.subline != blank -%}
+        <p class="db-hours__subline">{{ section.settings.subline }}</p>
+      {%- endif -%}
+    </header>
+  {%- endif -%}
+
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'hour' -%}
+      {%- assign product = block.settings.product -%}
+      <article class="db-hours__hour" {{ block.shopify_attributes }}>
+        <div class="db-hours__media">
+          {%- if block.settings.image != blank -%}
+            <img
+              src="{{ block.settings.image | image_url: width: 2400 }}"
+              alt="{{ block.settings.image_alt | escape }}"
+              loading="lazy"
+              width="{{ block.settings.image.width }}"
+              height="{{ block.settings.image.height }}"
+              class="db-hours__img"
+            >
+          {%- else -%}
+            <div class="db-hours__placeholder" aria-hidden="true"></div>
+          {%- endif -%}
+          <div class="db-hours__overlay" aria-hidden="true"></div>
+        </div>
+
+        <div class="db-hours__content">
+          {%- if block.settings.label != blank -%}
+            <p class="db-hours__label db-type--press">{{ block.settings.label }}</p>
+          {%- endif -%}
+          {%- if block.settings.quote != blank -%}
+            <blockquote class="db-hours__quote">
+              <p>{{ block.settings.quote }}</p>
+            </blockquote>
+          {%- endif -%}
+          {%- if product != blank -%}
+            <a class="db-hours__product" href="{{ product.url }}">
+              <span class="db-hours__product-text">
+                {%- if block.settings.cta_label != blank -%}
+                  {{ block.settings.cta_label }}
+                {%- else -%}
+                  {{ product.title }}
+                {%- endif -%}
+              </span>
+              {{ hour_arrow_svg }}
+            </a>
+          {%- endif -%}
+        </div>
+      </article>
+    {%- endif -%}
+  {%- endfor -%}
+</section>
+
+{% schema %}
+{
+  "name": "The Hours",
+  "class": "db-the-hours-section",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Page header"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Everyday Essentials"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Hours"
+    },
+    {
+      "type": "text",
+      "id": "subline",
+      "label": "Subline (optional)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "hour",
+      "name": "Hour",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_alt",
+          "label": "Image alt text"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Hour label",
+          "info": "e.g. Morning, Midday, Evening, Moonlight"
+        },
+        {
+          "type": "text",
+          "id": "quote",
+          "label": "Quote",
+          "info": "One short, poetic line"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Featured piece"
+        },
+        {
+          "type": "text",
+          "id": "cta_label",
+          "label": "CTA label (optional)",
+          "info": "Defaults to product title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "The Hours",
+      "blocks": [
+        {
+          "type": "hour",
+          "settings": {
+            "label": "Morning",
+            "quote": "Before anyone needs you."
+          }
+        },
+        {
+          "type": "hour",
+          "settings": {
+            "label": "Midday",
+            "quote": "When you're already gone."
+          }
+        },
+        {
+          "type": "hour",
+          "settings": {
+            "label": "Evening",
+            "quote": "The hour you stop performing."
+          }
+        },
+        {
+          "type": "hour",
+          "settings": {
+            "label": "Moonlight",
+            "quote": "Worn without thinking."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

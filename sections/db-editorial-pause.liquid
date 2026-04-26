@@ -1,0 +1,224 @@
+{% comment %}
+  Daphne Blue — Editorial pause
+  A full-bleed silent moment between sections. One image or video,
+  optional single line of copy. No CTA, no buttons. Just one breath.
+  Becomes the screenshotted thing on the site.
+{% endcomment %}
+
+{% liquid
+  assign video = section.settings.video
+  assign poster = section.settings.poster_image
+  assign caption = section.settings.caption
+  assign caption_align = section.settings.caption_align | default: 'bottom-left'
+  assign height_vh = section.settings.height_vh | default: 100
+%}
+
+<section
+  class="db-pause db-pause--{{ caption_align }} spacing-style"
+  style="--db-pause-height: {{ height_vh }}vh; {% render 'spacing-style', settings: section.settings %}"
+>
+  <div class="db-pause__media">
+    {%- if video != blank -%}
+      <video
+        class="db-pause__video"
+        autoplay
+        loop
+        muted
+        playsinline
+        {% if poster != blank %}poster="{{ poster | image_url: width: 1800 }}"{% endif %}
+        aria-hidden="true"
+      >
+        {%- for source in video.sources -%}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {%- endfor -%}
+      </video>
+    {%- elsif poster != blank -%}
+      <img
+        src="{{ poster | image_url: width: 2400 }}"
+        alt="{{ section.settings.image_alt | escape }}"
+        loading="lazy"
+        width="{{ poster.width }}"
+        height="{{ poster.height }}"
+        class="db-pause__image"
+      >
+    {%- else -%}
+      <div class="db-pause__placeholder" aria-hidden="true"></div>
+    {%- endif -%}
+    <div class="db-pause__overlay" aria-hidden="true"></div>
+  </div>
+
+  {%- if caption != blank -%}
+    <div class="db-pause__caption">
+      <p class="db-pause__caption-text">{{ caption }}</p>
+    </div>
+  {%- endif -%}
+</section>
+
+{% stylesheet %}
+  .db-pause {
+    position: relative;
+    height: var(--db-pause-height, 100vh);
+    overflow: hidden;
+    background-color: var(--db-color-charcoal-ink);
+    color: var(--db-color-soft-white);
+  }
+
+  .db-pause__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    line-height: 0;
+  }
+
+  .db-pause__video,
+  .db-pause__image,
+  .db-pause__placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .db-pause__placeholder {
+    background: linear-gradient(180deg, var(--db-color-warm-stone), var(--db-color-charcoal-ink));
+  }
+
+  .db-pause__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.1) 50%, transparent 80%);
+    pointer-events: none;
+  }
+
+  /* Caption — quiet, single line, Maragsa display */
+  .db-pause__caption {
+    position: absolute;
+    z-index: 1;
+    padding: clamp(2rem, 6vh, 4rem) clamp(1.5rem, 6vw, 5rem);
+    max-width: 70ch;
+    pointer-events: none;
+  }
+
+  .db-pause--bottom-left .db-pause__caption {
+    bottom: 0;
+    left: 0;
+  }
+  .db-pause--bottom-center .db-pause__caption {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+  .db-pause--center .db-pause__caption {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+
+  .db-pause__caption-text {
+    margin: 0;
+    font-family: "Maragsa Display", serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--db-color-soft-white);
+    text-wrap: balance;
+  }
+
+  @media (max-width: 749px) {
+    .db-pause {
+      height: 75svh;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .db-pause__video {
+      animation: none !important;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Editorial pause",
+  "class": "db-editorial-pause-section",
+  "settings": [
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video",
+      "info": "Short looping clip — 5–8 seconds works well. Autoplays muted."
+    },
+    {
+      "type": "image_picker",
+      "id": "poster_image",
+      "label": "Poster / fallback image",
+      "info": "Shown if no video is set, or before the video loads, or for users who prefer reduced motion."
+    },
+    {
+      "type": "text",
+      "id": "image_alt",
+      "label": "Image alt text",
+      "default": "Daphne Blue"
+    },
+    {
+      "type": "text",
+      "id": "caption",
+      "label": "Caption (optional)",
+      "info": "One short, poetic line. Leave blank for a pure visual moment."
+    },
+    {
+      "type": "select",
+      "id": "caption_align",
+      "label": "Caption position",
+      "options": [
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom centre" },
+        { "value": "center", "label": "Centre" }
+      ],
+      "default": "bottom-left"
+    },
+    {
+      "type": "range",
+      "id": "height_vh",
+      "label": "Height",
+      "min": 60,
+      "max": 100,
+      "step": 4,
+      "unit": "vh",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial pause",
+      "category": "Daphne Blue"
+    }
+  ]
+}
+{% endschema %}

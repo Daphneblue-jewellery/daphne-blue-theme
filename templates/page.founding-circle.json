@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "story": {
@@ -7,7 +16,7 @@
           "type": "opening",
           "settings": {
             "eyebrow": "The Founding Circle",
-            "heading": "You\u2019re here from the very beginning",
+            "heading": "You’re here from the very beginning",
             "subtitle": ""
           }
         },
@@ -22,7 +31,7 @@
           "type": "narrative",
           "settings": {
             "eyebrow": "Welcome",
-            "body": "<p>A small community of women invited into the brand from the very beginning \u2014 to explore early collections, share honest feedback, and help shape what Daphne Blue becomes.</p><p>Designed to be lived in, from morning light to quiet evenings, each piece is created with calm intention and thoughtful detail.</p>",
+            "body": "<p>A small community of women invited into the brand from the very beginning — to explore early collections, share honest feedback, and help shape what Daphne Blue becomes.</p><p>Designed to be lived in, from morning light to quiet evenings, each piece is created with calm intention and thoughtful detail.</p>",
             "alignment": "centre",
             "padding": 96
           }
@@ -37,8 +46,8 @@
         "fc05_receive": {
           "type": "narrative",
           "settings": {
-            "eyebrow": "What you\u2019ll receive",
-            "body": "<p>Private access to new releases before anyone else. A personal note with your first order. Occasional previews of what\u2019s coming next. And the quiet recognition of being one of the very first to believe in what we\u2019re building.</p>",
+            "eyebrow": "What you’ll receive",
+            "body": "<p>Private access to new releases before anyone else. A personal note with your first order. Occasional previews of what’s coming next. And the quiet recognition of being one of the very first to believe in what we’re building.</p>",
             "alignment": "centre",
             "padding": 96
           }
@@ -53,11 +62,9 @@
         "fc07_closing": {
           "type": "narrative",
           "settings": {
-            "body": "<p>We\u2019re so glad you\u2019re here.</p>",
+            "body": "<p>We’re so glad you’re here.</p>",
             "alignment": "centre",
-            "padding": 80,
-            "link_label": "Explore the collection \u2192",
-            "link_url": "/collections/all"
+            "padding": 80
           }
         },
         "fc08_end": {
@@ -81,5 +88,7 @@
       "settings": {}
     }
   },
-  "order": ["story"]
+  "order": [
+    "story"
+  ]
 }

@@ -58,20 +58,27 @@
 
     {%- if recommendations.performed or section.settings.product == blank -%}
       {% liquid
+        assign products = recommendations.products
+
         comment
-          TEMPORARY: Force collection fallback for dev testing.
-          The Shopify Recommendations API returns very few results on dev stores
-          with no purchase/browsing data. This pulls from collections.all so we
-          can validate the 4-card grid layout. Remove this block and restore the
-          original logic before going live.
+          DEV FALLBACK: Shopify's Recommendations API returns almost nothing
+          on dev stores (no purchase/browsing data). When the API is empty,
+          fall back to collections.all but ONLY show products that have a
+          featured image — this skips imageless test products. Remove this
+          block when the store has real recommendation data (post-launch).
         endcomment
-        assign products = collections.all.products
+        if products == blank or products.size == 0
+          assign products = collections.all.products
+          assign db_fallback_mode = true
+        endif
+
         assign current_product_id = section.settings.product.id | default: product.id
       %}
       {% capture list_items %}
         {% assign db_items_shown = 0 %}
         {% for product in products %}
           {% if product.id == current_product_id %}{% continue %}{% endif %}
+          {% if db_fallback_mode and product.featured_image == blank %}{% continue %}{% endif %}
           {% if db_items_shown >= section.settings.max_products %}{% break %}{% endif %}
           <div class="resource-list__item">
             {% content_for 'block', type: '_product-card', id: 'static-product-card', closest.product: product %}

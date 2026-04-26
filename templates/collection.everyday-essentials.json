@@ -1,0 +1,48 @@
+{
+  "sections": {
+    "the_hours": {
+      "type": "db-the-hours",
+      "blocks": {
+        "morning": {
+          "type": "hour",
+          "settings": {
+            "label": "Morning",
+            "quote": "Before anyone needs you."
+          }
+        },
+        "midday": {
+          "type": "hour",
+          "settings": {
+            "label": "Midday",
+            "quote": "When you're already gone."
+          }
+        },
+        "evening": {
+          "type": "hour",
+          "settings": {
+            "label": "Evening",
+            "quote": "The hour you stop performing."
+          }
+        },
+        "moonlight": {
+          "type": "hour",
+          "settings": {
+            "label": "Moonlight",
+            "quote": "Worn without thinking."
+          }
+        }
+      },
+      "block_order": [
+        "morning",
+        "midday",
+        "evening",
+        "moonlight"
+      ],
+      "settings": {
+        "eyebrow": "Everyday Essentials",
+        "heading": "The Hours"
+      }
+    }
+  },
+  "order": ["the_hours"]
+}

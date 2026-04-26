@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero_TCphkR": {
@@ -51,12 +60,16 @@
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/jewelry-natural-5.jpg",
+        "image_1": "shopify://shop_images/Californian_Landscape_Portrait.jpg",
+        "video_1_url": "",
         "media_type_2": "video",
+        "video_2_url": "",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",
+        "video_1_url_mobile": "",
         "media_type_2_mobile": "image",
+        "video_2_url_mobile": "",
         "link": "",
         "open_in_new_tab": false,
         "content_direction": "column",
@@ -76,21 +89,20 @@
         "overlay_style": "gradient",
         "gradient_direction": "to top",
         "blurred_reflection": false,
+        "apply_retro_filter": false,
         "reflection_opacity": 75,
         "padding-block-start": 40,
         "padding-block-end": 40
       }
     },
-    "db_favourites": {
-      "type": "db-favourites",
+    "custom_liquid_press": {
+      "type": "custom-liquid",
       "settings": {
-        "heading": "Favourites",
-        "subline": "",
-        "products": [],
-        "link_label": "Explore all →",
-        "link_url": "/collections/all",
-        "padding-block-start": 80,
-        "padding-block-end": 80
+        "custom_liquid": "<div class=\"db-press-strip db-type--press\">\n  <span>Jewellery designed to be lived in &mdash; from morning to moonlight</span>\n</div>",
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 48,
+        "padding-block-end": 48
       }
     },
     "collection_list_cQYk97": {
@@ -102,12 +114,12 @@
             "title": "Begin",
             "subtitle": "",
             "section_padding": 60,
-            "background_color": "#FAFAF8",
-            "text_color": "#2E2E2E",
-            "card_background": "#F2EDE6",
-            "button_color": "#2E2E2E",
-            "button_text_color": "#FAFAF8",
-            "button_hover_color": "#6FA9B8",
+            "background_color": "#fafaf8",
+            "text_color": "#2e2e2e",
+            "card_background": "#f2ede6",
+            "button_color": "#2e2e2e",
+            "button_text_color": "#fafaf8",
+            "button_hover_color": "#6fa9b8",
             "title_size": 60,
             "subtitle_size": 22,
             "card_border_radius": 8,
@@ -230,30 +242,33 @@
         "padding-block-end": 80
       }
     },
-    "custom_liquid_press": {
-      "type": "custom-liquid",
+    "db_favourites": {
+      "type": "db-favourites",
       "settings": {
-        "custom_liquid": "<div class=\"db-press-strip db-type--press\">\n  <span>Jewellery designed to be lived in &mdash; from morning to moonlight</span>\n</div>",
-        "color_scheme": "scheme-1",
-        "section_width": "page-width",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "heading": "Favourites",
+        "subline": "",
+        "products": [
+          "pearl-shell-ring",
+          "becoming-ring",
+          "low-tide-band-ring"
+        ],
+        "link_label": "Explore all →",
+        "link_url": "/collections/all",
+        "padding-block-start": 80,
+        "padding-block-end": 80
       }
     },
-    "db_editorial_moment": {
-      "type": "db-editorial-moment",
+    "db_editorial_pause": {
+      "type": "db-editorial-pause",
+      "disabled": true,
       "settings": {
-        "image": "shopify://shop_images/jewelry-natural-5.jpg",
-        "image_alt": "Daphne Blue jewellery held in warm light",
-        "heading": "A quiet kind of radiance",
-        "subline": "A note from Daphne Blue",
-        "body": "<p>Jewellery should feel like a soft second skin. We finish every piece in small batches so each curve rests lightly, keeps its warmth, and moves with you from slow mornings to late trains. Pieces that invite you to pause, not perform.</p>",
-        "link_label": "Our story →",
-        "link_url": "/pages/our-story",
-        "show_divider": false,
-        "color_variant": "soft-sand",
-        "padding-block-start": 96,
-        "padding-block-end": 96
+        "video": "shopify://files/videos/Los Angeles Evening Sky.mp4",
+        "image_alt": "Daphne Blue",
+        "caption": "",
+        "caption_align": "bottom-left",
+        "height_vh": 100,
+        "padding-block-start": 0,
+        "padding-block-end": 0
       }
     },
     "db_curated_discovery": {
@@ -263,26 +278,44 @@
         "subline": "",
         "cta_label": "→",
         "tile_a_collection": "shopify://collections/necklaces",
-        "tile_a_image": "shopify://shop_images/jewelry-natural-5.jpg",
-        "tile_a_asset_image": "mia-necklace-discovery.png",
+        "tile_a_image": "shopify://shop_images/LuxuryNecklaceShoot1.jpg",
+        "tile_a_asset_image": "",
         "tile_a_image_alt": "Mia wearing a delicate gold botanical pendant necklace",
         "tile_a_title": "Necklaces",
         "tile_a_link": "shopify://collections/necklaces",
         "tile_a_descriptor": "",
         "tile_b_collection": "shopify://collections/rings",
-        "tile_b_image": "shopify://shop_images/jewelry-natural-3.jpg",
-        "tile_b_asset_image": "mia-ring-discovery.png",
+        "tile_b_image": "shopify://shop_images/LuxuryJewelleryClose-up1.jpg",
+        "tile_b_asset_image": "",
         "tile_b_image_alt": "Hand wearing a gold crosshatch band ring on linen",
         "tile_b_title": "Rings",
         "tile_b_link": "shopify://collections/rings",
         "tile_c_collection": "shopify://collections/earrings",
-        "tile_c_image": "shopify://shop_images/jewelry-natural-2.jpg",
-        "tile_c_asset_image": "mia-earring-discovery.png",
+        "tile_c_image": "shopify://shop_images/LND-EAR-GLD-005.jpg",
+        "tile_c_asset_image": "",
         "tile_c_image_alt": "Gold leaf charm earring in warm golden light",
         "tile_c_title": "Earrings",
         "tile_c_link": "shopify://collections/earrings",
         "padding-block-start": 80,
         "padding-block-end": 80
+      }
+    },
+    "db_editorial_moment": {
+      "type": "db-editorial-moment",
+      "settings": {
+        "eyebrow": "",
+        "image": "shopify://shop_images/jewelry-natural-5.jpg",
+        "image_alt": "Daphne Blue jewellery held in warm light",
+        "heading": "A quiet kind of radiance",
+        "subline": "a note from Daphne Blue",
+        "body": "<p>Jewellery should feel like a soft second skin. Every piece is designed to rest lightly, keep its warmth, and move with you — from slow mornings to late light.</p>",
+        "link_label": "our story →",
+        "link_url": "/pages/our-story",
+        "reverse_layout": false,
+        "color_variant": "soft-sand",
+        "show_divider": false,
+        "padding-block-start": 96,
+        "padding-block-end": 96
       }
     },
     "db_values_strip": {
@@ -324,6 +357,7 @@
         "val_4"
       ],
       "settings": {
+        "heading": "",
         "padding-block-start": 64,
         "padding-block-end": 80
       }
@@ -334,6 +368,7 @@
     "custom_liquid_press",
     "collection_list_cQYk97",
     "db_favourites",
+    "db_editorial_pause",
     "db_curated_discovery",
     "db_editorial_moment",
     "db_values_strip"

@@ -56,20 +56,11 @@
     {% endif %}
   {% else %}
     {% liquid
-      assign search_categories_menu = settings.search_categories_menu
-      if search_categories_menu == blank
-        assign search_categories_menu = block_settings.menu
-      endif
-
-      assign placeholder_categories = ''
-      if search_categories_menu != blank and search_categories_menu.links.size > 1
-        assign placeholder_categories = search_categories_menu.links | map: 'title'
-      endif
-      if placeholder_categories == blank or placeholder_categories.size <= 1
-        assign placeholder_categories = 'Necklaces,Rings,Earrings,Bracelets,Anklets' | split: ','
-      endif
-
-      assign placeholder_prefix = 'content.search_input_placeholder' | t | append: ' for'
+      # Daphne Blue: empty categories disables the rotating "for [category]"
+      # animation in header-search.js. Static placeholder reads quieter and
+      # matches the brand voice (the rotating tempo conflicted with "the pause").
+      assign placeholder_categories = '' | split: ','
+      assign placeholder_prefix = 'content.search_input_placeholder' | t
     %}
 
     <header-search
@@ -94,7 +85,7 @@
         <span
           class="header-search__placeholder"
           ref="placeholder"
-        ></span>
+        >{{ placeholder_prefix }}</span>
       </button>
     </header-search>
 

@@ -120,7 +120,7 @@
     },
     "filter": "Filter",
     "load_video": "Load video: {{ description }}",
-    "sold_out": "Currently unavailable",
+    "sold_out": "Back soon",
     "payment_methods": "Payment methods"
   },
   "blogs": {
@@ -185,7 +185,7 @@
     },
     "inventory_low_stock": "Limited availability",
     "inventory_in_stock": "In stock",
-    "inventory_out_of_stock": "Currently unavailable",
+    "inventory_out_of_stock": "Back soon",
     "item_count": {
       "one": "{{ count }} item",
       "other": "{{ count }} items"
@@ -217,7 +217,7 @@
     "product_image": "Product image",
     "product_information": "Product information",
     "product_total": "Product total",
-    "product_badge_sold_out": "Currently unavailable",
+    "product_badge_sold_out": "Back soon",
     "product_badge_sale": "Reduced",
     "product_card_placeholder": "Product title",
     "placeholder_image": "Placeholder image",
@@ -318,8 +318,8 @@
       "added_to_cart": "Added to your bag",
       "add_to_cart_error": "Something went wrong — please try again",
       "quantity_error_max": "This item has a maximum of {{ maximum }}",
-      "sold_out": "Currently unavailable",
-      "unavailable": "Currently unavailable",
+      "sold_out": "Back soon",
+      "unavailable": "Back soon",
       "quantity": "Quantity",
       "quantity_increments": "Increments of {{ increment }}",
       "quantity_minimum": "Minimum of {{ minimum }}",
